@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FLASH</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- PAGE DE CRÉATION -->
+    <div id="setup" class="screen">
+
+        <div class="setup-box">
+
+            <div class="logo">
+                <span>⚡</span> FLASH
+            </div>
+
+            <p class="subtitle">
+                Un mini-chat. Un compte temporaire.
+            </p>
+
+            <label for="username">Pseudo</label>
+
+            <input
+                id="username"
+                type="text"
+                maxlength="24"
+                placeholder="Ton pseudo..."
+                autocomplete="off"
+            >
+
+            <label for="duration">Durée du compte</label>
+
+            <select id="duration">
+                <option value="3600000">1 heure</option>
+                <option value="21600000">6 heures</option>
+                <option value="86400000" selected>24 heures</option>
+                <option value="604800000">7 jours</option>
+                <option value="2592000000">30 jours</option>
+                <option value="0">♾️ Illimitée</option>
+            </select>
+
+            <button id="createAccount">
+                Créer mon compte
+            </button>
+
+            <p id="error"></p>
+
+        </div>
+
+    </div>
+
+
+    <!-- CHAT -->
+    <div id="chat" class="screen hidden">
+
+        <header class="topbar">
+
+            <div class="brand">
+                <span>⚡</span>
+                <strong>FLASH</strong>
+            </div>
+
+            <div class="account-info">
+
+                <span id="userDisplay"></span>
+
+                <span id="timer"></span>
+
+                <button id="deleteAccount" class="delete-btn">
+                    Supprimer
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <main id="messages"></main>
+
+
+        <form id="messageForm">
+
+            <input
+                id="messageInput"
+                type="text"
+                maxlength="1000"
+                placeholder="Écrire un message..."
+                autocomplete="off"
+            >
+
+            <button type="submit">
+                ➤
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <script src="app.js"></script>
+
+</body>
+</html>
