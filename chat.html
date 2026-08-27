@@ -3,621 +3,730 @@
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-    <title>FLASH — Chat</title>
+<title>FLASH — Chat</title>
 
+<style>
 
-    <style>
+/* =====================================================
+   BASE
+===================================================== */
 
-        * {
-            box-sizing: border-box;
-        }
+* {
+    box-sizing: border-box;
+}
 
+html,
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
 
-        body {
+body {
+    background: #111214;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
 
-            margin: 0;
+button,
+input {
+    font-family: inherit;
+}
 
-            height: 100vh;
 
-            overflow: hidden;
+/* =====================================================
+   APP
+===================================================== */
 
-            background: #111214;
+#app {
+    width: 100%;
+    height: 100dvh;
 
-            color: white;
+    display: grid;
 
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
-        }
+    grid-template-columns:
+        64px
+        210px
+        minmax(0, 1fr)
+        270px;
+}
 
 
-        /* =====================================
-           STRUCTURE
-        ===================================== */
+/* =====================================================
+   SERVERS
+===================================================== */
 
+.servers {
+    background: #0b0c0e;
 
-        #app {
+    display: flex;
+    flex-direction: column;
 
-            height: 100vh;
+    align-items: center;
 
-            display: grid;
+    gap: 12px;
 
-            grid-template-columns:
-                70px
-                220px
-                1fr
-                280px;
-        }
+    padding: 12px 8px;
+}
 
+.server {
+    width: 46px;
+    height: 46px;
 
-        /* =====================================
-           SERVEURS
-        ===================================== */
+    border-radius: 14px;
 
+    background: #1e1f22;
 
-        .servers {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-            background: #0c0d0f;
+    font-size: 21px;
 
-            padding: 12px 10px;
+    cursor: pointer;
 
-            display: flex;
+    transition: .15s;
+}
 
-            flex-direction: column;
+.server:hover {
+    border-radius: 10px;
+}
 
-            align-items: center;
+.server.active {
+    background: #5865f2;
+}
 
-            gap: 12px;
-        }
 
+/* =====================================================
+   CHANNEL SIDEBAR
+===================================================== */
 
-        .server {
+.sidebar {
+    background: #18191c;
 
-            width: 48px;
+    border-right: 1px solid #303238;
 
-            height: 48px;
+    min-width: 0;
+}
 
-            border-radius: 15px;
+.server-title {
+    height: 64px;
 
-            background: #1e1f22;
+    display: flex;
+    align-items: center;
 
-            display: flex;
+    padding: 0 17px;
 
-            align-items: center;
+    font-size: 18px;
+    font-weight: 800;
 
-            justify-content: center;
+    border-bottom: 1px solid #303238;
+}
 
-            font-size: 22px;
+.channel-list {
+    padding: 12px 9px;
+}
 
-            cursor: pointer;
-        }
+.channel-category {
+    padding: 8px;
 
+    color: #777a82;
 
-        .server.active {
+    font-size: 11px;
+    font-weight: 800;
 
-            border-radius: 13px;
+    text-transform: uppercase;
+}
 
-            background: #5865f2;
-        }
+.channel {
+    width: 100%;
 
+    padding: 10px;
 
-        /* =====================================
-           SIDEBAR
-        ===================================== */
+    border-radius: 7px;
 
+    border: 0;
 
-        .sidebar {
+    background: transparent;
 
-            background: #18191c;
+    color: #aeb1b7;
 
-            border-right:
-                1px solid #303238;
+    text-align: left;
 
-            display: flex;
+    cursor: pointer;
 
-            flex-direction: column;
-        }
+    font-size: 14px;
+}
 
+.channel:hover {
+    background: #2b2d31;
+    color: white;
+}
 
-        .server-name {
+.channel.active {
+    background: #2b2d31;
+    color: white;
+}
 
-            height: 65px;
 
-            display: flex;
+/* =====================================================
+   CHAT
+===================================================== */
 
-            align-items: center;
+.chat {
+    min-width: 0;
+    min-height: 0;
 
-            padding: 0 18px;
+    display: grid;
 
-            font-size: 18px;
+    grid-template-rows:
+        64px
+        minmax(0, 1fr)
+        auto;
+}
 
-            font-weight: bold;
+.chat-header {
+    display: flex;
+    align-items: center;
 
-            border-bottom:
-                1px solid #303238;
-        }
+    padding: 0 20px;
 
+    background: #18191c;
 
-        .channels {
+    border-bottom: 1px solid #303238;
+}
 
-            padding: 15px 10px;
-        }
+.chat-title {
+    font-weight: 800;
+}
 
+.chat-description {
+    margin-left: 12px;
 
-        .channel {
+    color: #777a82;
 
-            padding: 10px;
+    font-size: 13px;
+}
 
-            border-radius: 7px;
 
-            color: #aeb1b7;
+/* =====================================================
+   MESSAGES
+===================================================== */
 
-            cursor: pointer;
-        }
+#messages {
+    min-height: 0;
 
+    overflow-y: auto;
 
-        .channel.active {
+    padding: 22px;
+}
 
-            background: #2b2d31;
+.empty {
+    color: #777a82;
 
-            color: white;
-        }
+    text-align: center;
 
+    margin-top: 50px;
+}
 
-        .channel:hover {
+.message {
+    display: flex;
 
-            background: #2b2d31;
+    gap: 11px;
 
-            color: white;
-        }
+    margin-bottom: 19px;
+}
 
+.message-avatar {
+    width: 40px;
+    height: 40px;
 
-        /* =====================================
-           CHAT
-        ===================================== */
+    flex-shrink: 0;
 
+    border-radius: 50%;
 
-        .chat {
+    object-fit: cover;
 
-            min-width: 0;
+    background: #5865f2;
+}
 
-            display: grid;
+.message-avatar-text {
+    width: 40px;
+    height: 40px;
 
-            grid-template-rows:
-                65px
-                1fr
-                auto;
+    flex-shrink: 0;
 
-            background: #111214;
-        }
+    border-radius: 50%;
 
+    background: #5865f2;
 
-        .chat-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-            display: flex;
+    font-weight: 800;
+}
 
-            align-items: center;
+.message-body {
+    min-width: 0;
+}
 
-            padding: 0 20px;
+.message-header {
+    display: flex;
+    align-items: center;
 
-            border-bottom:
-                1px solid #303238;
+    gap: 7px;
 
-            background: #18191c;
-        }
+    margin-bottom: 3px;
+}
 
+.message-user {
+    font-weight: 800;
+}
 
-        .chat-title {
+.message-time {
+    color: #777a82;
+    font-size: 11px;
+}
 
-            font-size: 17px;
+.message-badge {
+    width: 18px;
+    height: 18px;
 
-            font-weight: bold;
-        }
+    object-fit: contain;
+}
 
+.message-content {
+    color: #dedfe2;
 
-        #messages {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
 
-            overflow-y: auto;
 
-            padding: 25px;
-        }
+/* =====================================================
+   MESSAGE INPUT
+===================================================== */
 
+#form {
+    display: flex;
 
-        .message {
+    gap: 10px;
 
-            margin-bottom: 20px;
+    padding: 13px;
 
-            display: flex;
+    background: #18191c;
 
-            gap: 10px;
-        }
+    border-top: 1px solid #303238;
+}
 
+#input {
+    min-width: 0;
+    flex: 1;
 
-        .avatar {
+    padding: 12px;
 
-            width: 40px;
+    border: 1px solid #3b3d44;
 
-            height: 40px;
+    border-radius: 8px;
 
-            flex-shrink: 0;
+    background: #111214;
 
-            border-radius: 50%;
+    color: white;
 
-            background: #5865f2;
+    outline: none;
+}
 
-            display: flex;
+#input:focus {
+    border-color: #5865f2;
+}
 
-            align-items: center;
+#send {
+    width: 52px;
 
-            justify-content: center;
+    border: 0;
+    border-radius: 8px;
 
-            font-weight: bold;
-        }
+    background: #5865f2;
 
+    color: white;
 
-        .message-body {
+    font-size: 19px;
 
-            min-width: 0;
-        }
+    cursor: pointer;
+}
 
 
-        .message-header {
+/* =====================================================
+   PROFILE
+===================================================== */
 
-            display: flex;
+.profile {
+    background: #18191c;
 
-            align-items: center;
+    border-left: 1px solid #303238;
 
-            gap: 7px;
+    overflow-y: auto;
+}
 
-            margin-bottom: 3px;
-        }
+.profile-banner {
+    height: 100px;
 
+    background:
+        linear-gradient(
+            135deg,
+            #5865f2,
+            #8b5cf6
+        );
+}
 
-        .message-user {
+.profile-content {
+    padding: 0 20px 25px;
+}
 
-            font-weight: bold;
-        }
+.profile-avatar-wrapper {
+    position: relative;
 
+    width: 86px;
+    height: 86px;
 
-        .message-time {
+    margin-top: -43px;
+}
 
-            color: #777a82;
+.profile-avatar {
+    width: 86px;
+    height: 86px;
 
-            font-size: 11px;
-        }
+    border: 6px solid #18191c;
 
+    border-radius: 50%;
 
-        .message-content {
+    object-fit: cover;
 
-            color: #dedfe2;
+    background: #5865f2;
+}
 
-            white-space: pre-wrap;
+.profile-avatar-text {
+    width: 86px;
+    height: 86px;
 
-            overflow-wrap: anywhere;
-        }
+    border: 6px solid #18191c;
 
+    border-radius: 50%;
 
-        /* =====================================
-           BADGES
-        ===================================== */
+    background: #5865f2;
 
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-        .badge {
+    font-size: 29px;
+    font-weight: 900;
+}
 
-            width: 19px;
+.change-avatar {
+    width: 100%;
 
-            height: 19px;
+    margin-top: 10px;
 
-            object-fit: contain;
+    padding: 9px;
 
-            display: inline-block;
+    border: 1px solid #3b3d44;
 
-            vertical-align: middle;
-        }
+    border-radius: 7px;
 
+    background: #232428;
 
-        .profile-badge {
+    color: white;
 
-            width: 30px;
+    cursor: pointer;
+}
 
-            height: 30px;
+.change-avatar:hover {
+    background: #2b2d31;
+}
 
-            object-fit: contain;
-        }
+.profile-name {
+    margin-top: 13px;
 
+    display: flex;
+    align-items: center;
 
-        /* =====================================
-           MESSAGE INPUT
-        ===================================== */
+    gap: 7px;
 
+    font-size: 20px;
+    font-weight: 900;
+}
 
-        #form {
+.profile-badge {
+    width: 21px;
+    height: 21px;
 
-            display: flex;
+    object-fit: contain;
+}
 
-            gap: 10px;
+.profile-username {
+    margin-top: 3px;
 
-            padding: 14px;
+    color: #aeb1b7;
 
-            background: #18191c;
+    font-size: 14px;
+}
 
-            border-top:
-                1px solid #303238;
-        }
+.profile-section {
+    margin-top: 24px;
 
+    padding-top: 17px;
 
-        #input {
+    border-top: 1px solid #303238;
+}
 
-            flex: 1;
+.profile-title {
+    margin-bottom: 9px;
 
-            min-width: 0;
+    color: #aeb1b7;
 
-            padding: 13px;
+    font-size: 11px;
+    font-weight: 800;
 
-            border:
-                1px solid #3b3d44;
+    text-transform: uppercase;
+}
 
-            border-radius: 8px;
+.profile-info {
+    color: #dedfe2;
 
-            background: #111214;
+    font-size: 13px;
 
-            color: white;
+    line-height: 1.7;
 
-            outline: none;
+    overflow-wrap: anywhere;
+}
 
-            font-size: 15px;
-        }
+.delete {
+    width: 100%;
 
+    margin-top: 25px;
 
-        #input:focus {
+    padding: 11px;
 
-            border-color: #5865f2;
-        }
+    border: 0;
 
+    border-radius: 8px;
 
-        #send {
+    background: #c43d3d;
 
-            width: 55px;
+    color: white;
 
-            border: none;
+    font-weight: 800;
 
-            border-radius: 8px;
+    cursor: pointer;
+}
 
-            background: #5865f2;
+.delete:hover {
+    background: #df4a4a;
+}
 
-            color: white;
 
-            font-size: 20px;
+/* =====================================================
+   MOBILE NAVIGATION
+===================================================== */
 
-            cursor: pointer;
-        }
+.mobile-nav {
+    display: none;
+}
 
 
-        /* =====================================
-           PROFILE
-        ===================================== */
+/* =====================================================
+   MOBILE PORTRAIT
+===================================================== */
 
+@media (max-width: 900px) {
 
-        .profile {
+    #app {
+        grid-template-columns:
+            58px
+            minmax(0, 1fr);
+    }
 
-            background: #18191c;
+    .sidebar {
+        display: none;
+    }
 
-            border-left:
-                1px solid #303238;
+    .profile {
+        display: none;
+    }
 
-            overflow-y: auto;
-        }
+    .mobile-nav {
+        display: flex;
 
+        position: fixed;
 
-        .profile-banner {
+        left: 0;
+        right: 0;
+        bottom: 0;
 
-            height: 100px;
+        height: 58px;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #5865f2,
-                    #8b5cf6
-                );
-        }
+        z-index: 20;
 
+        background: #18191c;
 
-        .profile-content {
+        border-top: 1px solid #303238;
 
-            padding: 0 20px 25px;
-        }
+        align-items: center;
+        justify-content: space-around;
+    }
 
+    .mobile-nav button {
+        width: 25%;
 
-        .profile-avatar {
+        height: 100%;
 
-            width: 82px;
+        border: 0;
 
-            height: 82px;
+        background: transparent;
 
-            margin-top: -41px;
+        color: #aeb1b7;
 
-            border: 6px solid #18191c;
+        font-size: 21px;
 
-            border-radius: 50%;
+        cursor: pointer;
+    }
 
-            background: #5865f2;
+    .mobile-nav button.active {
+        color: white;
+    }
 
-            display: flex;
+    #messages {
+        padding-bottom: 75px;
+    }
 
-            align-items: center;
+    #form {
+        padding-bottom: 13px;
+    }
 
-            justify-content: center;
+}
 
-            font-size: 28px;
 
-            font-weight: bold;
-        }
+/* =====================================================
+   SMALL PHONE
+===================================================== */
 
+@media (max-width: 600px) {
 
-        .profile-name {
+    #app {
+        display: block;
+    }
 
-            margin-top: 12px;
+    .servers {
+        display: none;
+    }
 
-            display: flex;
+    .chat {
+        width: 100%;
+        height: 100dvh;
+    }
 
-            align-items: center;
+    .chat-header {
+        height: 58px;
 
-            gap: 7px;
+        padding: 0 15px;
+    }
 
-            font-size: 21px;
+    .chat-description {
+        display: none;
+    }
 
-            font-weight: bold;
-        }
+    #messages {
+        padding: 15px;
 
+        padding-bottom: 70px;
+    }
 
-        .profile-username {
+    #form {
+        padding: 9px;
+    }
 
-            color: #aeb1b7;
+    #input {
+        padding: 11px;
+    }
 
-            font-size: 14px;
+    #send {
+        width: 48px;
+    }
 
-            margin-top: 3px;
-        }
+}
 
 
-        .profile-section {
+/* =====================================================
+   PANNEAUX MOBILES
+===================================================== */
 
-            margin-top: 25px;
+.mobile-panel {
+    position: fixed;
 
-            padding-top: 18px;
+    inset: 0;
 
-            border-top:
-                1px solid #303238;
-        }
+    z-index: 30;
 
+    display: none;
 
-        .profile-title {
+    background: #111214;
+}
 
-            margin-bottom: 10px;
+.mobile-panel.open {
+    display: block;
+}
 
-            font-size: 12px;
+.mobile-panel-header {
+    height: 60px;
 
-            font-weight: bold;
+    display: flex;
 
-            color: #aeb1b7;
+    align-items: center;
 
-            text-transform: uppercase;
-        }
+    justify-content: space-between;
 
+    padding: 0 16px;
 
-        .profile-info {
+    background: #18191c;
 
-            color: #dedfe2;
+    border-bottom: 1px solid #303238;
+}
 
-            font-size: 14px;
+.mobile-panel-title {
+    font-weight: 800;
+}
 
-            line-height: 1.7;
-        }
+.close-panel {
+    border: 0;
 
+    background: transparent;
 
-        #timer {
+    color: white;
 
-            color: #aeb1b7;
-        }
+    font-size: 22px;
+}
 
+.mobile-channels {
+    padding: 15px;
+}
 
-        .delete {
+.mobile-profile {
+    overflow-y: auto;
 
-            width: 100%;
+    height: calc(100dvh - 60px);
+}
 
-            margin-top: 25px;
-
-            padding: 11px;
-
-            border: none;
-
-            border-radius: 8px;
-
-            background: #c43d3d;
-
-            color: white;
-
-            font-weight: bold;
-
-            cursor: pointer;
-        }
-
-
-        .delete:hover {
-
-            background: #df4a4a;
-        }
-
-
-        /* =====================================
-           MOBILE
-        ===================================== */
-
-
-        @media (max-width: 1000px) {
-
-            #app {
-
-                grid-template-columns:
-                    60px
-                    180px
-                    1fr;
-            }
-
-
-            .profile {
-
-                display: none;
-            }
-
-        }
-
-
-        @media (max-width: 650px) {
-
-            #app {
-
-                grid-template-columns:
-                    55px
-                    1fr;
-            }
-
-
-            .sidebar {
-
-                display: none;
-            }
-
-
-            .servers {
-
-                padding:
-                    10px 5px;
-            }
-
-
-            #messages {
-
-                padding: 18px;
-            }
-
-
-            .account-mobile {
-
-                display: none;
-            }
-
-        }
-
-    </style>
+</style>
 
 </head>
 
@@ -628,92 +737,79 @@
 <div id="app">
 
 
-    <!-- =================================
-         SERVEURS
-    ================================== -->
-
+    <!-- SERVEURS -->
 
     <aside class="servers">
 
-
         <div class="server active">
-
             ⚡
-
         </div>
-
 
         <div class="server">
-
             +
-
         </div>
-
 
     </aside>
 
 
-
-    <!-- =================================
-         CHANNELS
-    ================================== -->
-
+    <!-- SALONS -->
 
     <aside class="sidebar">
 
-
-        <div class="server-name">
-
+        <div class="server-title">
             FLASH
-
         </div>
 
+        <div class="channel-list">
 
-        <div class="channels">
+            <div class="channel-category">
+                Salons
+            </div>
 
-
-            <div class="channel active">
-
+            <button
+                class="channel active"
+                data-channel="general"
+            >
                 # général
+            </button>
 
-            </div>
-
-
-            <div class="channel">
-
+            <button
+                class="channel"
+                data-channel="random"
+            >
                 # random
+            </button>
 
-            </div>
-
-
-            <div class="channel">
-
+            <button
+                class="channel"
+                data-channel="discussion"
+            >
                 # discussion
-
-            </div>
-
+            </button>
 
         </div>
-
 
     </aside>
 
 
-
-    <!-- =================================
-         CHAT
-    ================================== -->
-
+    <!-- CHAT -->
 
     <main class="chat">
 
-
         <header class="chat-header">
 
-            <div class="chat-title">
-
+            <div
+                id="chatTitle"
+                class="chat-title"
+            >
                 # général
+            </div>
 
+            <div
+                id="chatDescription"
+                class="chat-description"
+            >
+                Discussion générale
             </div>
 
         </header>
@@ -724,7 +820,6 @@
 
         <form id="form">
 
-
             <input
                 id="input"
                 type="text"
@@ -733,57 +828,58 @@
                 autocomplete="off"
             >
 
-
-            <button
-                id="send"
-                type="submit"
-            >
-
+            <button id="send" type="submit">
                 ➤
-
             </button>
 
-
         </form>
-
 
     </main>
 
 
-
-    <!-- =================================
-         PROFIL
-    ================================== -->
-
+    <!-- PROFIL -->
 
     <aside class="profile">
 
-
         <div class="profile-banner"></div>
-
 
         <div class="profile-content">
 
+            <div class="profile-avatar-wrapper">
 
-            <div
-                id="profileAvatar"
-                class="profile-avatar"
-            >
+                <img
+                    id="profileAvatar"
+                    class="profile-avatar"
+                    alt="PDP"
+                >
 
-                ?
+                <div
+                    id="profileAvatarText"
+                    class="profile-avatar-text"
+                ></div>
 
             </div>
 
 
+            <input
+                id="avatarInput"
+                type="file"
+                accept="image/*"
+                hidden
+            >
+
+
+            <button
+                id="changeAvatar"
+                class="change-avatar"
+            >
+                Changer la PDP
+            </button>
+
+
             <div class="profile-name">
 
-
-                <span id="profileName">
-                    -
-                </span>
-
-
-                <!-- BADGE CRÉATEUR -->
+                <span id="profileName"></span>
 
                 <img
                     id="profileBadge"
@@ -792,37 +888,25 @@
                     alt="Badge créateur"
                 >
 
-
             </div>
 
 
             <div
                 id="profileUsername"
                 class="profile-username"
-            >
-
-                @-
-
-            </div>
+            ></div>
 
 
             <div class="profile-section">
 
-
                 <div class="profile-title">
-
                     Compte
-
                 </div>
-
 
                 <div
                     id="profileInfo"
                     class="profile-info"
-                >
-
-                </div>
-
+                ></div>
 
             </div>
 
@@ -831,37 +915,214 @@
                 id="delete"
                 class="delete"
             >
-
                 Supprimer mon compte
-
             </button>
-
 
         </div>
 
-
     </aside>
-
 
 </div>
 
 
+<!-- NAVIGATION MOBILE -->
+
+<nav class="mobile-nav">
+
+    <button
+        id="mobileChannels"
+        class="active"
+    >
+        💬
+    </button>
+
+    <button id="mobileProfile">
+        👤
+    </button>
+
+</nav>
+
+
+<!-- PANNEAU SALONS MOBILE -->
+
+<div
+    id="channelsPanel"
+    class="mobile-panel"
+>
+
+    <header class="mobile-panel-header">
+
+        <span class="mobile-panel-title">
+            Salons
+        </span>
+
+        <button
+            class="close-panel"
+            data-close="channelsPanel"
+        >
+            ×
+        </button>
+
+    </header>
+
+
+    <div class="mobile-channels">
+
+        <button
+            class="channel active"
+            data-channel="general"
+        >
+            # général
+        </button>
+
+        <button
+            class="channel"
+            data-channel="random"
+        >
+            # random
+        </button>
+
+        <button
+            class="channel"
+            data-channel="discussion"
+        >
+            # discussion
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- PANNEAU PROFIL MOBILE -->
+
+<div
+    id="profilePanel"
+    class="mobile-panel"
+>
+
+    <header class="mobile-panel-header">
+
+        <span class="mobile-panel-title">
+            Profil
+        </span>
+
+        <button
+            class="close-panel"
+            data-close="profilePanel"
+        >
+            ×
+        </button>
+
+    </header>
+
+
+    <div class="mobile-profile">
+
+        <div class="profile-banner"></div>
+
+        <div class="profile-content">
+
+            <div class="profile-avatar-wrapper">
+
+                <img
+                    id="mobileProfileAvatar"
+                    class="profile-avatar"
+                    alt="PDP"
+                >
+
+                <div
+                    id="mobileProfileAvatarText"
+                    class="profile-avatar-text"
+                ></div>
+
+            </div>
+
+
+            <button
+                id="mobileChangeAvatar"
+                class="change-avatar"
+            >
+                Changer la PDP
+            </button>
+
+
+            <div class="profile-name">
+
+                <span id="mobileProfileName"></span>
+
+                <img
+                    class="profile-badge"
+                    src="VIP_Badge.webp"
+                    alt="Badge créateur"
+                >
+
+            </div>
+
+
+            <div
+                id="mobileProfileUsername"
+                class="profile-username"
+            ></div>
+
+
+            <div class="profile-section">
+
+                <div class="profile-title">
+                    Compte
+                </div>
+
+                <div
+                    id="mobileProfileInfo"
+                    class="profile-info"
+                ></div>
+
+            </div>
+
+
+            <button
+                id="mobileDelete"
+                class="delete"
+            >
+                Supprimer mon compte
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
 
 <script>
 
-
 /* =====================================================
-   FLASH V0 — CHAT
+   CONFIG
 ===================================================== */
-
 
 const STORAGE_KEY = "FLASH_V0";
 
+const CREATOR_BADGE =
+    "VIP_Badge.webp";
 
-/* ==============================================
-   CHARGER
-============================================== */
 
+/* =====================================================
+   STATE
+===================================================== */
+
+let state =
+    loadState();
+
+
+let currentChannel =
+    localStorage.getItem(
+        "FLASH_CURRENT_CHANNEL"
+    ) || "general";
+
+
+/* =====================================================
+   LOAD STATE
+===================================================== */
 
 function loadState() {
 
@@ -872,19 +1133,13 @@ function loadState() {
                 STORAGE_KEY
             );
 
-
         if (!data) {
-
             return null;
-
         }
-
 
         return JSON.parse(data);
 
-    }
-
-    catch {
+    } catch {
 
         return null;
 
@@ -893,55 +1148,45 @@ function loadState() {
 }
 
 
-/* ==============================================
-   SAUVEGARDER
-============================================== */
-
+/* =====================================================
+   SAVE STATE
+===================================================== */
 
 function saveState() {
 
     localStorage.setItem(
-
         STORAGE_KEY,
-
         JSON.stringify(state)
-
     );
 
 }
 
 
-/* ==============================================
+/* =====================================================
    ID
-============================================== */
-
+===================================================== */
 
 function generateID() {
 
     return (
-
         Date.now() +
-
         "-" +
-
         Math.random()
             .toString(36)
             .substring(2)
-
     );
 
 }
 
 
-/* ==============================================
-   COMPTE
-============================================== */
+/* =====================================================
+   CHECK ACCOUNT
+===================================================== */
 
-
-let state = loadState();
-
-
-if (!state || !state.account) {
+if (
+    !state ||
+    !state.account
+) {
 
     window.location.href =
         "index.html";
@@ -949,10 +1194,9 @@ if (!state || !state.account) {
 }
 
 
-/* ==============================================
+/* =====================================================
    EXPIRATION
-============================================== */
-
+===================================================== */
 
 function isExpired() {
 
@@ -964,12 +1208,9 @@ function isExpired() {
 
     }
 
-
     return (
-
         Date.now() >=
         state.account.expiresAt
-
     );
 
 }
@@ -981,83 +1222,39 @@ function expireAccount() {
         STORAGE_KEY
     );
 
-
     window.location.href =
         "index.html";
 
 }
 
 
-/* ==============================================
-   TIMER
-============================================== */
-
-
-function updateTimer() {
-
-
-    const timer =
-        document.getElementById(
-            "timer"
-        );
-
-
-    if (
-        state.account.expiresAt === 0
-    ) {
-
-        return;
-
-    }
-
-
-    if (isExpired()) {
-
-        expireAccount();
-
-        return;
-
-    }
-
-
-}
-
-
-/* ==============================================
-   TEMPS
-============================================== */
-
+/* =====================================================
+   FORMAT TIME
+===================================================== */
 
 function formatTime(ms) {
 
-
     let seconds =
         Math.floor(ms / 1000);
-
 
     const days =
         Math.floor(
             seconds / 86400
         );
 
-
     seconds %= 86400;
-
 
     const hours =
         Math.floor(
             seconds / 3600
         );
 
-
     seconds %= 3600;
-
 
     const minutes =
         Math.floor(
             seconds / 60
         );
-
 
     seconds %= 60;
 
@@ -1073,7 +1270,6 @@ function formatTime(ms) {
 
     }
 
-
     if (hours > 0) {
 
         return (
@@ -1084,7 +1280,6 @@ function formatTime(ms) {
         );
 
     }
-
 
     if (minutes > 0) {
 
@@ -1097,360 +1292,74 @@ function formatTime(ms) {
 
     }
 
-
     return seconds + "s";
 
 }
 
 
-/* ==============================================
-   PROFIL
-============================================== */
+/* =====================================================
+   PROFILE
+===================================================== */
 
-
-function loadProfile() {
-
+function updateProfile() {
 
     const account =
         state.account;
 
 
-    document
-        .getElementById("profileName")
-        .textContent =
-            account.username;
+    const initial =
+        account.username
+            .charAt(0)
+            .toUpperCase();
 
 
-    document
-        .getElementById("profileUsername")
-        .textContent =
-            "@" + account.username;
+    const username =
+        "@" + account.username;
 
 
-    document
-        .getElementById("profileAvatar")
-        .textContent =
-            account.username
-                .charAt(0)
-                .toUpperCase();
-
-
-    let durationText;
+    let duration;
 
 
     if (
         account.expiresAt === 0
     ) {
 
-        durationText =
+        duration =
             "♾️ Illimitée";
 
+    } else {
+
+        const remaining =
+            account.expiresAt -
+            Date.now();
+
+
+        duration =
+            remaining > 0
+                ? formatTime(remaining)
+                : "Expiré";
+
     }
 
-    else {
 
-        durationText =
-            formatTime(
+    /* DESKTOP */
 
-                account.expiresAt -
-                Date.now()
-
-            );
-
-    }
+    document
+        .getElementById(
+            "profileName"
+        )
+        .textContent =
+            account.username;
 
 
     document
-        .getElementById("profileInfo")
-        .innerHTML =
-
-            "ID : " +
-            account.id +
-
-            "<br>" +
-
-            "Créé le : " +
-
-            new Date(
-                account.createdAt
-            ).toLocaleDateString(
-                "fr-FR"
-            ) +
-
-            "<br>" +
-
-            "Temps restant : " +
-
-            durationText;
-
-
-    /*
-     * BADGE
-     *
-     * Pour la V0 locale :
-     * le compte créé ici possède
-     * le rôle creator.
-     */
-
-
-    const badge =
-        document.getElementById(
-            "profileBadge"
-        );
-
-
-    if (
-        account.role === "creator"
-    ) {
-
-        badge.style.display =
-            "inline-block";
-
-    }
-
-    else {
-
-        badge.style.display =
-            "none";
-
-    }
-
-}
-
-
-/* ==============================================
-   MESSAGES
-============================================== */
-
-
-function renderMessages() {
-
-
-    const container =
-        document.getElementById(
-            "messages"
-        );
-
-
-    container.innerHTML = "";
-
-
-    for (
-        const message
-        of state.messages
-    ) {
-
-
-        const article =
-            document.createElement(
-                "article"
-            );
-
-
-        article.className =
-            "message";
-
-
-        const avatar =
-            document.createElement(
-                "div"
-            );
-
-
-        avatar.className =
-            "avatar";
-
-
-        avatar.textContent =
-            message.username
-                .charAt(0)
-                .toUpperCase();
-
-
-        const body =
-            document.createElement(
-                "div"
-            );
-
-
-        body.className =
-            "message-body";
-
-
-        const header =
-            document.createElement(
-                "div"
-            );
-
-
-        header.className =
-            "message-header";
-
-
-        const username =
-            document.createElement(
-                "span"
-            );
-
-
-        username.className =
-            "message-user";
-
-
-        username.textContent =
-            "@" + message.username;
-
-
-        /*
-         * Badge du créateur
-         */
-
-
-        if (
-            message.role === "creator"
-        ) {
-
-
-            const badge =
-                document.createElement(
-                    "img"
-                );
-
-
-            badge.className =
-                "badge";
-
-
-            badge.src =
-                "VIP_Badge.webp";
-
-
-            badge.alt =
-                "Badge créateur";
-
-
-            header.appendChild(
-                badge
-            );
-
-        }
-
-
-        const time =
-            document.createElement(
-                "span"
-            );
-
-
-        time.className =
-            "message-time";
-
-
-        time.textContent =
-
-            new Date(
-                message.createdAt
-            ).toLocaleTimeString(
-
-                "fr-FR",
-
-                {
-
-                    hour: "2-digit",
-
-                    minute: "2-digit"
-
-                }
-
-            );
-
-
-        header.prepend(
-            username
-        );
-
-
-        header.appendChild(
-            time
-        );
-
-
-        const content =
-            document.createElement(
-                "div"
-            );
-
-
-        content.className =
-            "message-content";
-
-
-        content.textContent =
-            message.text;
-
-
-        body.appendChild(header);
-
-        body.appendChild(content);
-
-
-        article.appendChild(avatar);
-
-        article.appendChild(body);
-
-
-        container.appendChild(article);
-
-    }
-
-
-    container.scrollTop =
-        container.scrollHeight;
-
-}
-
-
-/* ==============================================
-   ENVOYER MESSAGE
-============================================== */
-
-
-document
-    .getElementById("form")
-    .addEventListener(
-        "submit",
-        function(event) {
-
-
-            event.preventDefault();
-
-
-            if (isExpired()) {
-
-                expireAccount();
-
-                return;
-
-            }
-
-
-            const input =
-                document.getElementById(
-                    "input"
-                );
-
-
-            const text =
-                input.value.trim();
-
-
-            if (!text) {
-
-                return;
-
-            }
-
-
-            state.messages.push({
-
-             
+        .getElementById(
+            "profileUsername"
+        )
+        .textContent =
+            username;
+
+
+    document
+        .getElementById(
+            "profileInfo
