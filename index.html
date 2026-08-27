@@ -2,396 +2,1295 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>FLASH</title>
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>S!NNER13 — BLACK HOLE</title>
 
 <style>
 
+/* =========================================================
+   S!NNER13 // BLACK HOLE
+   HYPERPOP / UNDERGROUND / DIGITAL VOID
+========================================================= */
+
 * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
-    margin: 0;
+
     min-height: 100vh;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    overflow-x: hidden;
 
-    background: #050509;
+    background:
+        radial-gradient(
+            circle at 50% 40%,
+            rgba(89, 42, 160, .18),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 20% 80%,
+            rgba(0, 180, 255, .08),
+            transparent 25%
+        ),
+        #020204;
+
     color: white;
 
-    font-family: Arial, sans-serif;
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
 }
 
-.card {
-    width: min(420px, 90%);
-    padding: 30px;
 
-    background: #101018;
+/* =========================================================
+   NOISE
+========================================================= */
 
-    border: 1px solid #292943;
-    border-radius: 20px;
+body::before {
 
-    box-shadow:
-        0 0 50px rgba(80,60,255,.15);
+    content: "";
 
-    text-align: center;
+    position: fixed;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: 999;
+
+    opacity: .055;
+
+    background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
+
 }
 
-h1 {
-    margin-top: 0;
 
-    font-size: 40px;
+/* =========================================================
+   CURSOR GLOW
+========================================================= */
+
+.cursor {
+
+    position: fixed;
+
+    width: 220px;
+    height: 220px;
+
+    pointer-events: none;
+
+    border-radius: 50%;
+
+    transform: translate(-50%, -50%);
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(130, 80, 255, .13),
+            transparent 70%
+        );
+
+    filter: blur(10px);
+
+    z-index: 2;
+
 }
 
-p {
-    color: #9999aa;
-}
 
-input,
-select,
-button {
+/* =========================================================
+   NAV
+========================================================= */
+
+nav {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
 
     width: 100%;
 
-    height: 48px;
+    height: 70px;
 
-    margin-top: 10px;
+    padding: 0 25px;
 
-    border-radius: 10px;
+    display: flex;
 
-    border: 1px solid #292943;
+    align-items: center;
 
-    padding: 0 12px;
+    justify-content: space-between;
 
-    font-size: 14px;
+    z-index: 100;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(2,2,4,.95),
+            transparent
+        );
+
+    backdrop-filter: blur(5px);
+
 }
 
-input,
-select {
+.logo {
 
-    background: #07070b;
+    font-family: monospace;
+
+    font-weight: 900;
+
+    font-size: 18px;
+
+    letter-spacing: -1px;
+
+    text-shadow:
+        2px 0 #8d5cff,
+        -2px 0 #00d9ff;
+
+}
+
+.nav-links {
+
+    display: flex;
+
+    gap: 22px;
+
+}
+
+.nav-links a {
+
+    color: rgba(255,255,255,.45);
+
+    text-decoration: none;
+
+    font-family: monospace;
+
+    font-size: 10px;
+
+    letter-spacing: 1px;
+
+    transition: .2s;
+
+}
+
+.nav-links a:hover {
 
     color: white;
 
+    text-shadow:
+        0 0 12px #8d5cff;
+
 }
 
-button {
 
-    background: #6355df;
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+
+    min-height: 100vh;
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    overflow: hidden;
+
+}
+
+
+/* =========================================================
+   BLACK HOLE
+========================================================= */
+
+.black-hole {
+
+    position: absolute;
+
+    width: min(70vw, 520px);
+    height: min(70vw, 520px);
+
+    border-radius: 50%;
+
+    background:
+
+        radial-gradient(
+            circle,
+            #000 0 24%,
+            #020203 25% 31%,
+            transparent 32%
+        );
+
+    filter:
+        drop-shadow(
+            0 0 40px rgba(109, 61, 255, .3)
+        );
+
+    animation:
+        float 7s ease-in-out infinite;
+
+}
+
+
+/* accretion disk */
+
+.black-hole::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 5%;
+
+    border-radius: 50%;
+
+    background:
+
+        conic-gradient(
+            from 10deg,
+            transparent,
+            rgba(120,70,255,.7),
+            rgba(0,220,255,.65),
+            transparent 35%,
+            rgba(255,70,190,.55),
+            transparent 65%,
+            rgba(100,50,255,.7),
+            transparent
+        );
+
+    filter: blur(17px);
+
+    animation:
+        spin 10s linear infinite;
+
+}
+
+
+/* inner ring */
+
+.black-hole::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 19%;
+
+    border-radius: 50%;
+
+    border:
+        2px solid rgba(255,255,255,.08);
+
+    box-shadow:
+
+        0 0 30px rgba(123,77,255,.8),
+
+        inset 0 0 35px rgba(0,0,0,.9);
+
+}
+
+
+/* =========================================================
+   HERO TEXT
+========================================================= */
+
+.hero-content {
+
+    position: relative;
+
+    z-index: 5;
+
+    text-align: center;
+
+    padding: 20px;
+
+}
+
+.pre-title {
+
+    font-family: monospace;
+
+    font-size: 9px;
+
+    letter-spacing: 5px;
+
+    color: rgba(255,255,255,.35);
+
+    margin-bottom: 20px;
+
+}
+
+
+.title {
+
+    position: relative;
+
+    font-size:
+        clamp(55px, 15vw, 145px);
+
+    font-weight: 1000;
+
+    letter-spacing:
+        clamp(-7px, -1vw, -2px);
+
+    line-height: .8;
+
+    text-shadow:
+
+        3px 0 #ff3bbd,
+
+        -3px 0 #00d9ff,
+
+        0 0 40px rgba(139,82,255,.45);
+
+    animation:
+        titleGlitch 4s infinite;
+
+}
+
+
+.title::before,
+.title::after {
+
+    content: "S!NNER13";
+
+    position: absolute;
+
+    left: 0;
+
+    width: 100%;
+
+    opacity: .5;
+
+}
+
+.title::before {
+
+    color: #00eaff;
+
+    transform:
+        translate(-3px, 2px);
+
+    clip-path:
+        inset(0 0 65% 0);
+
+}
+
+.title::after {
+
+    color: #ff32ba;
+
+    transform:
+        translate(3px, -2px);
+
+    clip-path:
+        inset(65% 0 0 0);
+
+}
+
+
+.subtitle {
+
+    margin-top: 25px;
+
+    color: rgba(255,255,255,.5);
+
+    font-family: monospace;
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
+
+}
+
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.enter {
+
+    display: inline-flex;
+
+    margin-top: 35px;
+
+    padding: 13px 22px;
 
     color: white;
 
-    font-weight: bold;
+    text-decoration: none;
 
-    cursor: pointer;
+    font-family: monospace;
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
+
+    border:
+        1px solid rgba(255,255,255,.2);
+
+    background:
+        rgba(255,255,255,.035);
+
+    backdrop-filter:
+        blur(10px);
+
+    transition:
+        .25s;
+
 }
 
-button:hover {
+.enter:hover {
 
-    background: #7568ef;
+    transform:
+        translateY(-4px);
+
+    border-color:
+        rgba(155,110,255,.7);
+
+    box-shadow:
+        0 0 30px rgba(113,75,255,.25);
 
 }
 
-#existing {
 
-    display: none;
+/* =========================================================
+   STARS
+========================================================= */
 
-    margin-top: 10px;
+.stars {
 
-    background: #181826;
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
 }
 
-#error {
+.star {
 
-    color: #ff6666;
+    position: absolute;
 
-    min-height: 20px;
+    width: 2px;
+    height: 2px;
+
+    border-radius: 50%;
+
+    background: white;
+
+    opacity: .5;
+
+    animation:
+        twinkle
+        calc(2s + var(--delay))
+        infinite alternate;
+
+}
+
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+section {
+
+    position: relative;
+
+    padding:
+        110px 7vw;
+
+    border-top:
+        1px solid rgba(255,255,255,.05);
+
+}
+
+
+/* =========================================================
+   SECTION HEADER
+========================================================= */
+
+.section-label {
+
+    color:
+        rgba(255,255,255,.25);
+
+    font-family: monospace;
+
+    font-size: 8px;
+
+    letter-spacing: 3px;
+
+    margin-bottom: 15px;
+
+}
+
+.section-title {
+
+    font-size:
+        clamp(32px, 7vw, 70px);
+
+    line-height: .95;
+
+    font-weight: 900;
+
+}
+
+
+/* =========================================================
+   MUSIC
+========================================================= */
+
+.music-grid {
+
+    margin-top: 45px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(220px, 1fr)
+        );
+
+    gap: 15px;
+
+}
+
+.track {
+
+    min-height: 170px;
+
+    position: relative;
+
+    padding: 20px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: flex-end;
+
+    overflow: hidden;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    background:
+
+        radial-gradient(
+            circle at 80% 20%,
+            rgba(111,77,255,.22),
+            transparent 40%
+        ),
+
+        rgba(255,255,255,.025);
+
+    transition:
+        .3s;
+
+}
+
+.track:hover {
+
+    transform:
+        translateY(-7px)
+        rotate(-.5deg);
+
+    border-color:
+        rgba(143,105,255,.4);
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,.4);
+
+}
+
+.track-number {
+
+    position: absolute;
+
+    top: 17px;
+    right: 17px;
+
+    font-family: monospace;
+
+    color:
+        rgba(255,255,255,.15);
+
+    font-size: 10px;
+
+}
+
+.track-name {
+
+    font-size: 21px;
+
+    font-weight: 900;
+
+}
+
+.track-info {
+
+    margin-top: 7px;
+
+    color:
+        rgba(255,255,255,.3);
+
+    font-family: monospace;
+
+    font-size: 8px;
+
+}
+
+
+/* =========================================================
+   ABOUT
+========================================================= */
+
+.about {
+
+    max-width: 850px;
+
+}
+
+.about p {
+
+    margin-top: 30px;
+
+    color:
+        rgba(255,255,255,.48);
+
+    font-size:
+        clamp(15px, 2vw, 19px);
+
+    line-height: 1.8;
+
+}
+
+.highlight {
+
+    color: white;
+
+    text-shadow:
+        0 0 15px rgba(135,90,255,.7);
+
+}
+
+
+/* =========================================================
+   SOCIALS
+========================================================= */
+
+.socials {
+
+    margin-top: 45px;
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+}
+
+.social {
+
+    padding:
+        13px 18px;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    color:
+        rgba(255,255,255,.55);
+
+    text-decoration: none;
+
+    font-family: monospace;
+
+    font-size: 9px;
+
+    transition: .2s;
+
+}
+
+.social:hover {
+
+    color: white;
+
+    background:
+        rgba(255,255,255,.04);
+
+    border-color:
+        rgba(255,255,255,.25);
+
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+
+    padding:
+        40px 25px;
+
+    text-align: center;
+
+    border-top:
+        1px solid rgba(255,255,255,.05);
+
+    color:
+        rgba(255,255,255,.18);
+
+    font-family: monospace;
+
+    font-size: 8px;
+
+    letter-spacing: 1px;
+
+}
+
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes spin {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+@keyframes float {
+
+    0%,100% {
+        transform:
+            translateY(0)
+            scale(1);
+    }
+
+    50% {
+        transform:
+            translateY(-14px)
+            scale(1.02);
+    }
+
+}
+
+@keyframes twinkle {
+
+    from {
+        opacity: .15;
+        transform: scale(.7);
+    }
+
+    to {
+        opacity: .8;
+        transform: scale(1.4);
+    }
+
+}
+
+@keyframes titleGlitch {
+
+    0%, 88%, 100% {
+        transform: translate(0);
+    }
+
+    89% {
+        transform: translate(-3px, 1px);
+    }
+
+    90% {
+        transform: translate(3px, -1px);
+    }
+
+    91% {
+        transform: translate(0);
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    nav {
+        padding: 0 15px;
+    }
+
+    .nav-links {
+        gap: 10px;
+    }
+
+    .nav-links a {
+        font-size: 8px;
+    }
+
+    .black-hole {
+        width: 105vw;
+        height: 105vw;
+    }
+
+    .hero-content {
+        padding-top: 40px;
+    }
+
+    section {
+        padding:
+            80px 20px;
+    }
+
+    .music-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+    }
+
 }
 
 </style>
 </head>
 
+
 <body>
 
-<div class="card">
 
-    <h1>⚡ FLASH</h1>
-
-    <p>
-        Temporary social network
-    </p>
+<div class="cursor" id="cursor"></div>
 
 
-    <input
-        id="username"
-        type="text"
-        placeholder="Ton pseudo"
-        maxlength="24"
-    >
+<!-- ======================================================
+     NAVIGATION
+====================================================== -->
+
+<nav>
+
+    <div class="logo">
+        S!NNER13
+    </div>
+
+    <div class="nav-links">
+
+        <a href="#music">
+            MUSIC
+        </a>
+
+        <a href="#about">
+            VOID
+        </a>
+
+        <a href="#contact">
+            LINKS
+        </a>
+
+    </div>
+
+</nav>
 
 
-    <select id="duration">
+<!-- ======================================================
+     HERO
+====================================================== -->
 
-        <option value="3600000">
-            1 heure
-        </option>
+<main>
 
-        <option value="21600000">
-            6 heures
-        </option>
+<section class="hero">
 
-        <option value="86400000">
-            24 heures
-        </option>
+    <div class="stars" id="stars"></div>
 
-        <option value="604800000">
-            7 jours
-        </option>
-
-        <option value="2592000000">
-            30 jours
-        </option>
-
-        <option value="0">
-            ∞ Illimité
-        </option>
-
-    </select>
+    <div class="black-hole"></div>
 
 
-    <button id="create">
-        CRÉER MON COMPTE
-    </button>
+    <div class="hero-content">
+
+        <div class="pre-title">
+            WELCOME TO THE VOID
+        </div>
+
+        <h1 class="title">
+            S!NNER13
+        </h1>
+
+        <div class="subtitle">
+            HYPERPOP // UNDERGROUND // BLACK HOLE
+        </div>
+
+        <a
+            href="#music"
+            class="enter"
+        >
+            ENTER THE VOID →
+        </a>
+
+    </div>
+
+</section>
 
 
-    <button id="existing">
-        ACCÉDER AU CHAT
-    </button>
+<!-- ======================================================
+     MUSIC
+====================================================== -->
+
+<section id="music">
+
+    <div class="section-label">
+        01 // AUDIO TRANSMISSIONS
+    </div>
+
+    <h2 class="section-title">
+        MUSIC
+    </h2>
 
 
-    <p id="error"></p>
+    <div class="music-grid">
 
-</div>
+
+        <div class="track">
+
+            <div class="track-number">
+                001
+            </div>
+
+            <div class="track-name">
+                ZERO KELVIN*
+            </div>
+
+            <div class="track-info">
+                ALBUM // 2026
+            </div>
+
+        </div>
+
+
+        <div class="track">
+
+            <div class="track-number">
+                002
+            </div>
+
+            <div class="track-name">
+                βLⱯCK∬S⋃Π
+            </div>
+
+            <div class="track-info">
+                PROJECT // UNKNOWN
+            </div>
+
+        </div>
+
+
+        <div class="track">
+
+            <div class="track-number">
+                003
+            </div>
+
+            <div class="track-name">
+                BLACK HOLE
+            </div>
+
+            <div class="track-info">
+                TRANSMISSION // 13
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     ABOUT
+====================================================== -->
+
+<section id="about">
+
+    <div class="about">
+
+        <div class="section-label">
+            02 // SIGNAL
+        </div>
+
+        <h2 class="section-title">
+            NOTHING<br>
+            IS STABLE.
+        </h2>
+
+
+        <p>
+
+            S!NNER13 is somewhere between
+            <span class="highlight">
+                hyperpop,
+                underground,
+                distortion
+            </span>
+            and the digital void.
+
+            <br><br>
+
+            Sounds that shouldn't fit together.
+            Visuals that feel like corrupted memories.
+            Music falling endlessly into a
+            <span class="highlight">
+                black hole.
+            </span>
+
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     LINKS
+====================================================== -->
+
+<section id="contact">
+
+    <div class="section-label">
+        03 // CONNECTIONS
+    </div>
+
+    <h2 class="section-title">
+        FIND<br>
+        ME.
+    </h2>
+
+
+    <div class="socials">
+
+        <a
+            class="social"
+            href="#"
+        >
+            SOUNDCLOUD
+        </a>
+
+        <a
+            class="social"
+            href="#"
+        >
+            SPOTIFY
+        </a>
+
+        <a
+            class="social"
+            href="#"
+        >
+            INSTAGRAM
+        </a>
+
+        <a
+            class="social"
+            href="#"
+        >
+            DISCORD
+        </a>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- ======================================================
+     FOOTER
+====================================================== -->
+
+<footer>
+
+    S!NNER13 © 2026
+
+    <br><br>
+
+    LOST SOMEWHERE INSIDE THE VOID
+
+</footer>
 
 
 <script>
 
-const STORAGE_KEY = "FLASH_V0";
+/* =========================================================
+   STAR GENERATOR
+========================================================= */
+
+const stars =
+    document.getElementById(
+        "stars"
+    );
 
 
-const username =
-    document.getElementById("username");
+for (
+    let i = 0;
+    i < 120;
+    i++
+) {
 
-
-const duration =
-    document.getElementById("duration");
-
-
-const create =
-    document.getElementById("create");
-
-
-const existing =
-    document.getElementById("existing");
-
-
-const error =
-    document.getElementById("error");
-
-
-function getAccount() {
-
-    const data =
-        localStorage.getItem(STORAGE_KEY);
-
-    if (!data) {
-        return null;
-    }
-
-    try {
-
-        const state =
-            JSON.parse(data);
-
-        return state.account || null;
-
-    } catch {
-
-        return null;
-
-    }
-
-}
-
-
-function isExpired(account) {
-
-    if (!account) {
-        return true;
-    }
-
-    if (account.expiresAt === 0) {
-        return false;
-    }
-
-    return Date.now() >= account.expiresAt;
-
-}
-
-
-function refresh() {
-
-    const account =
-        getAccount();
-
-
-    if (!account) {
-
-        existing.style.display =
-            "none";
-
-        return;
-
-    }
-
-
-    if (isExpired(account)) {
-
-        localStorage.removeItem(
-            STORAGE_KEY
+    const star =
+        document.createElement(
+            "div"
         );
 
-        existing.style.display =
-            "none";
+    star.className =
+        "star";
 
-        return;
+    star.style.left =
+        Math.random() * 100 + "%";
 
-    }
+    star.style.top =
+        Math.random() * 100 + "%";
 
+    star.style.setProperty(
+        "--delay",
+        Math.random() * 5 + "s"
+    );
 
-    existing.style.display =
-        "block";
+    star.style.opacity =
+        Math.random();
+
+    stars.appendChild(
+        star
+    );
 
 }
 
 
-create.addEventListener(
-    "click",
-    function() {
+/* =========================================================
+   CURSOR
+========================================================= */
 
-        error.textContent = "";
-
-
-        const name =
-            username.value.trim();
-
-
-        if (!name) {
-
-            error.textContent =
-                "Entre un pseudo.";
-
-            return;
-
-        }
+const cursor =
+    document.getElementById(
+        "cursor"
+    );
 
 
-        if (name.length < 2) {
+document.addEventListener(
+    "mousemove",
+    event => {
 
-            error.textContent =
-                "Le pseudo doit avoir au moins 2 caractères.";
+        cursor.style.left =
+            event.clientX + "px";
 
-            return;
-
-        }
-
-
-        const selectedDuration =
-            Number(duration.value);
-
-
-        const account = {
-
-            id:
-                Date.now().toString(36) +
-                Math.random()
-                    .toString(36)
-                    .slice(2),
-
-            username:
-                name,
-
-            createdAt:
-                Date.now(),
-
-            expiresAt:
-
-                selectedDuration === 0
-
-                    ? 0
-
-                    : Date.now() +
-                      selectedDuration
-
-        };
-
-
-        const state = {
-
-            account:
-                account,
-
-            messages:
-                [],
-
-            channels:
-                []
-
-        };
-
-
-        try {
-
-            localStorage.setItem(
-                STORAGE_KEY,
-                JSON.stringify(state)
-            );
-
-        } catch {
-
-            error.textContent =
-                "Impossible d'utiliser le stockage local.";
-
-            return;
-
-        }
-
-
-        window.location.href =
-            "chat.html";
+        cursor.style.top =
+            event.clientY + "px";
 
     }
 );
 
 
-existing.addEventListener(
-    "click",
-    function() {
+/* =========================================================
+   BLACK HOLE PARALLAX
+========================================================= */
 
-        window.location.href =
-            "chat.html";
+const blackHole =
+    document.querySelector(
+        ".black-hole"
+    );
+
+
+document.addEventListener(
+    "mousemove",
+    event => {
+
+        const x =
+            (event.clientX /
+            window.innerWidth -
+            .5);
+
+        const y =
+            (event.clientY /
+            window.innerHeight -
+            .5);
+
+
+        blackHole.style.transform =
+            `
+            translate(
+                ${x * 12}px,
+                ${y * 12}px
+            )
+            `;
 
     }
 );
 
 
-refresh();
+/* =========================================================
+   MOBILE TOUCH EFFECT
+========================================================= */
+
+document.addEventListener(
+    "touchmove",
+    event => {
+
+        const touch =
+            event.touches[0];
+
+        if (!touch) return;
+
+        cursor.style.left =
+            touch.clientX + "px";
+
+        cursor.style.top =
+            touch.clientY + "px";
+
+    },
+    {
+        passive: true
+    }
+);
 
 </script>
 
 </body>
-</html>
+            </html>
