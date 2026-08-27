@@ -1,1535 +1,397 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
-
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
-
-<meta name="theme-color" content="#020204">
-
-<title>FLASH — Enter the Void</title>
-
+<title>FLASH</title>
 
 <style>
 
-/* =====================================================
-   FLASH V0
-===================================================== */
-
 * {
     box-sizing: border-box;
+}
+
+body {
     margin: 0;
-    padding: 0;
-}
-
-html,
-body {
-    width: 100%;
-    min-height: 100%;
-}
-
-body {
-
     min-height: 100vh;
-    min-height: 100dvh;
 
-    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    background: #020204;
-
+    background: #050509;
     color: white;
 
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
+    font-family: Arial, sans-serif;
 }
 
+.card {
+    width: min(420px, 90%);
+    padding: 30px;
 
-/* =====================================================
-   SPACE
-===================================================== */
+    background: #101018;
 
-.space {
-
-    position: fixed;
-
-    inset: 0;
-
-    overflow: hidden;
-
-    z-index: 0;
-
-    background:
-        radial-gradient(
-            circle at 50% 45%,
-            #111020 0%,
-            #07070d 25%,
-            #020204 60%,
-            #000 100%
-        );
-}
-
-
-/* =====================================================
-   STARS
-===================================================== */
-
-.stars {
-
-    position: absolute;
-
-    inset: -50%;
-
-    background-image:
-
-        radial-gradient(
-            circle,
-            rgba(255,255,255,.9) 0 1px,
-            transparent 1.5px
-        ),
-
-        radial-gradient(
-            circle,
-            rgba(150,150,255,.65) 0 1px,
-            transparent 1.5px
-        );
-
-    background-size:
-        120px 120px,
-        220px 220px;
-
-    animation:
-        starsMove 90s linear infinite;
-}
-
-
-@keyframes starsMove {
-
-    from {
-        transform:
-            translate(0,0);
-    }
-
-    to {
-        transform:
-            translate(180px,100px);
-    }
-
-}
-
-
-/* =====================================================
-   NEBULA
-===================================================== */
-
-.nebula {
-
-    position: absolute;
-
-    width: 100vw;
-    height: 100vw;
-
-    left: 50%;
-    top: 50%;
-
-    transform:
-        translate(-50%, -50%);
-
-    border-radius: 50%;
-
-    background:
-
-        radial-gradient(
-            circle,
-            rgba(100,75,255,.16),
-            transparent 45%
-        );
-
-    filter:
-        blur(50px);
-
-    animation:
-        nebulaPulse 8s ease-in-out infinite alternate;
-}
-
-
-@keyframes nebulaPulse {
-
-    from {
-
-        transform:
-            translate(-50%, -50%)
-            scale(.9);
-
-        opacity: .6;
-
-    }
-
-    to {
-
-        transform:
-            translate(-50%, -50%)
-            scale(1.1);
-
-        opacity: 1;
-
-    }
-
-}
-
-
-/* =====================================================
-   BLACK HOLE
-===================================================== */
-
-.black-hole {
-
-    position: absolute;
-
-    width:
-        min(600px, 100vw);
-
-    height:
-        min(600px, 100vw);
-
-    left: 50%;
-    top: 50%;
-
-    transform:
-        translate(-50%, -50%);
-}
-
-
-/* =====================================================
-   GRAVITY RING
-===================================================== */
-
-.gravity-ring {
-
-    position: absolute;
-
-    inset: 5%;
-
-    border-radius: 50%;
-
-    border:
-        1px solid
-        rgba(130,110,255,.25);
+    border: 1px solid #292943;
+    border-radius: 20px;
 
     box-shadow:
+        0 0 50px rgba(80,60,255,.15);
 
-        0 0 50px
-        rgba(90,70,255,.12),
-
-        inset 0 0 50px
-        rgba(90,70,255,.08);
-
-    animation:
-        ringPulse 5s ease-in-out infinite alternate;
+    text-align: center;
 }
 
+h1 {
+    margin-top: 0;
 
-@keyframes ringPulse {
-
-    from {
-
-        transform:
-            scale(.96);
-
-        opacity:
-            .35;
-
-    }
-
-    to {
-
-        transform:
-            scale(1.04);
-
-        opacity:
-            .8;
-
-    }
-
+    font-size: 40px;
 }
 
-
-/* =====================================================
-   ACCRETION DISK
-===================================================== */
-
-.disk {
-
-    position: absolute;
-
-    width: 90%;
-    height: 36%;
-
-    left: 5%;
-    top: 32%;
-
-    border-radius: 50%;
-
-    background:
-
-        conic-gradient(
-
-            from 0deg,
-
-            transparent 0deg,
-
-            rgba(70,80,255,.2) 35deg,
-
-            rgba(130,80,255,.8) 70deg,
-
-            rgba(255,170,80,.95) 100deg,
-
-            rgba(255,220,150,.65) 120deg,
-
-            rgba(120,80,255,.75) 150deg,
-
-            transparent 190deg,
-
-            rgba(70,100,255,.3) 230deg,
-
-            rgba(190,80,255,.75) 290deg,
-
-            transparent 340deg
-
-        );
-
-    filter:
-        blur(7px);
-
-    transform:
-        rotate(-12deg)
-        rotateX(60deg);
-
-    animation:
-        diskSpin 14s linear infinite;
+p {
+    color: #9999aa;
 }
 
-
-.disk::before {
-
-    content: "";
-
-    position: absolute;
-
-    inset: 10%;
-
-    border-radius: 50%;
-
-    border:
-        7px solid
-        rgba(255,255,255,.13);
-
-    filter:
-        blur(5px);
-}
-
-
-@keyframes diskSpin {
-
-    from {
-
-        transform:
-            rotate(-12deg)
-            rotateX(60deg)
-            rotate(0deg);
-
-    }
-
-    to {
-
-        transform:
-            rotate(-12deg)
-            rotateX(60deg)
-            rotate(360deg);
-
-    }
-
-}
-
-
-/* =====================================================
-   EVENT HORIZON
-===================================================== */
-
-.horizon {
-
-    position: absolute;
-
-    width: 35%;
-    aspect-ratio: 1;
-
-    left: 32.5%;
-    top: 32.5%;
-
-    border-radius: 50%;
-
-    background:
-        #000;
-
-    box-shadow:
-
-        0 0 30px #000,
-
-        0 0 70px
-        rgba(0,0,0,.95);
-
-    z-index: 5;
-}
-
-
-/* =====================================================
-   HORIZON GLOW
-===================================================== */
-
-.horizon-glow {
-
-    position: absolute;
-
-    width: 45%;
-    aspect-ratio: 1;
-
-    left: 27.5%;
-    top: 27.5%;
-
-    border-radius: 50%;
-
-    border:
-        2px solid
-        rgba(170,145,255,.25);
-
-    box-shadow:
-        0 0 30px
-        rgba(130,100,255,.2);
-
-    animation:
-        horizonGlow 4s ease-in-out infinite alternate;
-
-    z-index: 4;
-}
-
-
-@keyframes horizonGlow {
-
-    from {
-
-        transform:
-            scale(.95);
-
-        opacity:
-            .35;
-
-    }
-
-    to {
-
-        transform:
-            scale(1.05);
-
-        opacity:
-            .85;
-
-    }
-
-}
-
-
-/* =====================================================
-   PARTICLES
-===================================================== */
-
-#particles {
-
-    position: absolute;
-
-    inset: 0;
-
-    z-index: 6;
-}
-
-
-.particle {
-
-    position: absolute;
-
-    width: 2px;
-    height: 2px;
-
-    border-radius: 50%;
-
-    background: white;
-
-    box-shadow:
-        0 0 8px white;
-
-    animation:
-        particleOrbit
-        var(--time)
-        linear infinite;
-}
-
-
-@keyframes particleOrbit {
-
-    from {
-
-        transform:
-            rotate(0deg)
-            translateX(var(--distance));
-
-        opacity: 0;
-
-    }
-
-    15% {
-        opacity: 1;
-    }
-
-    85% {
-        opacity: 1;
-    }
-
-    to {
-
-        transform:
-            rotate(360deg)
-            translateX(var(--distance));
-
-        opacity: 0;
-
-    }
-
-}
-
-
-/* =====================================================
-   GRID
-===================================================== */
-
-.grid {
-
-    position: absolute;
-
-    width: 160%;
-    height: 45%;
-
-    left: -30%;
-    bottom: -10%;
-
-    transform:
-        perspective(350px)
-        rotateX(60deg);
-
-    background-image:
-
-        linear-gradient(
-            rgba(100,90,255,.09) 1px,
-            transparent 1px
-        ),
-
-        linear-gradient(
-            90deg,
-            rgba(100,90,255,.09) 1px,
-            transparent 1px
-        );
-
-    background-size:
-        55px 55px;
-
-    opacity:
-        .4;
-}
-
-
-/* =====================================================
-   HUD
-===================================================== */
-
-.hud {
-
-    position: fixed;
-
-    inset: 18px;
-
-    z-index: 3;
-
-    pointer-events: none;
-}
-
-
-.corner {
-
-    position: absolute;
-
-    width: 38px;
-    height: 38px;
-
-    border-color:
-        rgba(150,140,255,.4);
-
-    border-style:
-        solid;
-}
-
-
-.tl {
-
-    left: 0;
-    top: 0;
-
-    border-width:
-        1px 0 0 1px;
-}
-
-
-.tr {
-
-    right: 0;
-    top: 0;
-
-    border-width:
-        1px 1px 0 0;
-}
-
-
-.bl {
-
-    left: 0;
-    bottom: 0;
-
-    border-width:
-        0 0 1px 1px;
-}
-
-
-.br {
-
-    right: 0;
-    bottom: 0;
-
-    border-width:
-        0 1px 1px 0;
-}
-
-
-/* =====================================================
-   HUD TEXT
-===================================================== */
-
-.system {
-
-    position: absolute;
-
-    top: 8px;
-    left: 50px;
-
-    color:
-        rgba(220,215,255,.42);
-
-    font-family:
-        monospace;
-
-    font-size:
-        8px;
-
-    line-height:
-        1.7;
-
-    letter-spacing:
-        1.4px;
-}
-
-
-.system strong {
-
-    color:
-        rgba(230,225,255,.75);
-}
-
-
-.coordinates {
-
-    position: absolute;
-
-    right: 50px;
-    bottom: 8px;
-
-    color:
-        rgba(220,215,255,.35);
-
-    font-family:
-        monospace;
-
-    font-size:
-        8px;
-
-    line-height:
-        1.8;
-
-    text-align:
-        right;
-}
-
-
-/* =====================================================
-   SCANLINES
-===================================================== */
-
-.scanlines {
-
-    position: fixed;
-
-    inset: 0;
-
-    z-index: 20;
-
-    pointer-events: none;
-
-    background:
-
-        repeating-linear-gradient(
-            to bottom,
-            rgba(255,255,255,.015) 0px,
-            rgba(255,255,255,.015) 1px,
-            transparent 1px,
-            transparent 5px
-        );
-}
-
-
-/* =====================================================
-   PAGE
-===================================================== */
-
-.page {
-
-    position: relative;
-
-    z-index: 10;
+input,
+select,
+button {
 
     width: 100%;
 
-    min-height:
-        100vh;
+    height: 48px;
 
-    min-height:
-        100dvh;
+    margin-top: 10px;
 
-    display:
-        flex;
+    border-radius: 10px;
 
-    align-items:
-        center;
+    border: 1px solid #292943;
 
-    justify-content:
-        center;
+    padding: 0 12px;
 
-    padding:
-        20px;
+    font-size: 14px;
 }
-
-
-/* =====================================================
-   CARD
-===================================================== */
-
-.card {
-
-    position: relative;
-
-    width:
-        min(430px, 100%);
-
-    padding:
-        30px;
-
-    border-radius:
-        24px;
-
-    border:
-        1px solid
-        rgba(180,170,255,.15);
-
-    background:
-        rgba(5,5,12,.78);
-
-    backdrop-filter:
-        blur(22px);
-
-    -webkit-backdrop-filter:
-        blur(22px);
-
-    box-shadow:
-
-        0 35px 100px
-        rgba(0,0,0,.75),
-
-        0 0 60px
-        rgba(90,70,220,.08),
-
-        inset 0 1px 0
-        rgba(255,255,255,.08);
-
-    overflow:
-        hidden;
-}
-
-
-.card-line {
-
-    position: absolute;
-
-    top: 0;
-    left: 0;
-    right: 0;
-
-    height: 1px;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(150,130,255,.8),
-            transparent
-        );
-}
-
-
-/* =====================================================
-   LOGO
-===================================================== */
-
-.logo-row {
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    gap:
-        12px;
-}
-
-
-.logo-icon {
-
-    width:
-        43px;
-
-    height:
-        43px;
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    flex-shrink:
-        0;
-
-    border-radius:
-        13px;
-
-    background:
-
-        radial-gradient(
-            circle,
-            #000 0 30%,
-            transparent 32%
-        ),
-
-        conic-gradient(
-            #5649d8,
-            #bd68ff,
-            #5c91ff,
-            #5649d8
-        );
-
-    box-shadow:
-        0 0 25px
-        rgba(110,90,255,.35);
-
-    font-size:
-        18px;
-}
-
-
-.logo {
-
-    font-size:
-        29px;
-
-    font-weight:
-        900;
-
-    letter-spacing:
-        -1px;
-}
-
-
-.logo-sub {
-
-    margin-top:
-        2px;
-
-    color:
-        rgba(255,255,255,.3);
-
-    font-family:
-        monospace;
-
-    font-size:
-        8px;
-
-    letter-spacing:
-        1.5px;
-}
-
-
-/* =====================================================
-   SUBTITLE
-===================================================== */
-
-.subtitle {
-
-    margin:
-        16px 0 20px;
-
-    color:
-        rgba(235,230,255,.45);
-
-    font-size:
-        12px;
-
-    line-height:
-        1.6;
-}
-
-
-/* =====================================================
-   STATUS
-===================================================== */
-
-.status {
-
-    display:
-        inline-flex;
-
-    align-items:
-        center;
-
-    gap:
-        7px;
-
-    padding:
-        7px 10px;
-
-    margin-bottom:
-        17px;
-
-    border:
-        1px solid
-        rgba(130,115,255,.2);
-
-    border-radius:
-        999px;
-
-    background:
-        rgba(100,90,255,.07);
-
-    color:
-        rgba(220,215,255,.65);
-
-    font-family:
-        monospace;
-
-    font-size:
-        8px;
-
-    letter-spacing:
-        1px;
-}
-
-
-.status-dot {
-
-    width:
-        6px;
-
-    height:
-        6px;
-
-    border-radius:
-        50%;
-
-    background:
-        #8c7cff;
-
-    box-shadow:
-        0 0 10px
-        #8c7cff;
-
-    animation:
-        blink 1.8s infinite;
-}
-
-
-@keyframes blink {
-
-    0%,
-    100% {
-        opacity: .35;
-    }
-
-    50% {
-        opacity: 1;
-    }
-
-}
-
-
-/* =====================================================
-   LABEL
-===================================================== */
-
-label {
-
-    display:
-        block;
-
-    margin:
-        14px 0 7px;
-
-    color:
-        rgba(255,255,255,.55);
-
-    font-family:
-        monospace;
-
-    font-size:
-        9px;
-
-    font-weight:
-        bold;
-
-    letter-spacing:
-        1.4px;
-}
-
-
-/* =====================================================
-   INPUT / SELECT
-===================================================== */
 
 input,
 select {
 
-    width:
-        100%;
+    background: #07070b;
 
-    height:
-        47px;
+    color: white;
 
-    padding:
-        0 13px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.08);
-
-    border-radius:
-        10px;
-
-    outline:
-        none;
-
-    background:
-        rgba(0,0,0,.38);
-
-    color:
-        white;
-
-    font-size:
-        13px;
-
-    transition:
-        .2s;
 }
-
-
-input::placeholder {
-
-    color:
-        rgba(255,255,255,.24);
-}
-
-
-input:focus,
-select:focus {
-
-    border-color:
-        rgba(130,115,255,.7);
-
-    background:
-        rgba(15,13,28,.65);
-
-    box-shadow:
-        0 0 0 3px
-        rgba(100,85,255,.08);
-}
-
-
-select {
-
-    cursor:
-        pointer;
-}
-
-
-/* =====================================================
-   BUTTONS
-===================================================== */
 
 button {
 
-    width:
-        100%;
+    background: #6355df;
 
-    height:
-        50px;
+    color: white;
 
-    border-radius:
-        11px;
+    font-weight: bold;
 
-    font-family:
-        monospace;
-
-    font-size:
-        10px;
-
-    font-weight:
-        900;
-
-    letter-spacing:
-        1.1px;
-
-    cursor:
-        pointer;
-
-    transition:
-        .18s;
+    cursor: pointer;
 }
 
+button:hover {
 
-#create {
-
-    position:
-        relative;
-
-    margin-top:
-        20px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.12);
-
-    background:
-
-        linear-gradient(
-            110deg,
-            #5144ca,
-            #765be0,
-            #4f72d5
-        );
-
-    color:
-        white;
-
-    box-shadow:
-        0 15px 35px
-        rgba(75,65,210,.25);
-
-    overflow:
-        hidden;
-}
-
-
-#create:hover {
-
-    transform:
-        translateY(-2px);
-
-    box-shadow:
-        0 20px 45px
-        rgba(75,65,220,.35);
-}
-
-
-/* =====================================================
-   CHAT BUTTON
-===================================================== */
-
-#chatButton {
-
-    margin-top:
-        10px;
-
-    border:
-        1px solid
-        rgba(140,125,255,.25);
-
-    background:
-        rgba(100,90,255,.08);
-
-    color:
-        rgba(235,230,255,.85);
+    background: #7568ef;
 
 }
 
+#existing {
 
-#chatButton:hover {
+    display: none;
 
-    background:
-        rgba(110,95,255,.16);
+    margin-top: 10px;
 
-    border-color:
-        rgba(150,135,255,.45);
-
-    transform:
-        translateY(-2px);
+    background: #181826;
 }
-
-
-/* =====================================================
-   ERROR
-===================================================== */
 
 #error {
 
-    min-height:
-        18px;
+    color: #ff6666;
 
-    margin-top:
-        8px;
-
-    color:
-        #ff7171;
-
-    font-size:
-        11px;
-
-    text-align:
-        center;
-}
-
-
-/* =====================================================
-   ACCOUNT INFO
-===================================================== */
-
-.account-info {
-
-    display:
-        none;
-
-    margin-top:
-        13px;
-
-    padding:
-        11px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.06);
-
-    border-radius:
-        10px;
-
-    background:
-        rgba(255,255,255,.025);
-
-    color:
-        rgba(255,255,255,.35);
-
-    font-family:
-        monospace;
-
-    font-size:
-        8px;
-
-    line-height:
-        1.7;
-
-}
-
-
-.account-info strong {
-
-    color:
-        rgba(255,255,255,.65);
-}
-
-
-/* =====================================================
-   FOOTER
-===================================================== */
-
-.footer {
-
-    margin-top:
-        17px;
-
-    padding-top:
-        13px;
-
-    border-top:
-        1px solid
-        rgba(255,255,255,.055);
-
-    color:
-        rgba(255,255,255,.22);
-
-    font-family:
-        monospace;
-
-    font-size:
-        8px;
-
-    line-height:
-        1.7;
-
-    text-align:
-        center;
-}
-
-
-.footer strong {
-
-    color:
-        rgba(220,215,255,.5);
-}
-
-
-/* =====================================================
-   MOBILE
-===================================================== */
-
-@media (max-width: 600px) {
-
-    .page {
-        padding: 13px;
-    }
-
-    .card {
-        padding: 23px 18px;
-        border-radius: 20px;
-    }
-
-    .black-hole {
-        width: 120vw;
-        height: 120vw;
-    }
-
-    .system {
-        left: 35px;
-        top: 7px;
-        font-size: 7px;
-    }
-
-    .coordinates {
-        right: 35px;
-        bottom: 7px;
-        font-size: 7px;
-    }
-
-    .hud {
-        inset: 12px;
-    }
-
-}
-
-
-/* =====================================================
-   SHORT SCREENS
-===================================================== */
-
-@media (max-height: 650px) {
-
-    .page {
-
-        align-items:
-            flex-start;
-
-        padding-top:
-            10px;
-
-        padding-bottom:
-            10px;
-    }
-
-    .card {
-
-        padding:
-            18px;
-    }
-
-    .subtitle {
-
-        margin:
-            10px 0 13px;
-    }
-
-    label {
-
-        margin-top:
-            9px;
-    }
-
-    #create {
-
-        margin-top:
-            14px;
-    }
-
+    min-height: 20px;
 }
 
 </style>
 </head>
 
-
 <body>
 
+<div class="card">
 
-<!-- =====================================================
-     BACKGROUND
-===================================================== -->
+    <h1>⚡ FLASH</h1>
 
-<div class="space">
-
-    <div class="stars"></div>
-
-    <div class="nebula"></div>
-
-    <div class="grid"></div>
+    <p>
+        Temporary social network
+    </p>
 
 
-    <div class="black-hole">
-
-        <div class="gravity-ring"></div>
-
-        <div class="disk"></div>
-
-        <div class="horizon-glow"></div>
-
-        <div class="horizon"></div>
-
-        <div id="particles"></div>
-
-    </div>
-
-</div>
+    <input
+        id="username"
+        type="text"
+        placeholder="Ton pseudo"
+        maxlength="24"
+    >
 
 
-<!-- =====================================================
-     HUD
-===================================================== -->
+    <select id="duration">
 
-<div class="hud">
+        <option value="3600000">
+            1 heure
+        </option>
 
-    <div class="corner tl"></div>
-    <div class="corner tr"></div>
-    <div class="corner bl"></div>
-    <div class="corner br"></div>
+        <option value="21600000">
+            6 heures
+        </option>
+
+        <option value="86400000">
+            24 heures
+        </option>
+
+        <option value="604800000">
+            7 jours
+        </option>
+
+        <option value="2592000000">
+            30 jours
+        </option>
+
+        <option value="0">
+            ∞ Illimité
+        </option>
+
+    </select>
 
 
-    <div class="system">
-
-        <strong>FLASH / CORE</strong><br>
-
-        GRAVITY FIELD : STABLE<br>
-
-        VOID LINK : ONLINE<br>
-
-        NODE : 07
-
-    </div>
+    <button id="create">
+        CRÉER MON COMPTE
+    </button>
 
 
-    <div class="coordinates">
+    <button id="existing">
+        ACCÉDER AU CHAT
+    </button>
 
-        X : <span id="x">04.827</span><br>
 
-        Y : <span id="y">-91.338</span><br>
-
-        Z : <span id="z">12.004</span>
-
-    </div>
+    <p id="error"></p>
 
 </div>
 
 
-<div class="scanlines"></div>
+<script>
+
+const STORAGE_KEY = "FLASH_V0";
 
 
-<!-- =====================================================
-     MAIN
-===================================================== -->
-
-<main class="page">
+const username =
+    document.getElementById("username");
 
 
-    <section class="card">
-
-        <div class="card-line"></div>
-
-
-        <div class="logo-row">
-
-            <div class="logo-icon">
-                ⚡
-            </div>
+const duration =
+    document.getElementById("duration");
 
 
-            <div>
-
-                <div class="logo">
-                    FLASH
-                </div>
-
-                <div class="logo-sub">
-                    TEMPORARY SOCIAL NETWORK
-                </div>
-
-            </div>
-
-        </div>
+const create =
+    document.getElementById("create");
 
 
-        <p class="subtitle">
-
-            Une identité temporaire dans le vide.
-            <br>
-
-            Entre. Parle. Puis disparais.
-
-        </p>
+const existing =
+    document.getElementById("existing");
 
 
-        <div class="status">
+const error =
+    document.getElementById("error");
 
-           
+
+function getAccount() {
+
+    const data =
+        localStorage.getItem(STORAGE_KEY);
+
+    if (!data) {
+        return null;
+    }
+
+    try {
+
+        const state =
+            JSON.parse(data);
+
+        return state.account || null;
+
+    } catch {
+
+        return null;
+
+    }
+
+}
+
+
+function isExpired(account) {
+
+    if (!account) {
+        return true;
+    }
+
+    if (account.expiresAt === 0) {
+        return false;
+    }
+
+    return Date.now() >= account.expiresAt;
+
+}
+
+
+function refresh() {
+
+    const account =
+        getAccount();
+
+
+    if (!account) {
+
+        existing.style.display =
+            "none";
+
+        return;
+
+    }
+
+
+    if (isExpired(account)) {
+
+        localStorage.removeItem(
+            STORAGE_KEY
+        );
+
+        existing.style.display =
+            "none";
+
+        return;
+
+    }
+
+
+    existing.style.display =
+        "block";
+
+}
+
+
+create.addEventListener(
+    "click",
+    function() {
+
+        error.textContent = "";
+
+
+        const name =
+            username.value.trim();
+
+
+        if (!name) {
+
+            error.textContent =
+                "Entre un pseudo.";
+
+            return;
+
+        }
+
+
+        if (name.length < 2) {
+
+            error.textContent =
+                "Le pseudo doit avoir au moins 2 caractères.";
+
+            return;
+
+        }
+
+
+        const selectedDuration =
+            Number(duration.value);
+
+
+        const account = {
+
+            id:
+                Date.now().toString(36) +
+                Math.random()
+                    .toString(36)
+                    .slice(2),
+
+            username:
+                name,
+
+            createdAt:
+                Date.now(),
+
+            expiresAt:
+
+                selectedDuration === 0
+
+                    ? 0
+
+                    : Date.now() +
+                      selectedDuration
+
+        };
+
+
+        const state = {
+
+            account:
+                account,
+
+            messages:
+                [],
+
+            channels:
+                []
+
+        };
+
+
+        try {
+
+            localStorage.setItem(
+                STORAGE_KEY,
+                JSON.stringify(state)
+            );
+
+        } catch {
+
+            error.textContent =
+                "Impossible d'utiliser le stockage local.";
+
+            return;
+
+        }
+
+
+        window.location.href =
+            "chat.html";
+
+    }
+);
+
+
+existing.addEventListener(
+    "click",
+    function() {
+
+        window.location.href =
+            "chat.html";
+
+    }
+);
+
+
+refresh();
+
+</script>
+
+</body>
+</html>
