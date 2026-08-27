@@ -1,0 +1,329 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #111214;
+    color: #ffffff;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+}
+
+
+/* ---------- UTIL ---------- */
+
+.hidden {
+    display: none !important;
+}
+
+
+/* ---------- SETUP ---------- */
+
+.screen {
+    min-height: 100vh;
+}
+
+#setup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+}
+
+.setup-box {
+    width: 100%;
+    max-width: 430px;
+
+    background: #1e1f22;
+
+    padding: 32px;
+
+    border-radius: 14px;
+
+    border: 1px solid #303136;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.45);
+}
+
+
+.logo {
+    font-size: 32px;
+    font-weight: 900;
+
+    margin-bottom: 8px;
+}
+
+.logo span {
+    margin-right: 6px;
+}
+
+
+.subtitle {
+    color: #aeb1b7;
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+
+
+label {
+    display: block;
+
+    margin-top: 18px;
+    margin-bottom: 7px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    color: #c9cbd0;
+}
+
+
+input,
+select {
+    width: 100%;
+
+    padding: 13px;
+
+    border-radius: 8px;
+
+    border: 1px solid #3b3d44;
+
+    background: #111214;
+
+    color: white;
+
+    outline: none;
+
+    font-size: 15px;
+}
+
+
+input:focus,
+select:focus {
+    border-color: #5865f2;
+}
+
+
+#createAccount {
+    width: 100%;
+
+    margin-top: 25px;
+
+    padding: 13px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #5865f2;
+
+    color: white;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+
+#createAccount:hover {
+    filter: brightness(1.1);
+}
+
+
+#error {
+    min-height: 20px;
+
+    color: #ff6b6b;
+
+    font-size: 14px;
+}
+
+
+/* ---------- CHAT ---------- */
+
+#chat {
+    height: 100vh;
+
+    display: grid;
+
+    grid-template-rows:
+        auto
+        1fr
+        auto;
+}
+
+
+.topbar {
+    min-height: 65px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 12px 18px;
+
+    background: #18191c;
+
+    border-bottom: 1px solid #303136;
+}
+
+
+.brand {
+    font-size: 20px;
+}
+
+
+.brand span {
+    margin-right: 5px;
+}
+
+
+.account-info {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    font-size: 13px;
+}
+
+
+#userDisplay {
+    color: #c9cbd0;
+}
+
+
+#timer {
+    color: #aeb1b7;
+}
+
+
+.delete-btn {
+    border: none;
+
+    border-radius: 7px;
+
+    padding: 8px 11px;
+
+    background: #c43d3d;
+
+    color: white;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+
+.delete-btn:hover {
+    background: #df4a4a;
+}
+
+
+/* ---------- MESSAGES ---------- */
+
+#messages {
+    overflow-y: auto;
+
+    padding: 25px;
+}
+
+
+.message {
+    margin-bottom: 18px;
+}
+
+
+.message-header {
+    margin-bottom: 4px;
+
+    font-size: 13px;
+
+    color: #aeb1b7;
+}
+
+
+.message-user {
+    color: #ffffff;
+
+    font-weight: 700;
+}
+
+
+.message-content {
+    color: #e5e5e5;
+
+    white-space: pre-wrap;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* ---------- INPUT ---------- */
+
+#messageForm {
+    display: flex;
+
+    gap: 10px;
+
+    padding: 14px;
+
+    background: #18191c;
+
+    border-top: 1px solid #303136;
+}
+
+
+#messageInput {
+    margin: 0;
+}
+
+
+#messageForm button {
+    width: 50px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #5865f2;
+
+    color: white;
+
+    font-size: 20px;
+
+    cursor: pointer;
+}
+
+
+@media (max-width: 650px) {
+
+    .topbar {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .account-info {
+        width: 100%;
+
+        justify-content: space-between;
+    }
+
+    #messages {
+        padding: 18px;
+    }
+
+}
