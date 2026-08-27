@@ -2,910 +2,694 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
-
-<title>S!NNER13 — BLACK HOLE</title>
+<title>S!NNER13 // THE VOID</title>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap');
 
-/* =========================================================
-   S!NNER13 // BLACK HOLE
-   HYPERPOP / UNDERGROUND / DIGITAL VOID
-========================================================= */
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+:root{
+    --bg:#020203;
+    --text:#f4f2ff;
+    --muted:#777383;
+    --purple:#8b5cff;
+    --pink:#ff3dbd;
+    --cyan:#20e7ff;
+    --panel:rgba(255,255,255,.035);
 }
 
-html {
-    scroll-behavior: smooth;
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
-body {
-
-    min-height: 100vh;
-
-    overflow-x: hidden;
-
-    background:
-        radial-gradient(
-            circle at 50% 40%,
-            rgba(89, 42, 160, .18),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 20% 80%,
-            rgba(0, 180, 255, .08),
-            transparent 25%
-        ),
-        #020204;
-
-    color: white;
-
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
+html{
+    scroll-behavior:smooth;
+    background:var(--bg);
 }
 
+body{
+    background:#020203;
+    color:var(--text);
+    font-family:'Syne',Arial,sans-serif;
+    overflow-x:hidden;
+}
 
-/* =========================================================
-   NOISE
-========================================================= */
+body.locked{
+    overflow:hidden;
+}
 
-body::before {
+canvas{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    z-index:0;
+}
 
-    content: "";
+.noise{
+    position:fixed;
+    inset:0;
+    z-index:1000;
+    pointer-events:none;
+    opacity:.045;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
 
-    position: fixed;
-
-    inset: 0;
-
-    pointer-events: none;
-
-    z-index: 999;
-
-    opacity: .055;
-
-    background-image:
-        url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
-
+.vignette{
+    position:fixed;
+    inset:0;
+    z-index:999;
+    pointer-events:none;
+    background:radial-gradient(circle,transparent 35%,rgba(0,0,0,.7) 100%);
 }
 
 
-/* =========================================================
-   CURSOR GLOW
-========================================================= */
+/* =========================
+   BOOT
+========================= */
 
-.cursor {
+.boot{
+    position:fixed;
+    inset:0;
+    z-index:5000;
+    background:#000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:opacity .8s,visibility .8s;
+}
 
-    position: fixed;
+.boot.hidden{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+}
 
-    width: 220px;
-    height: 220px;
+.boot-inner{
+    width:min(520px,85vw);
+    font-family:'Space Mono',monospace;
+    font-size:10px;
+    color:#aaa;
+}
 
-    pointer-events: none;
+.boot-logo{
+    font-family:'Syne',sans-serif;
+    font-size:clamp(45px,13vw,90px);
+    font-weight:800;
+    letter-spacing:-5px;
+    color:white;
+    margin-bottom:30px;
+    text-shadow:
+        3px 0 var(--pink),
+        -3px 0 var(--cyan);
+}
 
-    border-radius: 50%;
+.boot-line{
+    margin:8px 0;
+    opacity:.65;
+}
 
-    transform: translate(-50%, -50%);
+.boot-bar{
+    width:100%;
+    height:2px;
+    margin-top:22px;
+    background:#171719;
+    overflow:hidden;
+}
 
-    background:
-        radial-gradient(
-            circle,
-            rgba(130, 80, 255, .13),
-            transparent 70%
-        );
+.boot-progress{
+    width:0;
+    height:100%;
+    background:white;
+    transition:width 1.8s cubic-bezier(.2,.8,.2,1);
+}
 
-    filter: blur(10px);
-
-    z-index: 2;
-
+.boot-status{
+    margin-top:10px;
+    color:#555;
 }
 
 
-/* =========================================================
+/* =========================
    NAV
-========================================================= */
+========================= */
 
-nav {
-
-    position: fixed;
-
-    top: 0;
-    left: 0;
-
-    width: 100%;
-
-    height: 70px;
-
-    padding: 0 25px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    z-index: 100;
-
-    background:
-        linear-gradient(
-            to bottom,
-            rgba(2,2,4,.95),
-            transparent
-        );
-
-    backdrop-filter: blur(5px);
-
+nav{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    height:76px;
+    padding:0 25px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    z-index:100;
+    background:linear-gradient(to bottom,rgba(2,2,3,.95),transparent);
+    backdrop-filter:blur(8px);
 }
 
-.logo {
-
-    font-family: monospace;
-
-    font-weight: 900;
-
-    font-size: 18px;
-
-    letter-spacing: -1px;
-
+.logo{
+    font-family:'Space Mono',monospace;
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:-1px;
     text-shadow:
-        2px 0 #8d5cff,
-        -2px 0 #00d9ff;
-
+        2px 0 var(--pink),
+        -2px 0 var(--cyan);
 }
 
-.nav-links {
-
-    display: flex;
-
-    gap: 22px;
-
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:18px;
 }
 
-.nav-links a {
-
-    color: rgba(255,255,255,.45);
-
-    text-decoration: none;
-
-    font-family: monospace;
-
-    font-size: 10px;
-
-    letter-spacing: 1px;
-
-    transition: .2s;
-
+.signal{
+    font-family:'Space Mono',monospace;
+    font-size:8px;
+    color:#555;
 }
 
-.nav-links a:hover {
+.signal span{
+    color:#8dffb1;
+}
 
-    color: white;
-
-    text-shadow:
-        0 0 12px #8d5cff;
-
+.menu{
+    width:42px;
+    height:42px;
+    border:1px solid rgba(255,255,255,.1);
+    background:rgba(255,255,255,.025);
+    color:white;
+    cursor:pointer;
 }
 
 
-/* =========================================================
+/* =========================
    HERO
-========================================================= */
+========================= */
 
-.hero {
-
-    min-height: 100vh;
-
-    position: relative;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    overflow: hidden;
-
+.hero{
+    min-height:100svh;
+    position:relative;
+    z-index:2;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    overflow:hidden;
 }
 
-
-/* =========================================================
-   BLACK HOLE
-========================================================= */
-
-.black-hole {
-
-    position: absolute;
-
-    width: min(70vw, 520px);
-    height: min(70vw, 520px);
-
-    border-radius: 50%;
-
-    background:
-
-        radial-gradient(
-            circle,
-            #000 0 24%,
-            #020203 25% 31%,
-            transparent 32%
-        );
-
-    filter:
-        drop-shadow(
-            0 0 40px rgba(109, 61, 255, .3)
-        );
-
-    animation:
-        float 7s ease-in-out infinite;
-
+.hero-content{
+    position:relative;
+    z-index:5;
+    padding:20px;
 }
 
-
-/* accretion disk */
-
-.black-hole::before {
-
-    content: "";
-
-    position: absolute;
-
-    inset: 5%;
-
-    border-radius: 50%;
-
-    background:
-
-        conic-gradient(
-            from 10deg,
-            transparent,
-            rgba(120,70,255,.7),
-            rgba(0,220,255,.65),
-            transparent 35%,
-            rgba(255,70,190,.55),
-            transparent 65%,
-            rgba(100,50,255,.7),
-            transparent
-        );
-
-    filter: blur(17px);
-
-    animation:
-        spin 10s linear infinite;
-
+.coordinates{
+    font-family:'Space Mono',monospace;
+    color:#4f4a58;
+    font-size:8px;
+    letter-spacing:2px;
+    margin-bottom:28px;
 }
 
-
-/* inner ring */
-
-.black-hole::after {
-
-    content: "";
-
-    position: absolute;
-
-    inset: 19%;
-
-    border-radius: 50%;
-
-    border:
-        2px solid rgba(255,255,255,.08);
-
-    box-shadow:
-
-        0 0 30px rgba(123,77,255,.8),
-
-        inset 0 0 35px rgba(0,0,0,.9);
-
-}
-
-
-/* =========================================================
-   HERO TEXT
-========================================================= */
-
-.hero-content {
-
-    position: relative;
-
-    z-index: 5;
-
-    text-align: center;
-
-    padding: 20px;
-
-}
-
-.pre-title {
-
-    font-family: monospace;
-
-    font-size: 9px;
-
-    letter-spacing: 5px;
-
-    color: rgba(255,255,255,.35);
-
-    margin-bottom: 20px;
-
-}
-
-
-.title {
-
-    position: relative;
-
-    font-size:
-        clamp(55px, 15vw, 145px);
-
-    font-weight: 1000;
-
-    letter-spacing:
-        clamp(-7px, -1vw, -2px);
-
-    line-height: .8;
-
+.title{
+    position:relative;
+    font-size:clamp(58px,16vw,170px);
+    line-height:.78;
+    letter-spacing:-.075em;
+    font-weight:800;
+    color:white;
     text-shadow:
-
-        3px 0 #ff3bbd,
-
-        -3px 0 #00d9ff,
-
-        0 0 40px rgba(139,82,255,.45);
-
-    animation:
-        titleGlitch 4s infinite;
-
+        4px 0 var(--pink),
+        -4px 0 var(--cyan);
+    animation:glitch 5s infinite;
 }
-
 
 .title::before,
-.title::after {
-
-    content: "S!NNER13";
-
-    position: absolute;
-
-    left: 0;
-
-    width: 100%;
-
-    opacity: .5;
-
+.title::after{
+    content:'S!NNER13';
+    position:absolute;
+    inset:0;
+    pointer-events:none;
 }
 
-.title::before {
-
-    color: #00eaff;
-
-    transform:
-        translate(-3px, 2px);
-
-    clip-path:
-        inset(0 0 65% 0);
-
+.title::before{
+    color:var(--cyan);
+    clip-path:polygon(0 0,100% 0,100% 32%,0 32%);
+    transform:translate(-4px,2px);
 }
 
-.title::after {
+.title::after{
+    color:var(--pink);
+    clip-path:polygon(0 68%,100% 68%,100% 100%,0 100%);
+    transform:translate(4px,-2px);
+}
 
-    color: #ff32ba;
+.tagline{
+    margin-top:32px;
+    color:#68636f;
+    font-family:'Space Mono',monospace;
+    font-size:9px;
+    letter-spacing:3px;
+}
 
-    transform:
-        translate(3px, -2px);
+.enter{
+    display:inline-flex;
+    margin-top:32px;
+    padding:14px 20px;
+    color:white;
+    text-decoration:none;
+    font-family:'Space Mono',monospace;
+    font-size:9px;
+    border:1px solid rgba(255,255,255,.14);
+    background:rgba(255,255,255,.035);
+    transition:.3s;
+}
 
-    clip-path:
-        inset(65% 0 0 0);
+.enter:hover{
+    transform:translateY(-4px);
+    border-color:var(--purple);
+    box-shadow:0 0 35px rgba(139,92,255,.25);
+}
 
+.scroll{
+    position:absolute;
+    bottom:25px;
+    left:50%;
+    transform:translateX(-50%);
+    font-family:'Space Mono',monospace;
+    color:#393640;
+    font-size:7px;
+    letter-spacing:2px;
 }
 
 
-.subtitle {
+/* =========================
+   BLACK HOLE VISUAL
+========================= */
 
-    margin-top: 25px;
-
-    color: rgba(255,255,255,.5);
-
-    font-family: monospace;
-
-    font-size: 10px;
-
-    letter-spacing: 2px;
-
+.hole{
+    position:absolute;
+    width:min(75vw,600px);
+    aspect-ratio:1;
+    border-radius:50%;
+    z-index:1;
+    pointer-events:none;
 }
 
-
-/* =========================================================
-   BUTTON
-========================================================= */
-
-.enter {
-
-    display: inline-flex;
-
-    margin-top: 35px;
-
-    padding: 13px 22px;
-
-    color: white;
-
-    text-decoration: none;
-
-    font-family: monospace;
-
-    font-size: 10px;
-
-    letter-spacing: 2px;
-
-    border:
-        1px solid rgba(255,255,255,.2);
-
+.hole::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:50%;
     background:
-        rgba(255,255,255,.035);
-
-    backdrop-filter:
-        blur(10px);
-
-    transition:
-        .25s;
-
-}
-
-.enter:hover {
-
-    transform:
-        translateY(-4px);
-
-    border-color:
-        rgba(155,110,255,.7);
-
-    box-shadow:
-        0 0 30px rgba(113,75,255,.25);
-
-}
-
-
-/* =========================================================
-   STARS
-========================================================= */
-
-.stars {
-
-    position: absolute;
-
-    inset: 0;
-
-    pointer-events: none;
-
-}
-
-.star {
-
-    position: absolute;
-
-    width: 2px;
-    height: 2px;
-
-    border-radius: 50%;
-
-    background: white;
-
-    opacity: .5;
-
-    animation:
-        twinkle
-        calc(2s + var(--delay))
-        infinite alternate;
-
-}
-
-
-/* =========================================================
-   SECTIONS
-========================================================= */
-
-section {
-
-    position: relative;
-
-    padding:
-        110px 7vw;
-
-    border-top:
-        1px solid rgba(255,255,255,.05);
-
-}
-
-
-/* =========================================================
-   SECTION HEADER
-========================================================= */
-
-.section-label {
-
-    color:
-        rgba(255,255,255,.25);
-
-    font-family: monospace;
-
-    font-size: 8px;
-
-    letter-spacing: 3px;
-
-    margin-bottom: 15px;
-
-}
-
-.section-title {
-
-    font-size:
-        clamp(32px, 7vw, 70px);
-
-    line-height: .95;
-
-    font-weight: 900;
-
-}
-
-
-/* =========================================================
-   MUSIC
-========================================================= */
-
-.music-grid {
-
-    margin-top: 45px;
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(
-            auto-fit,
-            minmax(220px, 1fr)
+        conic-gradient(
+            from 0deg,
+            transparent 0deg,
+            rgba(128,73,255,.8) 45deg,
+            transparent 100deg,
+            rgba(0,225,255,.6) 180deg,
+            transparent 230deg,
+            rgba(255,45,185,.65) 300deg,
+            transparent 360deg
         );
-
-    gap: 15px;
-
+    filter:blur(25px);
+    animation:rotate 9s linear infinite;
 }
 
-.track {
-
-    min-height: 170px;
-
-    position: relative;
-
-    padding: 20px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    justify-content: flex-end;
-
-    overflow: hidden;
-
-    border:
-        1px solid rgba(255,255,255,.08);
-
-    background:
-
-        radial-gradient(
-            circle at 80% 20%,
-            rgba(111,77,255,.22),
-            transparent 40%
-        ),
-
-        rgba(255,255,255,.025);
-
-    transition:
-        .3s;
-
-}
-
-.track:hover {
-
-    transform:
-        translateY(-7px)
-        rotate(-.5deg);
-
-    border-color:
-        rgba(143,105,255,.4);
-
+.hole::after{
+    content:"";
+    position:absolute;
+    inset:24%;
+    border-radius:50%;
+    background:#000;
     box-shadow:
-        0 20px 50px rgba(0,0,0,.4);
-
+        0 0 50px 15px rgba(0,0,0,.9),
+        0 0 100px 20px rgba(91,50,170,.18);
 }
 
-.track-number {
-
-    position: absolute;
-
-    top: 17px;
-    right: 17px;
-
-    font-family: monospace;
-
-    color:
-        rgba(255,255,255,.15);
-
-    font-size: 10px;
-
-}
-
-.track-name {
-
-    font-size: 21px;
-
-    font-weight: 900;
-
-}
-
-.track-info {
-
-    margin-top: 7px;
-
-    color:
-        rgba(255,255,255,.3);
-
-    font-family: monospace;
-
-    font-size: 8px;
-
+.hole-core{
+    position:absolute;
+    inset:31%;
+    border-radius:50%;
+    background:#000;
+    z-index:2;
 }
 
 
-/* =========================================================
-   ABOUT
-========================================================= */
+/* =========================
+   SECTIONS
+========================= */
 
-.about {
-
-    max-width: 850px;
-
+section.content{
+    position:relative;
+    z-index:3;
+    padding:130px 7vw;
+    border-top:1px solid rgba(255,255,255,.05);
+    background:rgba(2,2,3,.7);
 }
 
-.about p {
-
-    margin-top: 30px;
-
-    color:
-        rgba(255,255,255,.48);
-
-    font-size:
-        clamp(15px, 2vw, 19px);
-
-    line-height: 1.8;
-
+.label{
+    font-family:'Space Mono',monospace;
+    font-size:8px;
+    color:#514d59;
+    letter-spacing:3px;
+    margin-bottom:18px;
 }
 
-.highlight {
-
-    color: white;
-
-    text-shadow:
-        0 0 15px rgba(135,90,255,.7);
-
+.big{
+    font-size:clamp(40px,8vw,95px);
+    line-height:.9;
+    letter-spacing:-.06em;
+    font-weight:800;
 }
 
 
-/* =========================================================
-   SOCIALS
-========================================================= */
+/* =========================
+   MUSIC
+========================= */
 
-.socials {
-
-    margin-top: 45px;
-
-    display: flex;
-
-    flex-wrap: wrap;
-
-    gap: 10px;
-
+.music-grid{
+    margin-top:55px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:14px;
 }
 
-.social {
-
-    padding:
-        13px 18px;
-
-    border:
-        1px solid rgba(255,255,255,.08);
-
-    color:
-        rgba(255,255,255,.55);
-
-    text-decoration: none;
-
-    font-family: monospace;
-
-    font-size: 9px;
-
-    transition: .2s;
-
-}
-
-.social:hover {
-
-    color: white;
-
+.track{
+    position:relative;
+    min-height:190px;
+    padding:22px;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,.08);
     background:
-        rgba(255,255,255,.04);
+        radial-gradient(
+            circle at 80% 10%,
+            rgba(130,80,255,.2),
+            transparent 45%
+        ),
+        var(--panel);
+    transition:.35s;
+}
 
-    border-color:
-        rgba(255,255,255,.25);
+.track::before{
+    content:"";
+    position:absolute;
+    width:180px;
+    height:180px;
+    border-radius:50%;
+    right:-80px;
+    top:-80px;
+    border:1px solid rgba(255,255,255,.08);
+    box-shadow:0 0 60px rgba(100,60,255,.15);
+}
 
+.track:hover{
+    transform:translateY(-8px);
+    border-color:rgba(145,100,255,.4);
+}
+
+.track-number{
+    position:absolute;
+    top:20px;
+    right:20px;
+    color:#3f3a47;
+    font-family:'Space Mono',monospace;
+    font-size:9px;
+}
+
+.track-name{
+    font-size:23px;
+    font-weight:800;
+}
+
+.track-meta{
+    margin-top:7px;
+    color:#57525f;
+    font-family:'Space Mono',monospace;
+    font-size:8px;
+}
+
+.play{
+    position:absolute;
+    top:20px;
+    left:20px;
+    width:35px;
+    height:35px;
+    border:1px solid rgba(255,255,255,.1);
+    background:rgba(255,255,255,.03);
+    color:white;
+    cursor:pointer;
 }
 
 
-/* =========================================================
+/* =========================
+   ABOUT
+========================= */
+
+.about-grid{
+    margin-top:50px;
+    max-width:900px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:60px;
+}
+
+.about-text{
+    color:#85808d;
+    line-height:1.9;
+    font-size:15px;
+}
+
+.about-text strong{
+    color:white;
+}
+
+.manifesto{
+    font-family:'Space Mono',monospace;
+    color:#4d4854;
+    font-size:10px;
+    line-height:2;
+}
+
+
+/* =========================
+   LINKS
+========================= */
+
+.links{
+    margin-top:45px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.link{
+    padding:14px 19px;
+    color:#aaa5b0;
+    border:1px solid rgba(255,255,255,.08);
+    text-decoration:none;
+    font-family:'Space Mono',monospace;
+    font-size:9px;
+    transition:.25s;
+}
+
+.link:hover{
+    color:white;
+    border-color:var(--purple);
+    box-shadow:0 0 25px rgba(139,92,255,.12);
+}
+
+
+/* =========================
    FOOTER
-========================================================= */
+========================= */
 
-footer {
-
-    padding:
-        40px 25px;
-
-    text-align: center;
-
-    border-top:
-        1px solid rgba(255,255,255,.05);
-
-    color:
-        rgba(255,255,255,.18);
-
-    font-family: monospace;
-
-    font-size: 8px;
-
-    letter-spacing: 1px;
-
+footer{
+    position:relative;
+    z-index:3;
+    padding:50px 20px;
+    text-align:center;
+    color:#302d35;
+    border-top:1px solid rgba(255,255,255,.05);
+    font-family:'Space Mono',monospace;
+    font-size:7px;
+    letter-spacing:2px;
 }
 
 
-/* =========================================================
+/* =========================
+   EASTER EGG
+========================= */
+
+.secret{
+    position:fixed;
+    inset:0;
+    z-index:4000;
+    background:#000;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+}
+
+.secret.active{
+    display:flex;
+}
+
+.secret-text{
+    font-family:'Space Mono',monospace;
+    font-size:10px;
+    color:#777;
+    line-height:2;
+}
+
+.secret-text strong{
+    display:block;
+    color:white;
+    font-size:25px;
+    margin-bottom:15px;
+}
+
+
+/* =========================
    ANIMATIONS
-========================================================= */
+========================= */
 
-@keyframes spin {
+@keyframes rotate{
+    to{transform:rotate(360deg);}
+}
 
-    from {
-        transform: rotate(0deg);
+@keyframes glitch{
+    0%,88%,100%{transform:translate(0);}
+    89%{transform:translate(-3px,1px);}
+    90%{transform:translate(3px,-2px);}
+    91%{transform:translate(-1px,0);}
+}
+
+@media(max-width:650px){
+
+    nav{
+        height:65px;
+        padding:0 15px;
     }
 
-    to {
-        transform: rotate(360deg);
+    .signal{
+        display:none;
+    }
+
+    .hole{
+        width:105vw;
+    }
+
+    .hero-content{
+        padding:15px;
+    }
+
+    .title{
+        font-size:19vw;
+    }
+
+    .tagline{
+        font-size:7px;
+        line-height:1.8;
+    }
+
+    section.content{
+        padding:90px 20px;
+    }
+
+    .about-grid{
+        grid-template-columns:1fr;
+        gap:35px;
+    }
+
+    .music-grid{
+        grid-template-columns:1fr;
     }
 
 }
 
-@keyframes float {
-
-    0%,100% {
-        transform:
-            translateY(0)
-            scale(1);
-    }
-
-    50% {
-        transform:
-            translateY(-14px)
-            scale(1.02);
-    }
-
-}
-
-@keyframes twinkle {
-
-    from {
-        opacity: .15;
-        transform: scale(.7);
-    }
-
-    to {
-        opacity: .8;
-        transform: scale(1.4);
-    }
-
-}
-
-@keyframes titleGlitch {
-
-    0%, 88%, 100% {
-        transform: translate(0);
-    }
-
-    89% {
-        transform: translate(-3px, 1px);
-    }
-
-    90% {
-        transform: translate(3px, -1px);
-    }
-
-    91% {
-        transform: translate(0);
-    }
-
-}
-
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media (max-width: 600px) {
-
-    nav {
-        padding: 0 15px;
-    }
-
-    .nav-links {
-        gap: 10px;
-    }
-
-    .nav-links a {
-        font-size: 8px;
-    }
-
-    .black-hole {
-        width: 105vw;
-        height: 105vw;
-    }
-
-    .hero-content {
-        padding-top: 40px;
-    }
-
-    section {
-        padding:
-            80px 20px;
-    }
-
-    .music-grid {
-        grid-template-columns: 1fr;
-    }
-
-}
-
-
-/* =========================================================
-   REDUCED MOTION
-========================================================= */
-
-@media (prefers-reduced-motion: reduce) {
+@media(prefers-reduced-motion:reduce){
 
     *,
     *::before,
-    *::after {
-        animation-duration: .01ms !important;
-        animation-iteration-count: 1 !important;
-        scroll-behavior: auto !important;
+    *::after{
+        animation-duration:.01ms!important;
+        animation-iteration-count:1!important;
     }
 
 }
-
 </style>
 </head>
 
+<body class="locked">
 
-<body>
+<canvas id="space"></canvas>
+
+<div class="noise"></div>
+<div class="vignette"></div>
 
 
-<div class="cursor" id="cursor"></div>
+<!-- =========================
+     BOOT SCREEN
+========================= -->
+
+<div class="boot" id="boot">
+
+    <div class="boot-inner">
+
+        <div class="boot-logo">
+            S!NNER13
+        </div>
+
+        <div class="boot-line">
+            [ SYSTEM ] INITIALIZING VOID...
+        </div>
+
+        <div class="boot-line">
+            [ SIGNAL ] SEARCHING FOR TRANSMISSION...
+        </div>
+
+        <div class="boot-line">
+            [ CORE ] BLACK HOLE DETECTED.
+        </div>
+
+        <div class="boot-line">
+            [ AUDIO ] UNKNOWN FREQUENCY.
+        </div>
+
+        <div class="boot-bar">
+            <div
+                class="boot-progress"
+                id="progress"
+            ></div>
+        </div>
+
+        <div
+            class="boot-status"
+            id="bootStatus"
+        >
+            0%
+        </div>
+
+    </div>
+
+</div>
 
 
-<!-- ======================================================
-     NAVIGATION
-====================================================== -->
+<!-- =========================
+     NAV
+========================= -->
 
 <nav>
 
@@ -913,83 +697,93 @@ footer {
         S!NNER13
     </div>
 
-    <div class="nav-links">
+    <div class="nav-right">
 
-        <a href="#music">
-            MUSIC
-        </a>
+        <div class="signal">
+            SIGNAL:
+            <span>● ONLINE</span>
+        </div>
 
-        <a href="#about">
-            VOID
-        </a>
-
-        <a href="#contact">
-            LINKS
-        </a>
+        <button
+            class="menu"
+            onclick="window.scrollTo({top:0,behavior:'smooth'})"
+        >
+            ↑
+        </button>
 
     </div>
 
 </nav>
 
 
-<!-- ======================================================
+<!-- =========================
      HERO
-====================================================== -->
+========================= -->
 
-<main>
+<header class="hero" id="home">
 
-<section class="hero">
-
-    <div class="stars" id="stars"></div>
-
-    <div class="black-hole"></div>
-
+    <div class="hole">
+        <div class="hole-core"></div>
+    </div>
 
     <div class="hero-content">
 
-        <div class="pre-title">
-            WELCOME TO THE VOID
+        <div class="coordinates">
+            43°13'VOID // UNKNOWN LOCATION
         </div>
 
         <h1 class="title">
             S!NNER13
         </h1>
 
-        <div class="subtitle">
-            HYPERPOP // UNDERGROUND // BLACK HOLE
+        <div class="tagline">
+            HYPERPOP / UNDERGROUND / DIGITAL VOID
         </div>
 
         <a
-            href="#music"
             class="enter"
+            href="#music"
         >
             ENTER THE VOID →
         </a>
 
     </div>
 
-</section>
+    <div class="scroll">
+        ↓ DESCEND ↓
+    </div>
+
+</header>
 
 
-<!-- ======================================================
+<!-- =========================
      MUSIC
-====================================================== -->
+========================= -->
 
-<section id="music">
+<section
+    class="content"
+    id="music"
+>
 
-    <div class="section-label">
+    <div class="label">
         01 // AUDIO TRANSMISSIONS
     </div>
 
-    <h2 class="section-title">
-        MUSIC
+    <h2 class="big">
+        MUSIC.
     </h2>
-
 
     <div class="music-grid">
 
 
-        <div class="track">
+        <article class="track">
+
+            <button
+                class="play"
+                onclick="fakePlay(this)"
+            >
+                ▶
+            </button>
 
             <div class="track-number">
                 001
@@ -999,14 +793,21 @@ footer {
                 ZERO KELVIN*
             </div>
 
-            <div class="track-info">
-                ALBUM // 2026
+            <div class="track-meta">
+                ALBUM // TRANSMISSION 001
             </div>
 
-        </div>
+        </article>
 
 
-        <div class="track">
+        <article class="track">
+
+            <button
+                class="play"
+                onclick="fakePlay(this)"
+            >
+                ▶
+            </button>
 
             <div class="track-number">
                 002
@@ -1016,28 +817,35 @@ footer {
                 βLⱯCK∬S⋃Π
             </div>
 
-            <div class="track-info">
-                PROJECT // UNKNOWN
+            <div class="track-meta">
+                PROJECT // TRANSMISSION 002
             </div>
 
-        </div>
+        </article>
 
 
-        <div class="track">
+        <article class="track">
+
+            <button
+                class="play"
+                onclick="fakePlay(this)"
+            >
+                ▶
+            </button>
 
             <div class="track-number">
-                003
+                013
             </div>
 
             <div class="track-name">
-                BLACK HOLE
+                UNKNOWN
             </div>
 
-            <div class="track-info">
-                TRANSMISSION // 13
+            <div class="track-meta">
+                SIGNAL // CLASSIFIED
             </div>
 
-        </div>
+        </article>
 
 
     </div>
@@ -1045,252 +853,356 @@ footer {
 </section>
 
 
-<!-- ======================================================
+<!-- =========================
      ABOUT
-====================================================== -->
+========================= -->
 
-<section id="about">
+<section
+    class="content"
+    id="about"
+>
 
-    <div class="about">
-
-        <div class="section-label">
-            02 // SIGNAL
-        </div>
-
-        <h2 class="section-title">
-            NOTHING<br>
-            IS STABLE.
-        </h2>
-
-
-        <p>
-
-            S!NNER13 is somewhere between
-            <span class="highlight">
-                hyperpop,
-                underground,
-                distortion
-            </span>
-            and the digital void.
-
-            <br><br>
-
-            Sounds that shouldn't fit together.
-            Visuals that feel like corrupted memories.
-            Music falling endlessly into a
-            <span class="highlight">
-                black hole.
-            </span>
-
-        </p>
-
+    <div class="label">
+        02 // THE ENTITY
     </div>
 
-</section>
-
-
-<!-- ======================================================
-     LINKS
-====================================================== -->
-
-<section id="contact">
-
-    <div class="section-label">
-        03 // CONNECTIONS
-    </div>
-
-    <h2 class="section-title">
-        FIND<br>
-        ME.
+    <h2 class="big">
+        WHO<br>
+        IS<br>
+        S!NNER13?
     </h2>
 
 
-    <div class="socials">
+    <div class="about-grid">
+
+        <p class="about-text">
+
+            Somewhere between
+            <strong>hyperpop</strong>,
+            distortion and the
+            underground.
+
+            <br><br>
+
+            S!NNER13 isn't supposed to
+            fit into one genre.
+
+            <br><br>
+
+            The music is a collision:
+            <strong>noise, emotion,
+            digital chaos and atmosphere.</strong>
+
+            <br><br>
+
+            Everything eventually falls
+            into the void.
+
+        </p>
+
+
+        <div class="manifesto">
+
+            NO GENRE.<br>
+            NO RULES.<br>
+            NO EXIT.<br>
+            <br>
+            CREATE.<br>
+            DISTORT.<br>
+            TRANSMIT.<br>
+            <br>
+            13 IS NOT A NUMBER.<br>
+            IT IS A COORDINATE.
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     LINKS
+========================= -->
+
+<section
+    class="content"
+    id="links"
+>
+
+    <div class="label">
+        03 // CONNECTION
+    </div>
+
+    <h2 class="big">
+        FIND<br>
+        THE SIGNAL.
+    </h2>
+
+
+    <div class="links">
 
         <a
-            class="social"
+            class="link"
             href="#"
         >
-            SOUNDCLOUD
+            SOUNDCLOUD ↗
         </a>
 
         <a
-            class="social"
+            class="link"
             href="#"
         >
-            SPOTIFY
+            SPOTIFY ↗
         </a>
 
         <a
-            class="social"
+            class="link"
             href="#"
         >
-            INSTAGRAM
+            INSTAGRAM ↗
         </a>
 
         <a
-            class="social"
+            class="link"
             href="#"
         >
-            DISCORD
+            DISCORD ↗
         </a>
 
     </div>
 
 </section>
 
-</main>
 
-
-<!-- ======================================================
+<!-- =========================
      FOOTER
-====================================================== -->
+========================= -->
 
 <footer>
 
-    S!NNER13 © 2026
+    S!NNER13 // 2026
 
     <br><br>
 
-    LOST SOMEWHERE INSIDE THE VOID
+    SIGNAL LOST.
 
 </footer>
+
+
+<!-- =========================
+     SECRET
+========================= -->
+
+<div
+    class="secret"
+    id="secret"
+>
+
+    <div class="secret-text">
+
+        <strong>
+            YOU FOUND THE VOID.
+        </strong>
+
+        there was never supposed<br>
+        to be anything here.
+
+        <br><br>
+
+        [ 13 ]
+
+        <br><br>
+
+        tap anywhere to return
+
+    </div>
+
+</div>
 
 
 <script>
 
 /* =========================================================
-   STAR GENERATOR
+   BOOT
 ========================================================= */
 
-const stars =
-    document.getElementById(
-        "stars"
+const boot =
+    document.getElementById("boot");
+
+const progress =
+    document.getElementById("progress");
+
+const bootStatus =
+    document.getElementById("bootStatus");
+
+let percent = 0;
+
+const bootTimer =
+    setInterval(() => {
+
+        percent +=
+            Math.floor(
+                Math.random() * 15
+            ) + 5;
+
+        if(percent > 100)
+            percent = 100;
+
+        progress.style.width =
+            percent + "%";
+
+        bootStatus.textContent =
+            percent + "%";
+
+        if(percent >= 100){
+
+            clearInterval(
+                bootTimer
+            );
+
+            setTimeout(() => {
+
+                boot.classList.add(
+                    "hidden"
+                );
+
+                document.body.classList.remove(
+                    "locked"
+                );
+
+            },500);
+
+        }
+
+    },180);
+
+
+/* =========================================================
+   SPACE CANVAS
+========================================================= */
+
+const canvas =
+    document.getElementById("space");
+
+const ctx =
+    canvas.getContext("2d");
+
+let width;
+let height;
+
+let particles = [];
+
+const mouse = {
+    x:0,
+    y:0,
+    active:false
+};
+
+
+function resize(){
+
+    width =
+        canvas.width =
+        window.innerWidth *
+        devicePixelRatio;
+
+    height =
+        canvas.height =
+        window.innerHeight *
+        devicePixelRatio;
+
+    canvas.style.width =
+        window.innerWidth + "px";
+
+    canvas.style.height =
+        window.innerHeight + "px";
+
+    ctx.scale(
+        devicePixelRatio,
+        devicePixelRatio
     );
 
+    width =
+        window.innerWidth;
 
-for (
-    let i = 0;
-    i < 120;
-    i++
-) {
+    height =
+        window.innerHeight;
 
-    const star =
-        document.createElement(
-            "div"
-        );
+}
 
-    star.className =
-        "star";
 
-    star.style.left =
-        Math.random() * 100 + "%";
+resize();
 
-    star.style.top =
-        Math.random() * 100 + "%";
+window.addEventListener(
+    "resize",
+    resize
+);
 
-    star.style.setProperty(
-        "--delay",
-        Math.random() * 5 + "s"
-    );
 
-    star.style.opacity =
-        Math.random();
+/* =========================================================
+   PARTICLES
+========================================================= */
 
-    stars.appendChild(
-        star
+function createParticle(){
+
+    const angle =
+        Math.random() *
+        Math.PI * 2;
+
+    const distance =
+        100 +
+        Math.random() *
+        Math.max(
+            width,
+            height
+        ) *
+        .65;
+
+    return {
+
+        x:
+            width/2 +
+            Math.cos(angle) *
+            distance,
+
+        y:
+            height/2 +
+            Math.sin(angle) *
+            distance,
+
+        size:
+            Math.random() *
+            1.7 + .2,
+
+        speed:
+            Math.random() *
+            .003 + .001,
+
+        angle:
+            angle,
+
+        distance:
+            distance,
+
+        rotation:
+            Math.random() *
+            .02
+
+    };
+
+}
+
+
+for(let i=0;i<180;i++){
+
+    particles.push(
+        createParticle()
     );
 
 }
 
 
 /* =========================================================
-   CURSOR
-========================================================= */
-
-const cursor =
-    document.getElementById(
-        "cursor"
-    );
-
-
-document.addEventListener(
-    "mousemove",
-    event => {
-
-        cursor.style.left =
-            event.clientX + "px";
-
-        cursor.style.top =
-            event.clientY + "px";
-
-    }
-);
-
-
-/* =========================================================
-   BLACK HOLE PARALLAX
-========================================================= */
-
-const blackHole =
-    document.querySelector(
-        ".black-hole"
-    );
-
-
-document.addEventListener(
-    "mousemove",
-    event => {
-
-        const x =
-            (event.clientX /
-            window.innerWidth -
-            .5);
-
-        const y =
-            (event.clientY /
-            window.innerHeight -
-            .5);
-
-
-        blackHole.style.transform =
-            `
-            translate(
-                ${x * 12}px,
-                ${y * 12}px
-            )
-            `;
-
-    }
-);
-
-
-/* =========================================================
-   MOBILE TOUCH EFFECT
-========================================================= */
-
-document.addEventListener(
-    "touchmove",
-    event => {
-
-        const touch =
-            event.touches[0];
-
-        if (!touch) return;
-
-        cursor.style.left =
-            touch.clientX + "px";
-
-        cursor.style.top =
-            touch.clientY + "px";
-
-    },
-    {
-        passive: true
-    }
-);
-
-</script>
-
-</body>
-            </html>
+   SPACE LOOP
+                
