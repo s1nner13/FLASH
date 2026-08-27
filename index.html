@@ -3,179 +3,1048 @@
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-    <title>FLASH</title>
+<meta
+    name="theme-color"
+    content="#020204"
+>
 
+<title>FLASH — Enter the void</title>
 
-    <style>
 
-        * {
-            box-sizing: border-box;
-        }
+<style>
 
+/* =========================================================
+   RESET
+========================================================= */
 
-        body {
+* {
+    box-sizing: border-box;
+}
 
-            margin: 0;
+html,
+body {
+    margin: 0;
+    width: 100%;
+    min-height: 100%;
+}
 
-            min-height: 100vh;
+body {
 
-            background: #111214;
+    min-height: 100dvh;
 
-            color: white;
+    overflow-x: hidden;
 
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
-        }
+    background:
+        radial-gradient(
+            ellipse at center,
+            #11121c 0%,
+            #07080d 32%,
+            #020204 70%,
+            #000000 100%
+        );
 
+    color: #fff;
 
-        .page {
+    font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+}
 
-            min-height: 100vh;
 
-            display: flex;
+/* =========================================================
+   SPACE
+========================================================= */
 
-            align-items: center;
+.space {
 
-            justify-content: center;
+    position: fixed;
 
-            padding: 20px;
-        }
+    inset: 0;
 
+    overflow: hidden;
 
-        .box {
+    pointer-events: none;
 
-            width: 100%;
+    z-index: 0;
+}
 
-            max-width: 430px;
 
-            padding: 32px;
+/* =========================================================
+   STARS
+========================================================= */
 
-            background: #1e1f22;
+.stars,
+.stars::before,
+.stars::after {
 
-            border: 1px solid #303238;
+    position: absolute;
 
-            border-radius: 16px;
+    inset: -50%;
 
-            box-shadow:
-                0 20px 60px
-                rgba(0, 0, 0, .5);
-        }
+    content: "";
 
+    background-image:
 
-        .logo {
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.8) 0 1px,
+            transparent 1.5px
+        ),
 
-            font-size: 36px;
+        radial-gradient(
+            circle,
+            rgba(180,190,255,.55) 0 1px,
+            transparent 1.5px
+        );
 
-            font-weight: 900;
+    background-size:
+        140px 140px,
+        230px 230px;
 
-            letter-spacing: 1px;
-        }
+    animation:
+        starsMove 90s linear infinite;
+}
 
+.stars::before {
 
-        .subtitle {
+    transform:
+        scale(1.4)
+        rotate(12deg);
 
-            color: #aeb1b7;
+    opacity: .35;
 
-            margin:
-                8px 0 30px;
-        }
+    animation-duration: 150s;
+}
 
+.stars::after {
 
-        label {
+    transform:
+        scale(1.8)
+        rotate(-18deg);
 
-            display: block;
+    opacity: .2;
 
-            margin:
-                18px 0 7px;
+    animation-duration: 220s;
+}
 
-            color: #c9cbd0;
 
-            font-size: 14px;
+@keyframes starsMove {
 
-            font-weight: bold;
-        }
+    from {
+        transform:
+            translate3d(0,0,0);
+    }
 
+    to {
+        transform:
+            translate3d(180px,100px,0);
+    }
 
-        input,
-        select {
+}
 
-            width: 100%;
 
-            padding: 13px;
+/* =========================================================
+   DISTANT NEBULA
+========================================================= */
 
-            border:
-                1px solid #3b3d44;
+.nebula {
 
-            border-radius: 8px;
+    position: absolute;
 
-            background: #111214;
+    width: 80vw;
+    height: 80vw;
 
-            color: white;
+    max-width: 1000px;
+    max-height: 1000px;
 
-            outline: none;
+    left: 50%;
+    top: 50%;
 
-            font-size: 15px;
-        }
+    transform:
+        translate(-50%,-50%);
 
+    border-radius: 50%;
 
-        input:focus,
-        select:focus {
+    background:
 
-            border-color: #5865f2;
-        }
+        radial-gradient(
+            circle,
+            rgba(120,80,255,.16),
+            transparent 34%
+        ),
 
+        radial-gradient(
+            circle at 70% 30%,
+            rgba(40,130,255,.10),
+            transparent 30%
+        ),
 
-        button {
+        radial-gradient(
+            circle at 30% 70%,
+            rgba(180,40,255,.08),
+            transparent 30%
+        );
 
-            border: none;
+    filter:
+        blur(50px);
 
-            border-radius: 8px;
+    animation:
+        nebulaPulse 9s ease-in-out infinite alternate;
+}
 
-            padding: 13px;
 
-            background: #5865f2;
+@keyframes nebulaPulse {
 
-            color: white;
+    from {
+        transform:
+            translate(-50%,-50%)
+            scale(.92);
+        opacity: .7;
+    }
 
-            font-weight: bold;
+    to {
+        transform:
+            translate(-50%,-50%)
+            scale(1.08);
+        opacity: 1;
+    }
 
-            cursor: pointer;
-        }
+}
 
 
-        button:hover {
+/* =========================================================
+   BLACK HOLE
+========================================================= */
 
-            filter: brightness(1.1);
-        }
+.black-hole {
 
+    position: absolute;
 
-        #create {
+    left: 50%;
+    top: 50%;
 
-            width: 100%;
+    width: min(42vw, 480px);
+    aspect-ratio: 1;
 
-            margin-top: 25px;
-        }
+    transform:
+        translate(-50%,-50%);
 
+    border-radius: 50%;
 
-        #error {
+    background:
 
-            min-height: 20px;
+        radial-gradient(
+            circle,
+            #000 0 32%,
+            rgba(0,0,0,.98) 42%,
+            rgba(0,0,0,0) 67%
+        );
 
-            color: #ff6b6b;
+    box-shadow:
 
-            font-size: 14px;
-        }
+        0 0 50px
+            rgba(130,100,255,.16),
 
-    </style>
+        0 0 110px
+            rgba(70,100,255,.09);
+
+    z-index: 1;
+}
+
+
+/* =========================================================
+   ACCRETION DISK
+========================================================= */
+
+.disk {
+
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: min(65vw, 720px);
+    aspect-ratio: 1;
+
+    transform:
+        translate(-50%,-50%)
+        rotateX(68deg)
+        rotate(-18deg);
+
+    border-radius: 50%;
+
+    background:
+
+        conic-gradient(
+
+            from 0deg,
+
+            transparent 0deg,
+
+            rgba(90,70,255,.15) 35deg,
+
+            rgba(170,100,255,.65) 70deg,
+
+            rgba(255,210,130,.9) 110deg,
+
+            rgba(120,90,255,.45) 150deg,
+
+            transparent 205deg,
+
+            rgba(60,100,255,.25) 250deg,
+
+            rgba(190,100,255,.7) 300deg,
+
+            transparent 360deg
+        );
+
+    filter:
+        blur(7px);
+
+    opacity: .9;
+
+    animation:
+        diskSpin 18s linear infinite;
+
+    z-index: 2;
+}
+
+
+.disk::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 9%;
+
+    border-radius: 50%;
+
+    border:
+        10px solid
+        rgba(255,255,255,.12);
+
+    filter:
+        blur(8px);
+}
+
+
+.disk::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 20%;
+
+    border-radius: 50%;
+
+    background:
+        #000;
+
+    box-shadow:
+        0 0 30px #000;
+
+}
+
+
+@keyframes diskSpin {
+
+    from {
+        transform:
+            translate(-50%,-50%)
+            rotateX(68deg)
+            rotate(-18deg);
+    }
+
+    to {
+        transform:
+            translate(-50%,-50%)
+            rotateX(68deg)
+            rotate(342deg);
+    }
+
+}
+
+
+/* =========================================================
+   GRAVITATIONAL LENS
+========================================================= */
+
+.lens {
+
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: min(48vw, 560px);
+    aspect-ratio: 1;
+
+    transform:
+        translate(-50%,-50%);
+
+    border-radius: 50%;
+
+    border:
+        1px solid
+        rgba(180,160,255,.18);
+
+    box-shadow:
+
+        inset 0 0 40px
+            rgba(100,80,255,.12),
+
+        0 0 40px
+            rgba(120,100,255,.08);
+
+    z-index: 3;
+
+    animation:
+        lensPulse 5s ease-in-out infinite alternate;
+}
+
+
+@keyframes lensPulse {
+
+    from {
+        opacity: .45;
+        transform:
+            translate(-50%,-50%)
+            scale(.97);
+    }
+
+    to {
+        opacity: .8;
+        transform:
+            translate(-50%,-50%)
+            scale(1.03);
+    }
+
+}
+
+
+/* =========================================================
+   UI
+========================================================= */
+
+.page {
+
+    position: relative;
+
+    z-index: 10;
+
+    min-height: 100dvh;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 30px 18px;
+}
+
+
+.card {
+
+    position: relative;
+
+    width: min(460px, 100%);
+
+    padding: 34px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.10);
+
+    border-radius: 26px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(20,20,29,.72),
+            rgba(5,5,9,.80)
+        );
+
+    backdrop-filter:
+        blur(24px);
+
+    -webkit-backdrop-filter:
+        blur(24px);
+
+    box-shadow:
+
+        0 30px 100px
+            rgba(0,0,0,.65),
+
+        inset 0 1px 0
+            rgba(255,255,255,.08);
+
+    overflow: hidden;
+}
+
+
+.card::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 250px;
+    height: 250px;
+
+    top: -160px;
+    right: -120px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(110,80,255,.18);
+
+    filter:
+        blur(45px);
+}
+
+
+.card::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 200px;
+    height: 200px;
+
+    bottom: -140px;
+    left: -100px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(30,100,255,.12);
+
+    filter:
+        blur(45px);
+}
+
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.logo-row {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    margin-bottom: 8px;
+}
+
+
+.logo-icon {
+
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background:
+
+        radial-gradient(
+            circle,
+            #000 0 32%,
+            transparent 34%
+        ),
+
+        conic-gradient(
+            #705cff,
+            #b45cff,
+            #4f8cff,
+            #705cff
+        );
+
+    box-shadow:
+        0 0 25px
+        rgba(110,90,255,.35);
+
+    font-size: 20px;
+}
+
+
+.logo {
+
+    font-size: 31px;
+
+    font-weight: 950;
+
+    letter-spacing: -.8px;
+}
+
+
+.subtitle {
+
+    margin:
+        0 0 28px;
+
+    color:
+        rgba(255,255,255,.52);
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    margin-bottom: 22px;
+
+    padding:
+        7px 10px;
+
+    border:
+        1px solid
+        rgba(120,110,255,.20);
+
+    border-radius: 999px;
+
+    background:
+        rgba(100,90,255,.08);
+
+    color:
+        rgba(210,205,255,.85);
+
+    font-size: 11px;
+
+    letter-spacing: .3px;
+}
+
+
+.status-dot {
+
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #8c7cff;
+
+    box-shadow:
+        0 0 12px
+        #8c7cff;
+
+    animation:
+        statusPulse 2s infinite;
+}
+
+
+@keyframes statusPulse {
+
+    0%,100% {
+        opacity: .45;
+        transform: scale(.8);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+label {
+
+    display: block;
+
+    margin:
+        17px 0 8px;
+
+    color:
+        rgba(255,255,255,.72);
+
+    font-size: 12px;
+
+    font-weight: 750;
+
+    letter-spacing: .2px;
+}
+
+
+.input-wrap {
+
+    position: relative;
+}
+
+
+input,
+select {
+
+    width: 100%;
+
+    height: 48px;
+
+    padding:
+        0 14px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
+    border-radius: 11px;
+
+    outline: none;
+
+    background:
+        rgba(0,0,0,.32);
+
+    color: white;
+
+    font-size: 14px;
+
+    transition:
+        border .2s,
+        box-shadow .2s,
+        background .2s;
+}
+
+
+input::placeholder {
+
+    color:
+        rgba(255,255,255,.28);
+}
+
+
+input:focus,
+select:focus {
+
+    border-color:
+        rgba(125,110,255,.75);
+
+    background:
+        rgba(20,18,35,.55);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(110,90,255,.10);
+}
+
+
+select {
+
+    appearance: none;
+
+    cursor: pointer;
+
+    background-image:
+
+        linear-gradient(45deg,
+            transparent 50%,
+            #aaa 50%
+        ),
+
+        linear-gradient(135deg,
+            #aaa 50%,
+            transparent 50%
+        );
+
+    background-position:
+
+        calc(100% - 17px) 20px,
+        calc(100% - 12px) 20px;
+
+    background-size:
+        5px 5px,
+        5px 5px;
+
+    background-repeat:
+        no-repeat;
+}
+
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+#create {
+
+    position: relative;
+
+    width: 100%;
+
+    height: 51px;
+
+    margin-top: 25px;
+
+    border: 0;
+
+    border-radius: 12px;
+
+    background:
+
+        linear-gradient(
+            110deg,
+            #5545dc,
+            #785ce8,
+            #4b72db
+        );
+
+    color: white;
+
+    font-size: 14px;
+
+    font-weight: 850;
+
+    letter-spacing: .2px;
+
+    cursor: pointer;
+
+    overflow: hidden;
+
+    box-shadow:
+
+        0 12px 30px
+        rgba(85,70,220,.25);
+
+    transition:
+        transform .15s,
+        box-shadow .15s;
+}
+
+
+#create::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            110deg,
+            transparent,
+            rgba(255,255,255,.18),
+            transparent
+        );
+
+    transform:
+        translateX(-100%);
+
+    transition:
+        transform .5s;
+}
+
+
+#create:hover {
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+
+        0 16px 40px
+        rgba(85,70,220,.34);
+}
+
+
+#create:hover::before {
+
+    transform:
+        translateX(100%);
+}
+
+
+#create:active {
+
+    transform:
+        translateY(1px)
+        scale(.99);
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+#error {
+
+    min-height: 19px;
+
+    margin:
+        10px 0 0;
+
+    color:
+        #ff7070;
+
+    font-size: 12px;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer {
+
+    margin-top: 24px;
+
+    padding-top: 17px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.06);
+
+    color:
+        rgba(255,255,255,.27);
+
+    font-size: 10px;
+
+    line-height: 1.6;
+
+    text-align: center;
+}
+
+
+.footer strong {
+
+    color:
+        rgba(255,255,255,.5);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .page {
+
+        padding:
+            18px 13px;
+    }
+
+
+    .card {
+
+        padding:
+            25px 20px;
+
+        border-radius: 21px;
+    }
+
+
+    .logo {
+
+        font-size: 27px;
+    }
+
+
+    .logo-icon {
+
+        width: 41px;
+        height: 41px;
+
+        border-radius: 12px;
+    }
+
+
+    .black-hole {
+
+        width: 95vw;
+    }
+
+
+    .disk {
+
+        width: 135vw;
+    }
+
+
+    .lens {
+
+        width: 105vw;
+    }
+
+}
+
+
+@media (max-height: 700px) {
+
+    .page {
+
+        align-items: flex-start;
+
+        padding-top: 18px;
+        padding-bottom: 18px;
+    }
+
+
+    .card {
+
+        padding:
+            21px 19px;
+    }
+
+
+    .subtitle {
+
+        margin-bottom: 17px;
+    }
+
+
+    label {
+
+        margin-top: 12px;
+    }
+
+
+    #create {
+
+        margin-top: 18px;
+    }
+
+}
+
+</style>
 
 </head>
 
@@ -183,45 +1052,94 @@
 <body>
 
 
-<div class="page">
+<!-- =====================================================
+     SPACE BACKGROUND
+====================================================== -->
+
+<div class="space">
+
+    <div class="stars"></div>
+
+    <div class="nebula"></div>
+
+    <div class="disk"></div>
+
+    <div class="black-hole"></div>
+
+    <div class="lens"></div>
+
+</div>
 
 
-    <div class="box">
+<!-- =====================================================
+     MAIN
+====================================================== -->
+
+<main class="page">
 
 
-        <div class="logo">
+    <section class="card">
 
-            ⚡ FLASH
+
+        <div class="logo-row">
+
+            <div class="logo-icon">
+                ⚡
+            </div>
+
+            <div class="logo">
+                FLASH
+            </div>
 
         </div>
 
 
         <p class="subtitle">
 
-            Un mini-chat avec des comptes temporaires.
+            Enter the void.
+            <br>
+            Crée ton identité. Disparais quand le temps est écoulé.
 
         </p>
 
 
+        <div class="status">
+
+            <span class="status-dot"></span>
+
+            SYSTEM ONLINE
+
+        </div>
+
+
+        <!-- PSEUDO -->
+
         <label for="username">
 
-            Pseudo
+            IDENTITÉ
 
         </label>
 
 
-        <input
-            id="username"
-            type="text"
-            maxlength="24"
-            placeholder="Ton pseudo..."
-            autocomplete="off"
-        >
+        <div class="input-wrap">
 
+            <input
+                id="username"
+                type="text"
+                maxlength="24"
+                placeholder="Choisis ton pseudo..."
+                autocomplete="off"
+                spellcheck="false"
+            >
+
+        </div>
+
+
+        <!-- DURÉE -->
 
         <label for="duration">
 
-            Durée du compte
+            DURÉE DU COMPTE
 
         </label>
 
@@ -277,9 +1195,11 @@
         </select>
 
 
+        <!-- CREATE -->
+
         <button id="create">
 
-            Créer mon compte
+            CRÉER MON COMPTE
 
         </button>
 
@@ -287,15 +1207,27 @@
         <p id="error"></p>
 
 
-    </div>
+        <div class="footer">
+
+            <strong>FLASH V0</strong>
+            · Compte local temporaire
+            · Données stockées sur cet appareil
+
+        </div>
 
 
-</div>
+    </section>
+
+
+</main>
 
 
 
 <script>
 
+/* =========================================================
+   FLASH — ACCOUNT CREATION
+========================================================= */
 
 const STORAGE_KEY = "FLASH_V0";
 
@@ -321,7 +1253,7 @@ document
     .getElementById("create")
     .addEventListener(
         "click",
-        function () {
+        function() {
 
 
             const username =
@@ -349,6 +1281,11 @@ document
                     .getElementById("error");
 
 
+            /* =========================
+               VALIDATION
+            ========================= */
+
+
             if (!username) {
 
                 error.textContent =
@@ -369,19 +1306,35 @@ document
             }
 
 
-            /*
-             * Pour cette V0 locale :
-             * ton compte reçoit automatiquement
-             * le rôle CREATOR.
-             */
+            if (
+                !/^[a-zA-Z0-9_.-]+$/.test(
+                    username
+                )
+            ) {
+
+                error.textContent =
+                    "Utilise uniquement lettres, chiffres, _, - ou .";
+
+                return;
+
+            }
+
+
+            /* =========================
+               CREATE ACCOUNT
+            ========================= */
+
 
             const account = {
 
-                id: generateID(),
+                id:
+                    generateID(),
 
-                username: username,
+                username:
+                    username,
 
-                createdAt: Date.now(),
+                createdAt:
+                    Date.now(),
 
                 expiresAt:
 
@@ -393,19 +1346,33 @@ document
 
 
                 /*
-                 * Badge créateur
+                 * V0 LOCALE
+                 *
+                 * Le compte créé depuis
+                 * cette page reçoit le rôle
+                 * creator.
+                 *
+                 * À remplacer par une
+                 * vérification serveur
+                 * dans une future version.
                  */
 
-                role: "creator"
+                role:
+                    "creator",
+
+                avatar:
+                    null
 
             };
 
 
             const state = {
 
-                account: account,
+                account:
+                    account,
 
-                messages: []
+                messages:
+                    []
 
             };
 
@@ -420,14 +1387,37 @@ document
 
 
             /*
-             * Redirection vers le chat
+             * Entrée dans le chat
              */
 
             window.location.href =
                 "chat.html";
 
         }
+    );
 
+
+/* =========================================================
+   ENTER KEY
+========================================================= */
+
+document
+    .getElementById("username")
+    .addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key === "Enter"
+            ) {
+
+                document
+                    .getElementById("create")
+                    .click();
+
+            }
+
+        }
     );
 
 </script>
@@ -435,4 +1425,4 @@ document
 
 </body>
 
-</html>
+    </html>
