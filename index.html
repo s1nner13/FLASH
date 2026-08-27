@@ -1,650 +1,1231 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+>
 
 <title>S!NNER13 // THE VOID</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap');
 
-:root{
-    --bg:#020203;
-    --text:#f4f2ff;
-    --muted:#777383;
-    --purple:#8b5cff;
-    --pink:#ff3dbd;
-    --cyan:#20e7ff;
-    --panel:rgba(255,255,255,.035);
+/* =========================================================
+   S!NNER13 // THE VOID
+   HYPERPOP / UNDERGROUND / BLACK HOLE
+========================================================= */
+
+:root {
+    --bg: #020203;
+    --white: #f5f3ff;
+    --muted: #77727f;
+
+    --purple: #8b5cff;
+    --pink: #ff3dbd;
+    --cyan: #20e7ff;
+
+    --border: rgba(255,255,255,.09);
+    --panel: rgba(255,255,255,.035);
 }
 
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-html{
-    scroll-behavior:smooth;
-    background:var(--bg);
+html {
+    background: var(--bg);
+    scroll-behavior: smooth;
 }
 
-body{
-    background:#020203;
-    color:var(--text);
-    font-family:'Syne',Arial,sans-serif;
-    overflow-x:hidden;
+body {
+    min-height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at 50% 40%,
+            rgba(90,50,160,.08),
+            transparent 40%
+        ),
+        var(--bg);
+
+    color: var(--white);
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    overflow-x: hidden;
 }
 
-body.locked{
-    overflow:hidden;
-}
-
-canvas{
-    position:fixed;
-    inset:0;
-    width:100%;
-    height:100%;
-    pointer-events:none;
-    z-index:0;
-}
-
-.noise{
-    position:fixed;
-    inset:0;
-    z-index:1000;
-    pointer-events:none;
-    opacity:.045;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-.vignette{
-    position:fixed;
-    inset:0;
-    z-index:999;
-    pointer-events:none;
-    background:radial-gradient(circle,transparent 35%,rgba(0,0,0,.7) 100%);
+body.locked {
+    overflow: hidden;
 }
 
 
-/* =========================
-   BOOT
-========================= */
+/* =========================================================
+   CANVAS
+========================================================= */
 
-.boot{
-    position:fixed;
-    inset:0;
-    z-index:5000;
-    background:#000;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    transition:opacity .8s,visibility .8s;
+#space {
+    position: fixed;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    z-index: 0;
+
+    pointer-events: none;
 }
 
-.boot.hidden{
-    opacity:0;
-    visibility:hidden;
-    pointer-events:none;
+
+/* =========================================================
+   NOISE
+========================================================= */
+
+.noise {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1000;
+
+    pointer-events: none;
+
+    opacity: .045;
+
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-.boot-inner{
-    width:min(520px,85vw);
-    font-family:'Space Mono',monospace;
-    font-size:10px;
-    color:#aaa;
+
+/* =========================================================
+   VIGNETTE
+========================================================= */
+
+.vignette {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 999;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle,
+            transparent 35%,
+            rgba(0,0,0,.72) 100%
+        );
 }
 
-.boot-logo{
-    font-family:'Syne',sans-serif;
-    font-size:clamp(45px,13vw,90px);
-    font-weight:800;
-    letter-spacing:-5px;
-    color:white;
-    margin-bottom:30px;
+
+/* =========================================================
+   BOOT SCREEN
+========================================================= */
+
+.boot {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 5000;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #000;
+
+    transition:
+        opacity .8s ease,
+        visibility .8s ease;
+
+}
+
+.boot.hidden {
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+}
+
+.boot-inner {
+
+    width: min(520px, 85vw);
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 10px;
+
+    color: #aaa;
+
+}
+
+.boot-logo {
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size:
+        clamp(48px, 14vw, 95px);
+
+    font-weight: 900;
+
+    letter-spacing: -6px;
+
+    color: white;
+
+    margin-bottom: 30px;
+
     text-shadow:
         3px 0 var(--pink),
         -3px 0 var(--cyan);
+
+    animation: bootGlitch 3s infinite;
+
 }
 
-.boot-line{
-    margin:8px 0;
-    opacity:.65;
+.boot-line {
+
+    margin: 8px 0;
+
+    color: #555;
+
 }
 
-.boot-bar{
-    width:100%;
-    height:2px;
-    margin-top:22px;
-    background:#171719;
-    overflow:hidden;
+.boot-bar {
+
+    width: 100%;
+
+    height: 3px;
+
+    margin-top: 24px;
+
+    background: #151517;
+
+    overflow: hidden;
+
 }
 
-.boot-progress{
-    width:0;
-    height:100%;
-    background:white;
-    transition:width 1.8s cubic-bezier(.2,.8,.2,1);
+.boot-progress {
+
+    width: 0%;
+
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--purple),
+            var(--cyan),
+            var(--pink)
+        );
+
+    box-shadow:
+        0 0 15px rgba(139,92,255,.8);
+
+    transition:
+        width .08s linear;
+
 }
 
-.boot-status{
-    margin-top:10px;
-    color:#555;
+.boot-status {
+
+    margin-top: 10px;
+
+    color: #777;
+
+    min-height: 14px;
+
 }
 
 
-/* =========================
-   NAV
-========================= */
+/* =========================================================
+   NAVIGATION
+========================================================= */
 
-nav{
-    position:fixed;
-    top:0;
-    left:0;
-    right:0;
-    height:76px;
-    padding:0 25px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    z-index:100;
-    background:linear-gradient(to bottom,rgba(2,2,3,.95),transparent);
-    backdrop-filter:blur(8px);
+nav {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 72px;
+
+    padding:
+        0 25px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    z-index: 100;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(2,2,3,.95),
+            transparent
+        );
+
+    backdrop-filter:
+        blur(8px);
+
 }
 
-.logo{
-    font-family:'Space Mono',monospace;
-    font-size:13px;
-    font-weight:700;
-    letter-spacing:-1px;
+.logo {
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
     text-shadow:
         2px 0 var(--pink),
         -2px 0 var(--cyan);
+
 }
 
-.nav-right{
-    display:flex;
-    align-items:center;
-    gap:18px;
+.nav-right {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
 }
 
-.signal{
-    font-family:'Space Mono',monospace;
-    font-size:8px;
-    color:#555;
+.signal {
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 8px;
+
+    color: #555;
+
 }
 
-.signal span{
-    color:#8dffb1;
+.signal span {
+
+    color: #8dffb1;
+
 }
 
-.menu{
-    width:42px;
-    height:42px;
-    border:1px solid rgba(255,255,255,.1);
-    background:rgba(255,255,255,.025);
-    color:white;
-    cursor:pointer;
+.menu {
+
+    width: 40px;
+    height: 40px;
+
+    border:
+        1px solid var(--border);
+
+    background:
+        rgba(255,255,255,.03);
+
+    color: white;
+
+    cursor: pointer;
+
+    transition: .25s;
+
+}
+
+.menu:hover {
+
+    border-color:
+        var(--purple);
+
 }
 
 
-/* =========================
+/* =========================================================
    HERO
-========================= */
+========================================================= */
 
-.hero{
-    min-height:100svh;
-    position:relative;
-    z-index:2;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    overflow:hidden;
+.hero {
+
+    position: relative;
+
+    z-index: 2;
+
+    min-height: 100svh;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    overflow: hidden;
+
 }
 
-.hero-content{
-    position:relative;
-    z-index:5;
-    padding:20px;
+.hero-content {
+
+    position: relative;
+
+    z-index: 5;
+
+    padding: 20px;
+
 }
 
-.coordinates{
-    font-family:'Space Mono',monospace;
-    color:#4f4a58;
-    font-size:8px;
-    letter-spacing:2px;
-    margin-bottom:28px;
+.coordinates {
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    color: #4e4a56;
+
+    font-size: 8px;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 28px;
+
 }
 
-.title{
-    position:relative;
-    font-size:clamp(58px,16vw,170px);
-    line-height:.78;
-    letter-spacing:-.075em;
-    font-weight:800;
-    color:white;
+.title {
+
+    position: relative;
+
+    font-size:
+        clamp(58px, 16vw, 170px);
+
+    line-height: .78;
+
+    letter-spacing: -.075em;
+
+    font-weight: 900;
+
+    color: white;
+
     text-shadow:
         4px 0 var(--pink),
         -4px 0 var(--cyan);
-    animation:glitch 5s infinite;
+
+    animation:
+        titleGlitch 5s infinite;
+
 }
 
 .title::before,
-.title::after{
-    content:'S!NNER13';
-    position:absolute;
-    inset:0;
-    pointer-events:none;
+.title::after {
+
+    content:
+        "S!NNER13";
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
 }
 
-.title::before{
-    color:var(--cyan);
-    clip-path:polygon(0 0,100% 0,100% 32%,0 32%);
-    transform:translate(-4px,2px);
+.title::before {
+
+    color: var(--cyan);
+
+    clip-path:
+        polygon(
+            0 0,
+            100% 0,
+            100% 32%,
+            0 32%
+        );
+
+    transform:
+        translate(-4px, 2px);
+
 }
 
-.title::after{
-    color:var(--pink);
-    clip-path:polygon(0 68%,100% 68%,100% 100%,0 100%);
-    transform:translate(4px,-2px);
+.title::after {
+
+    color: var(--pink);
+
+    clip-path:
+        polygon(
+            0 68%,
+            100% 68%,
+            100% 100%,
+            0 100%
+        );
+
+    transform:
+        translate(4px, -2px);
+
 }
 
-.tagline{
-    margin-top:32px;
-    color:#68636f;
-    font-family:'Space Mono',monospace;
-    font-size:9px;
-    letter-spacing:3px;
+.tagline {
+
+    margin-top: 32px;
+
+    color: #69636f;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 9px;
+
+    letter-spacing: 3px;
+
 }
 
-.enter{
-    display:inline-flex;
-    margin-top:32px;
-    padding:14px 20px;
-    color:white;
-    text-decoration:none;
-    font-family:'Space Mono',monospace;
-    font-size:9px;
-    border:1px solid rgba(255,255,255,.14);
-    background:rgba(255,255,255,.035);
-    transition:.3s;
-}
+.enter {
 
-.enter:hover{
-    transform:translateY(-4px);
-    border-color:var(--purple);
-    box-shadow:0 0 35px rgba(139,92,255,.25);
-}
+    display: inline-flex;
 
-.scroll{
-    position:absolute;
-    bottom:25px;
-    left:50%;
-    transform:translateX(-50%);
-    font-family:'Space Mono',monospace;
-    color:#393640;
-    font-size:7px;
-    letter-spacing:2px;
-}
+    margin-top: 32px;
 
+    padding:
+        14px 20px;
 
-/* =========================
-   BLACK HOLE VISUAL
-========================= */
+    color: white;
 
-.hole{
-    position:absolute;
-    width:min(75vw,600px);
-    aspect-ratio:1;
-    border-radius:50%;
-    z-index:1;
-    pointer-events:none;
-}
+    text-decoration: none;
 
-.hole::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    border-radius:50%;
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
+
+    border:
+        1px solid rgba(255,255,255,.14);
+
     background:
+        rgba(255,255,255,.035);
+
+    transition: .3s;
+
+}
+
+.enter:hover {
+
+    transform:
+        translateY(-4px);
+
+    border-color:
+        var(--purple);
+
+    box-shadow:
+        0 0 35px
+        rgba(139,92,255,.25);
+
+}
+
+.scroll {
+
+    position: absolute;
+
+    bottom: 25px;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    color: #38343f;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 7px;
+
+    letter-spacing: 2px;
+
+}
+
+
+/* =========================================================
+   BLACK HOLE
+========================================================= */
+
+.hole {
+
+    position: absolute;
+
+    width:
+        min(75vw, 600px);
+
+    aspect-ratio: 1;
+
+    border-radius: 50%;
+
+    z-index: 1;
+
+    pointer-events: none;
+
+    transition:
+        transform .15s ease-out;
+
+}
+
+.hole::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    border-radius: 50%;
+
+    background:
+
         conic-gradient(
             from 0deg,
+
             transparent 0deg,
+
             rgba(128,73,255,.8) 45deg,
+
             transparent 100deg,
+
             rgba(0,225,255,.6) 180deg,
+
             transparent 230deg,
+
             rgba(255,45,185,.65) 300deg,
+
             transparent 360deg
         );
-    filter:blur(25px);
-    animation:rotate 9s linear infinite;
+
+    filter:
+        blur(25px);
+
+    animation:
+        rotate 9s linear infinite;
+
 }
 
-.hole::after{
-    content:"";
-    position:absolute;
-    inset:24%;
-    border-radius:50%;
-    background:#000;
+.hole::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 24%;
+
+    border-radius: 50%;
+
+    background: #000;
+
     box-shadow:
-        0 0 50px 15px rgba(0,0,0,.9),
-        0 0 100px 20px rgba(91,50,170,.18);
+        0 0 50px 15px rgba(0,0,0,.95),
+        0 0 100px 25px rgba(91,50,170,.18);
+
 }
 
-.hole-core{
-    position:absolute;
-    inset:31%;
-    border-radius:50%;
-    background:#000;
-    z-index:2;
+.hole-core {
+
+    position: absolute;
+
+    inset: 31%;
+
+    border-radius: 50%;
+
+    background: #000;
+
+    z-index: 2;
+
 }
 
 
-/* =========================
+/* =========================================================
    SECTIONS
-========================= */
+========================================================= */
 
-section.content{
-    position:relative;
-    z-index:3;
-    padding:130px 7vw;
-    border-top:1px solid rgba(255,255,255,.05);
-    background:rgba(2,2,3,.7);
-}
+section.content {
 
-.label{
-    font-family:'Space Mono',monospace;
-    font-size:8px;
-    color:#514d59;
-    letter-spacing:3px;
-    margin-bottom:18px;
-}
+    position: relative;
 
-.big{
-    font-size:clamp(40px,8vw,95px);
-    line-height:.9;
-    letter-spacing:-.06em;
-    font-weight:800;
-}
+    z-index: 3;
 
+    padding:
+        130px 7vw;
 
-/* =========================
-   MUSIC
-========================= */
+    border-top:
+        1px solid rgba(255,255,255,.05);
 
-.music-grid{
-    margin-top:55px;
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-    gap:14px;
-}
-
-.track{
-    position:relative;
-    min-height:190px;
-    padding:22px;
-    display:flex;
-    flex-direction:column;
-    justify-content:flex-end;
-    overflow:hidden;
-    border:1px solid rgba(255,255,255,.08);
     background:
+        rgba(2,2,3,.72);
+
+}
+
+.label {
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 8px;
+
+    color: #514d59;
+
+    letter-spacing: 3px;
+
+    margin-bottom: 18px;
+
+}
+
+.big {
+
+    font-size:
+        clamp(40px, 8vw, 95px);
+
+    line-height: .9;
+
+    letter-spacing: -.06em;
+
+    font-weight: 900;
+
+}
+
+
+/* =========================================================
+   MUSIC
+========================================================= */
+
+.music-grid {
+
+    margin-top: 55px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(230px, 1fr)
+        );
+
+    gap: 14px;
+
+}
+
+.track {
+
+    position: relative;
+
+    min-height: 190px;
+
+    padding: 22px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: flex-end;
+
+    overflow: hidden;
+
+    border:
+        1px solid var(--border);
+
+    background:
+
         radial-gradient(
             circle at 80% 10%,
             rgba(130,80,255,.2),
             transparent 45%
         ),
+
         var(--panel);
-    transition:.35s;
+
+    transition: .35s;
+
 }
 
-.track::before{
-    content:"";
-    position:absolute;
-    width:180px;
-    height:180px;
-    border-radius:50%;
-    right:-80px;
-    top:-80px;
-    border:1px solid rgba(255,255,255,.08);
-    box-shadow:0 0 60px rgba(100,60,255,.15);
+.track::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 180px;
+    height: 180px;
+
+    border-radius: 50%;
+
+    right: -80px;
+    top: -80px;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    box-shadow:
+        0 0 60px
+        rgba(100,60,255,.15);
+
 }
 
-.track:hover{
-    transform:translateY(-8px);
-    border-color:rgba(145,100,255,.4);
+.track:hover {
+
+    transform:
+        translateY(-8px);
+
+    border-color:
+        rgba(145,100,255,.4);
+
 }
 
-.track-number{
-    position:absolute;
-    top:20px;
-    right:20px;
-    color:#3f3a47;
-    font-family:'Space Mono',monospace;
-    font-size:9px;
+.track-number {
+
+    position: absolute;
+
+    top: 20px;
+    right: 20px;
+
+    color: #3f3a47;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 9px;
+
 }
 
-.track-name{
-    font-size:23px;
-    font-weight:800;
+.track-name {
+
+    font-size: 23px;
+
+    font-weight: 900;
+
 }
 
-.track-meta{
-    margin-top:7px;
-    color:#57525f;
-    font-family:'Space Mono',monospace;
-    font-size:8px;
+.track-meta {
+
+    margin-top: 7px;
+
+    color: #57525f;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 8px;
+
 }
 
-.play{
-    position:absolute;
-    top:20px;
-    left:20px;
-    width:35px;
-    height:35px;
-    border:1px solid rgba(255,255,255,.1);
-    background:rgba(255,255,255,.03);
-    color:white;
-    cursor:pointer;
+.play {
+
+    position: absolute;
+
+    top: 20px;
+    left: 20px;
+
+    width: 35px;
+    height: 35px;
+
+    border:
+        1px solid rgba(255,255,255,.1);
+
+    background:
+        rgba(255,255,255,.03);
+
+    color: white;
+
+    cursor: pointer;
+
 }
 
 
-/* =========================
+/* =========================================================
    ABOUT
-========================= */
+========================================================= */
 
-.about-grid{
-    margin-top:50px;
-    max-width:900px;
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:60px;
+.about-grid {
+
+    margin-top: 50px;
+
+    max-width: 900px;
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 60px;
+
 }
 
-.about-text{
-    color:#85808d;
-    line-height:1.9;
-    font-size:15px;
+.about-text {
+
+    color: #85808d;
+
+    line-height: 1.9;
+
+    font-size: 15px;
+
 }
 
-.about-text strong{
-    color:white;
+.about-text strong {
+
+    color: white;
+
 }
 
-.manifesto{
-    font-family:'Space Mono',monospace;
-    color:#4d4854;
-    font-size:10px;
-    line-height:2;
+.manifesto {
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    color: #4d4854;
+
+    font-size: 10px;
+
+    line-height: 2;
+
 }
 
 
-/* =========================
+/* =========================================================
    LINKS
-========================= */
+========================================================= */
 
-.links{
-    margin-top:45px;
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
+.links {
+
+    margin-top: 45px;
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+
 }
 
-.link{
-    padding:14px 19px;
-    color:#aaa5b0;
-    border:1px solid rgba(255,255,255,.08);
-    text-decoration:none;
-    font-family:'Space Mono',monospace;
-    font-size:9px;
-    transition:.25s;
+.link {
+
+    padding:
+        14px 19px;
+
+    color: #aaa5b0;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    text-decoration: none;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 9px;
+
+    transition: .25s;
+
 }
 
-.link:hover{
-    color:white;
-    border-color:var(--purple);
-    box-shadow:0 0 25px rgba(139,92,255,.12);
+.link:hover {
+
+    color: white;
+
+    border-color:
+        var(--purple);
+
+    box-shadow:
+        0 0 25px
+        rgba(139,92,255,.12);
+
 }
 
 
-/* =========================
+/* =========================================================
    FOOTER
-========================= */
+========================================================= */
 
-footer{
-    position:relative;
-    z-index:3;
-    padding:50px 20px;
-    text-align:center;
-    color:#302d35;
-    border-top:1px solid rgba(255,255,255,.05);
-    font-family:'Space Mono',monospace;
-    font-size:7px;
-    letter-spacing:2px;
+footer {
+
+    position: relative;
+
+    z-index: 3;
+
+    padding: 50px 20px;
+
+    text-align: center;
+
+    color: #302d35;
+
+    border-top:
+        1px solid rgba(255,255,255,.05);
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 7px;
+
+    letter-spacing: 2px;
+
 }
 
 
-/* =========================
-   EASTER EGG
-========================= */
+/* =========================================================
+   SECRET
+========================================================= */
 
-.secret{
-    position:fixed;
-    inset:0;
-    z-index:4000;
-    background:#000;
-    display:none;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
+.secret {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 4000;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    background: #000;
+
 }
 
-.secret.active{
-    display:flex;
+.secret.active {
+
+    display: flex;
+
 }
 
-.secret-text{
-    font-family:'Space Mono',monospace;
-    font-size:10px;
-    color:#777;
-    line-height:2;
+.secret-text {
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 10px;
+
+    color: #777;
+
+    line-height: 2;
+
 }
 
-.secret-text strong{
-    display:block;
-    color:white;
-    font-size:25px;
-    margin-bottom:15px;
+.secret-text strong {
+
+    display: block;
+
+    color: white;
+
+    font-size: 25px;
+
+    margin-bottom: 15px;
+
 }
 
 
-/* =========================
+/* =========================================================
    ANIMATIONS
-========================= */
+========================================================= */
 
-@keyframes rotate{
-    to{transform:rotate(360deg);}
-}
+@keyframes rotate {
 
-@keyframes glitch{
-    0%,88%,100%{transform:translate(0);}
-    89%{transform:translate(-3px,1px);}
-    90%{transform:translate(3px,-2px);}
-    91%{transform:translate(-1px,0);}
-}
-
-@media(max-width:650px){
-
-    nav{
-        height:65px;
-        padding:0 15px;
-    }
-
-    .signal{
-        display:none;
-    }
-
-    .hole{
-        width:105vw;
-    }
-
-    .hero-content{
-        padding:15px;
-    }
-
-    .title{
-        font-size:19vw;
-    }
-
-    .tagline{
-        font-size:7px;
-        line-height:1.8;
-    }
-
-    section.content{
-        padding:90px 20px;
-    }
-
-    .about-grid{
-        grid-template-columns:1fr;
-        gap:35px;
-    }
-
-    .music-grid{
-        grid-template-columns:1fr;
+    to {
+        transform: rotate(360deg);
     }
 
 }
 
-@media(prefers-reduced-motion:reduce){
+@keyframes titleGlitch {
+
+    0%,
+    88%,
+    100% {
+        transform: translate(0);
+    }
+
+    89% {
+        transform: translate(-3px,1px);
+    }
+
+    90% {
+        transform: translate(3px,-2px);
+    }
+
+    91% {
+        transform: translate(-1px,0);
+    }
+
+}
+
+@keyframes bootGlitch {
+
+    0%,
+    90%,
+    100% {
+        transform: translate(0);
+    }
+
+    92% {
+        transform: translate(-2px,1px);
+    }
+
+    94% {
+        transform: translate(2px,-1px);
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+
+    nav {
+
+        height: 65px;
+
+        padding:
+            0 15px;
+
+    }
+
+    .signal {
+
+        display: none;
+
+    }
+
+    .hole {
+
+        width: 105vw;
+
+    }
+
+    .hero-content {
+
+        padding: 15px;
+
+    }
+
+    .title {
+
+        font-size: 19vw;
+
+    }
+
+    .tagline {
+
+        font-size: 7px;
+
+        line-height: 1.8;
+
+    }
+
+    section.content {
+
+        padding:
+            90px 20px;
+
+    }
+
+    .about-grid {
+
+        grid-template-columns: 1fr;
+
+        gap: 35px;
+
+    }
+
+    .music-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
 
     *,
     *::before,
-    *::after{
-        animation-duration:.01ms!important;
-        animation-iteration-count:1!important;
+    *::after {
+
+        animation-duration:
+            .01ms !important;
+
+        animation-iteration-count:
+            1 !important;
+
+        scroll-behavior:
+            auto !important;
+
     }
 
 }
+
 </style>
+
 </head>
 
+
 <body class="locked">
+
+
+<!-- =======================================================
+     BACKGROUND
+======================================================= -->
 
 <canvas id="space"></canvas>
 
 <div class="noise"></div>
+
 <div class="vignette"></div>
 
 
-<!-- =========================
+<!-- =======================================================
      BOOT SCREEN
-========================= -->
+======================================================= -->
 
-<div class="boot" id="boot">
+<div
+    class="boot"
+    id="boot"
+>
 
     <div class="boot-inner">
 
@@ -653,33 +1234,35 @@ footer{
         </div>
 
         <div class="boot-line">
-            [ SYSTEM ] INITIALIZING VOID...
+            [ SYSTEM ] ONLINE
         </div>
 
         <div class="boot-line">
-            [ SIGNAL ] SEARCHING FOR TRANSMISSION...
+            [ SIGNAL ] CONNECTING...
         </div>
 
         <div class="boot-line">
-            [ CORE ] BLACK HOLE DETECTED.
+            [ VOID ] INITIALIZING...
         </div>
 
         <div class="boot-line">
-            [ AUDIO ] UNKNOWN FREQUENCY.
+            [ CORE ] SEARCHING...
         </div>
 
         <div class="boot-bar">
+
             <div
                 class="boot-progress"
                 id="progress"
             ></div>
+
         </div>
 
         <div
             class="boot-status"
             id="bootStatus"
         >
-            0%
+            INITIALIZING VOID...
         </div>
 
     </div>
@@ -687,9 +1270,9 @@ footer{
 </div>
 
 
-<!-- =========================
-     NAV
-========================= -->
+<!-- =======================================================
+     NAVIGATION
+======================================================= -->
 
 <nav>
 
@@ -706,7 +1289,7 @@ footer{
 
         <button
             class="menu"
-            onclick="window.scrollTo({top:0,behavior:'smooth'})"
+            onclick="goTop()"
         >
             ↑
         </button>
@@ -716,15 +1299,21 @@ footer{
 </nav>
 
 
-<!-- =========================
+<!-- =======================================================
      HERO
-========================= -->
+======================================================= -->
 
-<header class="hero" id="home">
+<header
+    class="hero"
+    id="home"
+>
 
     <div class="hole">
+
         <div class="hole-core"></div>
+
     </div>
+
 
     <div class="hero-content">
 
@@ -749,6 +1338,7 @@ footer{
 
     </div>
 
+
     <div class="scroll">
         ↓ DESCEND ↓
     </div>
@@ -756,9 +1346,9 @@ footer{
 </header>
 
 
-<!-- =========================
+<!-- =======================================================
      MUSIC
-========================= -->
+======================================================= -->
 
 <section
     class="content"
@@ -772,6 +1362,7 @@ footer{
     <h2 class="big">
         MUSIC.
     </h2>
+
 
     <div class="music-grid">
 
@@ -853,9 +1444,9 @@ footer{
 </section>
 
 
-<!-- =========================
+<!-- =======================================================
      ABOUT
-========================= -->
+======================================================= -->
 
 <section
     class="content"
@@ -867,9 +1458,11 @@ footer{
     </div>
 
     <h2 class="big">
+
         WHO<br>
         IS<br>
         S!NNER13?
+
     </h2>
 
 
@@ -884,325 +1477,21 @@ footer{
 
             <br><br>
 
-            S!NNER13 isn't supposed to
-            fit into one genre.
+            S!NNER13 isn't supposed
+            to fit into one genre.
 
             <br><br>
 
             The music is a collision:
-            <strong>noise, emotion,
-            digital chaos and atmosphere.</strong>
+            <strong>
+                noise, emotion,
+                digital chaos and atmosphere.
+            </strong>
 
             <br><br>
 
             Everything eventually falls
-            into the void.
+            into the <strong>void.</strong>
 
-        </p>
-
-
-        <div class="manifesto">
-
-            NO GENRE.<br>
-            NO RULES.<br>
-            NO EXIT.<br>
-            <br>
-            CREATE.<br>
-            DISTORT.<br>
-            TRANSMIT.<br>
-            <br>
-            13 IS NOT A NUMBER.<br>
-            IT IS A COORDINATE.
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     LINKS
-========================= -->
-
-<section
-    class="content"
-    id="links"
->
-
-    <div class="label">
-        03 // CONNECTION
-    </div>
-
-    <h2 class="big">
-        FIND<br>
-        THE SIGNAL.
-    </h2>
-
-
-    <div class="links">
-
-        <a
-            class="link"
-            href="#"
-        >
-            SOUNDCLOUD ↗
-        </a>
-
-        <a
-            class="link"
-            href="#"
-        >
-            SPOTIFY ↗
-        </a>
-
-        <a
-            class="link"
-            href="#"
-        >
-            INSTAGRAM ↗
-        </a>
-
-        <a
-            class="link"
-            href="#"
-        >
-            DISCORD ↗
-        </a>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     FOOTER
-========================= -->
-
-<footer>
-
-    S!NNER13 // 2026
-
-    <br><br>
-
-    SIGNAL LOST.
-
-</footer>
-
-
-<!-- =========================
-     SECRET
-========================= -->
-
-<div
-    class="secret"
-    id="secret"
->
-
-    <div class="secret-text">
-
-        <strong>
-            YOU FOUND THE VOID.
-        </strong>
-
-        there was never supposed<br>
-        to be anything here.
-
-        <br><br>
-
-        [ 13 ]
-
-        <br><br>
-
-        tap anywhere to return
-
-    </div>
-
-</div>
-
-
-<script>
-
-/* =========================================================
-   BOOT
-========================================================= */
-
-const boot =
-    document.getElementById("boot");
-
-const progress =
-    document.getElementById("progress");
-
-const bootStatus =
-    document.getElementById("bootStatus");
-
-let percent = 0;
-
-const bootTimer =
-    setInterval(() => {
-
-        percent +=
-            Math.floor(
-                Math.random() * 15
-            ) + 5;
-
-        if(percent > 100)
-            percent = 100;
-
-        progress.style.width =
-            percent + "%";
-
-        bootStatus.textContent =
-            percent + "%";
-
-        if(percent >= 100){
-
-            clearInterval(
-                bootTimer
-            );
-
-            setTimeout(() => {
-
-                boot.classList.add(
-                    "hidden"
-                );
-
-                document.body.classList.remove(
-                    "locked"
-                );
-
-            },500);
-
-        }
-
-    },180);
-
-
-/* =========================================================
-   SPACE CANVAS
-========================================================= */
-
-const canvas =
-    document.getElementById("space");
-
-const ctx =
-    canvas.getContext("2d");
-
-let width;
-let height;
-
-let particles = [];
-
-const mouse = {
-    x:0,
-    y:0,
-    active:false
-};
-
-
-function resize(){
-
-    width =
-        canvas.width =
-        window.innerWidth *
-        devicePixelRatio;
-
-    height =
-        canvas.height =
-        window.innerHeight *
-        devicePixelRatio;
-
-    canvas.style.width =
-        window.innerWidth + "px";
-
-    canvas.style.height =
-        window.innerHeight + "px";
-
-    ctx.scale(
-        devicePixelRatio,
-        devicePixelRatio
-    );
-
-    width =
-        window.innerWidth;
-
-    height =
-        window.innerHeight;
-
-}
-
-
-resize();
-
-window.addEventListener(
-    "resize",
-    resize
-);
-
-
-/* =========================================================
-   PARTICLES
-========================================================= */
-
-function createParticle(){
-
-    const angle =
-        Math.random() *
-        Math.PI * 2;
-
-    const distance =
-        100 +
-        Math.random() *
-        Math.max(
-            width,
-            height
-        ) *
-        .65;
-
-    return {
-
-        x:
-            width/2 +
-            Math.cos(angle) *
-            distance,
-
-        y:
-            height/2 +
-            Math.sin(angle) *
-            distance,
-
-        size:
-            Math.random() *
-            1.7 + .2,
-
-        speed:
-            Math.random() *
-            .003 + .001,
-
-        angle:
-            angle,
-
-        distance:
-            distance,
-
-        rotation:
-            Math.random() *
-            .02
-
-    };
-
-}
-
-
-for(let i=0;i<180;i++){
-
-    particles.push(
-        createParticle()
-    );
-
-}
-
-
-/* =========================================================
-   SPACE LOOP
-                
+    </p>
+            
