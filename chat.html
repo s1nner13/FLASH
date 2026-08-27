@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>FLASH — Chat</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            height: 100vh;
+
+            overflow: hidden;
+
+            background: #111214;
+
+            color: white;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+        }
+
+
+        /* =========================
+           CHAT
+        ========================= */
+
+
+        #chat {
+
+            height: 100vh;
+
+            display: grid;
+
+            grid-template-rows:
+                auto
+                1fr
+                auto;
+        }
+
+
+        /* =========================
+           HEADER
+        ========================= */
+
+
+        .topbar {
+
+            min-height: 65px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            padding: 12px 18px;
+
+            background: #18191c;
+
+            border-bottom:
+                1px solid #303238;
+        }
+
+
+        .logo {
+
+            font-size: 21px;
+
+            font-weight: 900;
+        }
+
+
+        .account {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            font-size: 13px;
+        }
+
+
+        #username {
+
+            color: #ffffff;
+
+            font-weight: bold;
+        }
+
+
+        #timer {
+
+            color: #aeb1b7;
+        }
+
+
+        #delete {
+
+            background: #c43d3d;
+
+            padding: 8px 12px;
+        }
+
+
+        #delete:hover {
+
+            background: #df4a4a;
+        }
+
+
+        /* =========================
+           MESSAGES
+        ========================= */
+
+
+        #messages {
+
+            padding: 25px;
+
+            overflow-y: auto;
+        }
+
+
+        .message {
+
+            margin-bottom: 18px;
+        }
+
+
+        .message-header {
+
+            margin-bottom: 4px;
+
+            color: #aeb1b7;
+
+            font-size: 13px;
+        }
+
+
+        .message-user {
+
+            color: white;
+
+            font-weight: bold;
+        }
+
+
+        .message-content {
+
+            color: #e5e5e5;
+
+            white-space: pre-wrap;
+
+            overflow-wrap: anywhere;
+        }
+
+
+        /* =========================
+           INPUT
+        ========================= */
+
+
+        #form {
+
+            display: flex;
+
+            gap: 10px;
+
+            padding: 14px;
+
+            background: #18191c;
+
+            border-top:
+                1px solid #303238;
+        }
+
+
+        #input {
+
+            flex: 1;
+
+            margin: 0;
+
+            padding: 13px;
+
+            border:
+                1px solid #3b3d44;
+
+            border-radius: 8px;
+
+            outline: none;
+
+            background: #111214;
+
+            color: white;
+
+            font-size: 15px;
+        }
+
+
+        #input:focus {
+
+            border-color: #5865f2;
+        }
+
+
+        #send {
+
+            width: 55px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: #5865f2;
+
+            color: white;
+
+            font-size: 20px;
+
+            cursor: pointer;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+
+        @media (max-width: 650px) {
+
+            .topbar {
+
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+
+            .account {
+
+                width: 100%;
+
+                justify-content: space-between;
+            }
+
+
+            #messages {
+
+                padding: 18px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div id="chat">
+
+
+    <!-- HEADER -->
+
+    <header class="topbar">
+
+
+        <div class="logo">
+
+            ⚡ FLASH
+
+        </div>
+
+
+        <div class="account">
+
+
+            <span id="username"></span>
+
+
+            <span id="timer"></span>
+
+
+            <button id="delete">
+
+                Supprimer
+
+            </button>
+
+
+        </div>
+
+
+    </header>
+
+
+    <!-- MESSAGES -->
+
+    <main id="messages"></main>
+
+
+    <!-- MESSAGE -->
+
+    <form id="form">
+
+
+        <input
+            id="input"
+            type="text"
+            maxlength="1000"
+            placeholder="Écrire un message..."
+            autocomplete="off"
+        >
+
+
+        <button
+            id="send"
+            type="submit"
+        >
+
+            ➤
+
+        </button>
+
+
+    </form>
+
+
+</div>
+
+
+<script>
+
+
+/* =====================================================
+   FLASH V0 — CHAT
+===================================================== */
+
+
+const STORAGE_KEY = "FLASH_V0";
+
+
+/* =====================================================
+   CHARGEMENT
+===================================================== */
+
+
+function loadState() {
+
+    try {
+
+        const data =
+            localStorage.getItem(
+                STORAGE_KEY
+            );
+
+
+        if (!data) {
+
+            return null;
+
+        }
+
+
+        return JSON.parse(data);
+
+    }
+
+    catch {
+
+        return null;
+
+    }
+
+}
+
+
+/* =====================================================
+   SAUVEGARDE
+===================================================== */
+
+
+function saveState(state) {
+
+    localStorage.setItem(
+
+        STORAGE_KEY,
+
+        JSON.stringify(state)
+
+    );
+
+}
+
+
+/* =====================================================
+   ID
+===================================================== */
+
+
+function generateID() {
+
+    return Date.now() + "-" +
+
+        Math.random()
+        .toString(36)
+        .substring(2);
+
+}
+
+
+/* =====================================================
+   ÉTAT
+===================================================== */
+
+
+let state = loadState();
+
+
+/* =====================================================
+   VÉRIFICATION COMPTE
+===================================================== */
+
+
+if (!state || !state.account) {
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+/* =====================================================
+   EXPIRATION
+===================================================== */
+
+
+function isExpired() {
+
+    if (
+        state.account.expiresAt === 0
+    ) {
+
+        return false;
+
+    }
+
+
+    return (
+        Date.now() >=
+        state.account.expiresAt
+    );
+
+}
+
+
+/* =====================================================
+   SUPPRESSION
+===================================================== */
+
+
+function deleteAccount() {
+
+
+    const confirmation = confirm(
+
+        "⚠️ Supprimer ton compte Flash ?\n\n" +
+
+        "Ton compte ET tous tes messages " +
+
+        "seront supprimés."
+
+    );
+
+
+    if (!confirmation) {
+
+        return;
+
+    }
+
+
+    /*
+       Suppression totale
+    */
+
+    localStorage.removeItem(
+        STORAGE_KEY
+    );
+
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+/* =====================================================
+   EXPIRATION AUTOMATIQUE
+===================================================== */
+
+
+function expireAccount() {
+
+    localStorage.removeItem(
+        STORAGE_KEY
+    );
+
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+/* =====================================================
+   TIMER
+===================================================== */
+
+
+function updateTimer() {
+
+
+    if (!state.account) {
+
+        return;
+
+    }
+
+
+    const timer =
+        document.getElementById(
+            "timer"
+        );
+
+
+    if (
+        state.account.expiresAt === 0
+    ) {
+
+        timer.textContent =
+            "♾️ Illimitée";
+
+        return;
+
+    }
+
+
+    const remaining =
+
+        state.account.expiresAt -
+        Date.now();
+
+
+    if (remaining <= 0) {
+
+        expireAccount();
+
+        return;
+
+    }
+
+
+    timer.textContent =
+        "⏳ " +
+        formatTime(remaining);
+
+}
+
+
+function formatTime(ms) {
+
+
+    let seconds =
+        Math.floor(ms / 1000);
+
+
+    const days =
+        Math.floor(
+            seconds / 86400
+        );
+
+
+    seconds %= 86400;
+
+
+    const hours =
+        Math.floor(
+            seconds / 3600
+        );
+
+
+    seconds %= 3600;
+
+
+    const minutes =
+        Math.floor(
+            seconds / 60
+        );
+
+
+    seconds %= 60;
+
+
+    if (days > 0) {
+
+        return (
+            days +
+            "j " +
+            hours +
+            "h"
+        );
+
+    }
+
+
+    if (hours > 0) {
+
+        return (
+            hours +
+            "h " +
+            minutes +
+            "min"
+        );
+
+    }
+
+
+    if (minutes > 0) {
+
+        return (
+            minutes +
+            "min " +
+            seconds +
+            "s"
+        );
+
+    }
+
+
+    return seconds + "s";
+
+}
+
+
+/* =====================================================
+   AFFICHER LES MESSAGES
+===================================================== */
+
+
+function renderMessages() {
+
+
+    const container =
+        document.getElementById(
+            "messages"
+        );
+
+
+    container.innerHTML = "";
+
+
+    for (
+        const message
+        of state.messages
+    ) {
+
+
+        const article =
+            document.createElement(
+                "article"
+            );
+
+
+        article.className =
+            "message";
+
+
+        const header =
+            document.createElement(
+                "div"
+            );
+
+
+        header.className =
+            "message-header";
+
+
+        const user =
+            document.createElement(
+                "span"
+            );
+
+
+        user.className =
+            "message-user";
+
+
+        user.textContent =
+            "@" + message.username;
+
+
+        const time =
+            document.createElement(
+                "span"
+            );
+
+
+        time.textContent =
+
+            " · " +
+
+            new Date(
+                message.createdAt
+            ).toLocaleTimeString(
+
+                "fr-FR",
+
+                {
+
+                    hour: "2-digit",
+
+                    minute: "2-digit"
+
+                }
+
+            );
+
+
+        header.appendChild(user);
+
+        header.appendChild(time);
+
+
+        const content =
+            document.createElement(
+                "div"
+            );
+
+
+        content.className =
+            "message-content";
+
+
+        /*
+           textContent évite que du HTML
+           envoyé comme message soit exécuté.
+        */
+
+        content.textContent =
+            message.text;
+
+
+        article.appendChild(header);
+
+        article.appendChild(content);
+
+
+        container.appendChild(article);
+
+    }
+
+
+    container.scrollTop =
+        container.scrollHeight;
+
+}
+
+
+/* =====================================================
+   ENVOYER MESSAGE
+===================================================== */
+
+
+function sendMessage(text) {
+
+
+    if (isExpired()) {
+
+        expireAccount();
+
+        return;
+
+    }
+
+
+    state.messages.push({
+
+        id: generateID(),
+
+        username:
+            state.account.username,
+
+        text: text,
+
+        createdAt: Date.now()
+
+    });
+
+
+    saveState(state);
+
+
+    renderMessages();
+
+}
+
+
+/* =====================================================
+   INITIALISATION
+===================================================== */
+
+
+document.getElementById(
+    "username"
+).textContent =
+
+    "@" +
+    state.account.username;
+
+
+document.getElementById(
+    "delete"
+).addEventListener(
+
+    "click",
+
+    deleteAccount
+
+);
+
+
+document.getElementById(
+    "form"
+).addEventListener(
+
+    "submit",
+
+    function(event) {
+
+
+        event.preventDefault();
+
+
+        const input =
+            document.getElementById(
+                "input"
+            );
+
+
+        const text =
+            input.value.trim();
+
+
+        if (!text) {
+
+            return;
+
+        }
+
+
+        sendMessage(text);
+
+
+        input.value = "";
+
+
+        input.focus();
+
+    }
+
+);
+
+
+/* =====================================================
+   DÉMARRAGE
+===================================================== */
+
+
+renderMessages();
+
+updateTimer();
+
+
+/* =====================================================
+   HORLOGE
+===================================================== */
+
+
+setInterval(
+
+    updateTimer,
+
+    1000
+
+);
+
+</script>
+
+</body>
+
+</html>
