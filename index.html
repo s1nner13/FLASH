@@ -1,16 +1,24 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
 <meta name="theme-color" content="#020204">
 
 <title>FLASH — Enter the Void</title>
 
+
 <style>
 
 /* =====================================================
-   FLASH V0 — INDEX
+   FLASH V0
 ===================================================== */
 
 * {
@@ -26,11 +34,14 @@ body {
 }
 
 body {
+
     min-height: 100vh;
     min-height: 100dvh;
+
     overflow: hidden;
 
     background: #020204;
+
     color: white;
 
     font-family:
@@ -41,13 +52,17 @@ body {
 
 
 /* =====================================================
-   BACKGROUND
+   SPACE
 ===================================================== */
 
 .space {
+
     position: fixed;
+
     inset: 0;
+
     overflow: hidden;
+
     z-index: 0;
 
     background:
@@ -66,15 +81,19 @@ body {
 ===================================================== */
 
 .stars {
+
     position: absolute;
+
     inset: -50%;
 
     background-image:
+
         radial-gradient(
             circle,
             rgba(255,255,255,.9) 0 1px,
             transparent 1.5px
         ),
+
         radial-gradient(
             circle,
             rgba(150,150,255,.65) 0 1px,
@@ -89,15 +108,19 @@ body {
         starsMove 90s linear infinite;
 }
 
+
 @keyframes starsMove {
 
     from {
-        transform: translate(0,0);
+        transform:
+            translate(0,0);
     }
 
     to {
-        transform: translate(180px,100px);
+        transform:
+            translate(180px,100px);
     }
+
 }
 
 
@@ -106,6 +129,7 @@ body {
 ===================================================== */
 
 .nebula {
+
     position: absolute;
 
     width: 100vw;
@@ -114,52 +138,65 @@ body {
     left: 50%;
     top: 50%;
 
-    transform: translate(-50%, -50%);
+    transform:
+        translate(-50%, -50%);
 
     border-radius: 50%;
 
     background:
+
         radial-gradient(
             circle,
             rgba(100,75,255,.16),
             transparent 45%
         );
 
-    filter: blur(50px);
+    filter:
+        blur(50px);
 
     animation:
         nebulaPulse 8s ease-in-out infinite alternate;
 }
 
+
 @keyframes nebulaPulse {
 
     from {
+
         transform:
             translate(-50%, -50%)
             scale(.9);
 
         opacity: .6;
+
     }
 
     to {
+
         transform:
             translate(-50%, -50%)
             scale(1.1);
 
         opacity: 1;
+
     }
+
 }
 
 
 /* =====================================================
-   BLACK HOLE SYSTEM
+   BLACK HOLE
 ===================================================== */
 
 .black-hole {
+
     position: absolute;
 
-    width: min(600px, 100vw);
-    height: min(600px, 100vw);
+    width:
+        min(600px, 100vw);
+
+    height:
+        min(600px, 100vw);
 
     left: 50%;
     top: 50%;
@@ -170,7 +207,7 @@ body {
 
 
 /* =====================================================
-   OUTER RING
+   GRAVITY RING
 ===================================================== */
 
 .gravity-ring {
@@ -186,24 +223,40 @@ body {
         rgba(130,110,255,.25);
 
     box-shadow:
-        0 0 50px rgba(90,70,255,.12),
-        inset 0 0 50px rgba(90,70,255,.08);
+
+        0 0 50px
+        rgba(90,70,255,.12),
+
+        inset 0 0 50px
+        rgba(90,70,255,.08);
 
     animation:
         ringPulse 5s ease-in-out infinite alternate;
 }
 
+
 @keyframes ringPulse {
 
     from {
-        transform: scale(.96);
-        opacity: .35;
+
+        transform:
+            scale(.96);
+
+        opacity:
+            .35;
+
     }
 
     to {
-        transform: scale(1.04);
-        opacity: .8;
+
+        transform:
+            scale(1.04);
+
+        opacity:
+            .8;
+
     }
+
 }
 
 
@@ -224,7 +277,9 @@ body {
     border-radius: 50%;
 
     background:
+
         conic-gradient(
+
             from 0deg,
 
             transparent 0deg,
@@ -246,9 +301,11 @@ body {
             rgba(190,80,255,.75) 290deg,
 
             transparent 340deg
+
         );
 
-    filter: blur(7px);
+    filter:
+        blur(7px);
 
     transform:
         rotate(-12deg)
@@ -258,27 +315,6 @@ body {
         diskSpin 14s linear infinite;
 }
 
-@keyframes diskSpin {
-
-    from {
-        transform:
-            rotate(-12deg)
-            rotateX(60deg)
-            rotate(0deg);
-    }
-
-    to {
-        transform:
-            rotate(-12deg)
-            rotateX(60deg)
-            rotate(360deg);
-    }
-}
-
-
-/* =====================================================
-   DISK INNER RING
-===================================================== */
 
 .disk::before {
 
@@ -294,12 +330,36 @@ body {
         7px solid
         rgba(255,255,255,.13);
 
-    filter: blur(5px);
+    filter:
+        blur(5px);
+}
+
+
+@keyframes diskSpin {
+
+    from {
+
+        transform:
+            rotate(-12deg)
+            rotateX(60deg)
+            rotate(0deg);
+
+    }
+
+    to {
+
+        transform:
+            rotate(-12deg)
+            rotateX(60deg)
+            rotate(360deg);
+
+    }
+
 }
 
 
 /* =====================================================
-   BLACK CENTER
+   EVENT HORIZON
 ===================================================== */
 
 .horizon {
@@ -314,11 +374,15 @@ body {
 
     border-radius: 50%;
 
-    background: #000;
+    background:
+        #000;
 
     box-shadow:
+
         0 0 30px #000,
-        0 0 70px rgba(0,0,0,.95);
+
+        0 0 70px
+        rgba(0,0,0,.95);
 
     z-index: 5;
 }
@@ -345,7 +409,8 @@ body {
         rgba(170,145,255,.25);
 
     box-shadow:
-        0 0 30px rgba(130,100,255,.2);
+        0 0 30px
+        rgba(130,100,255,.2);
 
     animation:
         horizonGlow 4s ease-in-out infinite alternate;
@@ -353,17 +418,29 @@ body {
     z-index: 4;
 }
 
+
 @keyframes horizonGlow {
 
     from {
-        transform: scale(.95);
-        opacity: .35;
+
+        transform:
+            scale(.95);
+
+        opacity:
+            .35;
+
     }
 
     to {
-        transform: scale(1.05);
-        opacity: .85;
+
+        transform:
+            scale(1.05);
+
+        opacity:
+            .85;
+
     }
+
 }
 
 
@@ -372,10 +449,14 @@ body {
 ===================================================== */
 
 #particles {
+
     position: absolute;
+
     inset: 0;
+
     z-index: 6;
 }
+
 
 .particle {
 
@@ -392,8 +473,11 @@ body {
         0 0 8px white;
 
     animation:
-        particleOrbit var(--time) linear infinite;
+        particleOrbit
+        var(--time)
+        linear infinite;
 }
+
 
 @keyframes particleOrbit {
 
@@ -404,6 +488,7 @@ body {
             translateX(var(--distance));
 
         opacity: 0;
+
     }
 
     15% {
@@ -421,7 +506,9 @@ body {
             translateX(var(--distance));
 
         opacity: 0;
+
     }
+
 }
 
 
@@ -459,7 +546,8 @@ body {
     background-size:
         55px 55px;
 
-    opacity: .4;
+    opacity:
+        .4;
 }
 
 
@@ -479,8 +567,6 @@ body {
 }
 
 
-/* CORNERS */
-
 .corner {
 
     position: absolute;
@@ -495,7 +581,9 @@ body {
         solid;
 }
 
+
 .tl {
+
     left: 0;
     top: 0;
 
@@ -503,7 +591,9 @@ body {
         1px 0 0 1px;
 }
 
+
 .tr {
+
     right: 0;
     top: 0;
 
@@ -511,7 +601,9 @@ body {
         1px 1px 0 0;
 }
 
+
 .bl {
+
     left: 0;
     bottom: 0;
 
@@ -519,7 +611,9 @@ body {
         0 0 1px 1px;
 }
 
+
 .br {
+
     right: 0;
     bottom: 0;
 
@@ -529,7 +623,7 @@ body {
 
 
 /* =====================================================
-   SYSTEM TEXT
+   HUD TEXT
 ===================================================== */
 
 .system {
@@ -542,24 +636,26 @@ body {
     color:
         rgba(220,215,255,.42);
 
-    font-family: monospace;
+    font-family:
+        monospace;
 
-    font-size: 8px;
+    font-size:
+        8px;
 
-    line-height: 1.7;
+    line-height:
+        1.7;
 
-    letter-spacing: 1.4px;
+    letter-spacing:
+        1.4px;
 }
 
+
 .system strong {
+
     color:
         rgba(230,225,255,.75);
 }
 
-
-/* =====================================================
-   COORDINATES
-===================================================== */
 
 .coordinates {
 
@@ -571,13 +667,17 @@ body {
     color:
         rgba(220,215,255,.35);
 
-    font-family: monospace;
+    font-family:
+        monospace;
 
-    font-size: 8px;
+    font-size:
+        8px;
 
-    line-height: 1.8;
+    line-height:
+        1.8;
 
-    text-align: right;
+    text-align:
+        right;
 }
 
 
@@ -596,6 +696,7 @@ body {
     pointer-events: none;
 
     background:
+
         repeating-linear-gradient(
             to bottom,
             rgba(255,255,255,.015) 0px,
@@ -607,7 +708,7 @@ body {
 
 
 /* =====================================================
-   MAIN
+   PAGE
 ===================================================== */
 
 .page {
@@ -617,16 +718,24 @@ body {
     z-index: 10;
 
     width: 100%;
-    min-height: 100vh;
-    min-height: 100dvh;
 
-    display: flex;
+    min-height:
+        100vh;
 
-    align-items: center;
+    min-height:
+        100dvh;
 
-    justify-content: center;
+    display:
+        flex;
 
-    padding: 20px;
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    padding:
+        20px;
 }
 
 
@@ -638,11 +747,14 @@ body {
 
     position: relative;
 
-    width: min(430px, 100%);
+    width:
+        min(430px, 100%);
 
-    padding: 30px;
+    padding:
+        30px;
 
-    border-radius: 24px;
+    border-radius:
+        24px;
 
     border:
         1px solid
@@ -668,40 +780,10 @@ body {
         inset 0 1px 0
         rgba(255,255,255,.08);
 
-    overflow: hidden;
+    overflow:
+        hidden;
 }
 
-
-/* =====================================================
-   CARD LIGHT
-===================================================== */
-
-.card::before {
-
-    content: "";
-
-    position: absolute;
-
-    width: 220px;
-    height: 220px;
-
-    top: -150px;
-    right: -100px;
-
-    border-radius: 50%;
-
-    background:
-        rgba(120,90,255,.16);
-
-    filter: blur(45px);
-
-    pointer-events: none;
-}
-
-
-/* =====================================================
-   TOP LINE
-===================================================== */
 
 .card-line {
 
@@ -729,34 +811,48 @@ body {
 
 .logo-row {
 
-    display: flex;
+    display:
+        flex;
 
-    align-items: center;
+    align-items:
+        center;
 
-    gap: 12px;
+    gap:
+        12px;
 }
 
 
 .logo-icon {
 
-    width: 43px;
-    height: 43px;
+    width:
+        43px;
 
-    display: flex;
+    height:
+        43px;
 
-    align-items: center;
-    justify-content: center;
+    display:
+        flex;
 
-    flex-shrink: 0;
+    align-items:
+        center;
 
-    border-radius: 13px;
+    justify-content:
+        center;
+
+    flex-shrink:
+        0;
+
+    border-radius:
+        13px;
 
     background:
+
         radial-gradient(
             circle,
             #000 0 30%,
             transparent 32%
         ),
+
         conic-gradient(
             #5649d8,
             #bd68ff,
@@ -768,37 +864,45 @@ body {
         0 0 25px
         rgba(110,90,255,.35);
 
-    font-size: 18px;
+    font-size:
+        18px;
 }
 
 
 .logo {
 
-    font-size: 29px;
+    font-size:
+        29px;
 
-    font-weight: 900;
+    font-weight:
+        900;
 
-    letter-spacing: -1px;
+    letter-spacing:
+        -1px;
 }
 
 
 .logo-sub {
 
-    margin-top: 2px;
+    margin-top:
+        2px;
 
     color:
         rgba(255,255,255,.3);
 
-    font-family: monospace;
+    font-family:
+        monospace;
 
-    font-size: 8px;
+    font-size:
+        8px;
 
-    letter-spacing: 1.5px;
+    letter-spacing:
+        1.5px;
 }
 
 
 /* =====================================================
-   DESCRIPTION
+   SUBTITLE
 ===================================================== */
 
 .subtitle {
@@ -823,11 +927,14 @@ body {
 
 .status {
 
-    display: inline-flex;
+    display:
+        inline-flex;
 
-    align-items: center;
+    align-items:
+        center;
 
-    gap: 7px;
+    gap:
+        7px;
 
     padding:
         7px 10px;
@@ -861,10 +968,14 @@ body {
 
 .status-dot {
 
-    width: 6px;
-    height: 6px;
+    width:
+        6px;
 
-    border-radius: 50%;
+    height:
+        6px;
+
+    border-radius:
+        50%;
 
     background:
         #8c7cff;
@@ -888,16 +999,18 @@ body {
     50% {
         opacity: 1;
     }
+
 }
 
 
 /* =====================================================
-   LABELS
+   LABEL
 ===================================================== */
 
 label {
 
-    display: block;
+    display:
+        block;
 
     margin:
         14px 0 7px;
@@ -920,15 +1033,17 @@ label {
 
 
 /* =====================================================
-   INPUTS
+   INPUT / SELECT
 ===================================================== */
 
 input,
 select {
 
-    width: 100%;
+    width:
+        100%;
 
-    height: 47px;
+    height:
+        47px;
 
     padding:
         0 13px;
@@ -940,7 +1055,8 @@ select {
     border-radius:
         10px;
 
-    outline: none;
+    outline:
+        none;
 
     background:
         rgba(0,0,0,.38);
@@ -980,41 +1096,25 @@ select:focus {
 
 select {
 
-    cursor: pointer;
+    cursor:
+        pointer;
 }
 
 
 /* =====================================================
-   BUTTON
+   BUTTONS
 ===================================================== */
 
-#create {
+button {
 
-    position: relative;
+    width:
+        100%;
 
-    width: 100%;
-
-    height: 50px;
-
-    margin-top: 20px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.12);
+    height:
+        50px;
 
     border-radius:
         11px;
-
-    background:
-        linear-gradient(
-            110deg,
-            #5144ca,
-            #765be0,
-            #4f72d5
-        );
-
-    color:
-        white;
 
     font-family:
         monospace;
@@ -1031,52 +1131,41 @@ select {
     cursor:
         pointer;
 
+    transition:
+        .18s;
+}
+
+
+#create {
+
+    position:
+        relative;
+
+    margin-top:
+        20px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    background:
+
+        linear-gradient(
+            110deg,
+            #5144ca,
+            #765be0,
+            #4f72d5
+        );
+
+    color:
+        white;
+
     box-shadow:
         0 15px 35px
         rgba(75,65,210,.25);
 
-    transition:
-        .18s;
-
     overflow:
         hidden;
-}
-
-
-#create::before {
-
-    content: "";
-
-    position: absolute;
-
-    top: 0;
-    bottom: 0;
-
-    left: -45%;
-
-    width: 35%;
-
-    transform:
-        skewX(-20deg);
-
-    background:
-        rgba(255,255,255,.22);
-
-    animation:
-        buttonScan 3s infinite;
-}
-
-
-@keyframes buttonScan {
-
-    0% {
-        left: -45%;
-    }
-
-    45%,
-    100% {
-        left: 120%;
-    }
 }
 
 
@@ -1091,10 +1180,38 @@ select {
 }
 
 
-#create:active {
+/* =====================================================
+   CHAT BUTTON
+===================================================== */
+
+#chatButton {
+
+    margin-top:
+        10px;
+
+    border:
+        1px solid
+        rgba(140,125,255,.25);
+
+    background:
+        rgba(100,90,255,.08);
+
+    color:
+        rgba(235,230,255,.85);
+
+}
+
+
+#chatButton:hover {
+
+    background:
+        rgba(110,95,255,.16);
+
+    border-color:
+        rgba(150,135,255,.45);
 
     transform:
-        scale(.985);
+        translateY(-2px);
 }
 
 
@@ -1118,6 +1235,53 @@ select {
 
     text-align:
         center;
+}
+
+
+/* =====================================================
+   ACCOUNT INFO
+===================================================== */
+
+.account-info {
+
+    display:
+        none;
+
+    margin-top:
+        13px;
+
+    padding:
+        11px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.06);
+
+    border-radius:
+        10px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    color:
+        rgba(255,255,255,.35);
+
+    font-family:
+        monospace;
+
+    font-size:
+        8px;
+
+    line-height:
+        1.7;
+
+}
+
+
+.account-info strong {
+
+    color:
+        rgba(255,255,255,.65);
 }
 
 
@@ -1201,32 +1365,43 @@ select {
 
 
 /* =====================================================
-   SMALL HEIGHT
+   SHORT SCREENS
 ===================================================== */
 
 @media (max-height: 650px) {
 
     .page {
-        align-items: flex-start;
-        padding-top: 10px;
-        padding-bottom: 10px;
+
+        align-items:
+            flex-start;
+
+        padding-top:
+            10px;
+
+        padding-bottom:
+            10px;
     }
 
     .card {
-        padding: 18px;
+
+        padding:
+            18px;
     }
 
     .subtitle {
+
         margin:
             10px 0 13px;
     }
 
     label {
+
         margin-top:
             9px;
     }
 
     #create {
+
         margin-top:
             14px;
     }
@@ -1241,7 +1416,7 @@ select {
 
 
 <!-- =====================================================
-     SPACE
+     BACKGROUND
 ===================================================== -->
 
 <div class="space">
@@ -1285,8 +1460,11 @@ select {
     <div class="system">
 
         <strong>FLASH / CORE</strong><br>
+
         GRAVITY FIELD : STABLE<br>
+
         VOID LINK : ONLINE<br>
+
         NODE : 07
 
     </div>
@@ -1295,7 +1473,9 @@ select {
     <div class="coordinates">
 
         X : <span id="x">04.827</span><br>
+
         Y : <span id="y">-91.338</span><br>
+
         Z : <span id="z">12.004</span>
 
     </div>
@@ -1344,6 +1524,7 @@ select {
 
             Une identité temporaire dans le vide.
             <br>
+
             Entre. Parle. Puis disparais.
 
         </p>
@@ -1351,40 +1532,4 @@ select {
 
         <div class="status">
 
-            <span class="status-dot"></span>
-
-            SYSTEM ONLINE
-
-        </div>
-
-
-        <!-- USERNAME -->
-
-        <label for="username">
-            IDENTIFIER / USERNAME
-        </label>
-
-        <input
-            id="username"
-            type="text"
-            maxlength="24"
-            placeholder="s1nner13"
-            autocomplete="off"
-            spellcheck="false"
-        >
-
-
-        <!-- DURATION -->
-
-        <label for="duration">
-            ACCOUNT LIFETIME
-        </label>
-
-        <select id="duration">
-
-            <option value="3600000">
-                01 HOUR
-            </option>
-
-            <option value="21600000">
            
